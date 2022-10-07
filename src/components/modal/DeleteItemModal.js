@@ -5,7 +5,7 @@ import AuthContext from "../../context/AuthContext";
 import TableContext from "../../context/TableContext";
 import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
 
-export default function DeleteItemModal({ item, closeModal,setDeleteMode }) {
+export default function DeleteItemModal({ item, closeModal, setDeleteMode }) {
   const { input } = useContext(TableContext);
   const { user, toastOptions, displayItems } = useContext(AuthContext);
   const product = item.product;
@@ -56,13 +56,20 @@ export default function DeleteItemModal({ item, closeModal,setDeleteMode }) {
       <div className="modal__center2">
         <div className="admin__pad">
           <h2>Delete Item</h2>
-          <button className="close__product" id="bg"   onClick={() => setDeleteMode(false)}>
+          <button
+            className="close__product"
+            id="bg"
+            onClick={() => setDeleteMode(false)}
+          >
             <FaTimes size={25} />
           </button>
 
           <form onSubmit={(e) => e.preventDefault()} className="staff__modal">
             <button
-              onClick={() => setDeleteMode(false)}
+              onClick={() => {
+                handleDeleteItem();
+                setDeleteMode(false);
+              }}
               style={{
                 marginTop: "0.5rem",
                 color: "white",
