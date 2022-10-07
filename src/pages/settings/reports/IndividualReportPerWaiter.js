@@ -20,8 +20,12 @@ function IndividualReportPerWaiter() {
     // FUNCTION TO GET WAITER
     const getWaiterReport = async (waiter) => {
       try {
+<<<<<<< HEAD
         const response = await fetch(
           "https://pos-server1.herokuapp.com/individual-report",
+=======
+        const response = await fetch("https://pos-server1.herokuapp.com/individual-report",
+>>>>>>> 46491f86fcc0fe939969c2ca59ada5fa3371fd75
           {
             method: "POST",
             headers: {
@@ -33,7 +37,11 @@ function IndividualReportPerWaiter() {
           }
         );
         const data = await response.json();
+<<<<<<< HEAD
         // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
+=======
+          // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
+>>>>>>> 46491f86fcc0fe939969c2ca59ada5fa3371fd75
         // filter property bar
         sortDuplicateValues(data);
       } catch (err) {
@@ -47,7 +55,11 @@ function IndividualReportPerWaiter() {
   function sortDuplicateValues(data) {
     let arr = data;
 
+<<<<<<< HEAD
     let resultWithSubTotal = mergeDuplicates(arr).map((obj) => ({
+=======
+    let resultWithSubTotal =(mergeDuplicates(arr)).map((obj) => ({
+>>>>>>> 46491f86fcc0fe939969c2ca59ada5fa3371fd75
       item: obj.item,
       quantity: obj.quantity,
       price: obj.price,
@@ -56,6 +68,7 @@ function IndividualReportPerWaiter() {
     setReport(resultWithSubTotal);
   }
 
+<<<<<<< HEAD
   function mergeDuplicates(array) {
     for (let i = 0; i < array.length; i++) {
       for (let j = 0; j < array.length; j++) {
@@ -82,6 +95,41 @@ function IndividualReportPerWaiter() {
     }
     return array;
   }
+=======
+
+ 
+
+
+function mergeDuplicates(array){
+  for(let i = 0; i < array.length; i++){
+    for(let j = 0; j < array.length; j++){
+      if(i !== j){
+        if(
+          array[i].item === array[j].item  && array[i].price === array[j].price
+        ){
+          // remove both matching duplicates and create a new array
+          let new_array = array.filter((item, index) => index === i || index === j ? null:item);
+          // add a sample of duplicate items with quantity merged together
+          new_array.push({
+            item: array[i].item,
+            price: array[i].price,
+            quantity: array[i].quantity + array[j].quantity,
+        });
+
+          return mergeDuplicates(new_array);
+
+
+        }
+
+      }
+
+    }
+  }
+  return array
+}
+
+
+>>>>>>> 46491f86fcc0fe939969c2ca59ada5fa3371fd75
 
   const individualReportPageRef = useRef(null);
 

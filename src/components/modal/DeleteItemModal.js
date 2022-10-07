@@ -61,6 +61,7 @@ export default function DeleteItemModal({ item, closeModal, setDeleteMode }) {
             id="bg"
             onClick={() => setDeleteMode(false)}
           >
+  
             <FaTimes size={25} />
           </button>
 
