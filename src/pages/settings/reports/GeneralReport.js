@@ -80,30 +80,20 @@ const GeneralReport = () => {
     const results = arr.filter((bar) => {
       return bar.department === "Bar";
     });
-      
-    
-    
+
     // filter property lounge
     const results2 = arr.filter((lounge) => {
       return lounge.department === "Lounge";
     });
 
-<<<<<<< HEAD
     let BarResultWithSubTotal = mergeDuplicates(results).map((obj) => ({
-=======
-    let BarResultWithSubTotal = (mergeDuplicates(results)).map((obj) => ({
->>>>>>> 46491f86fcc0fe939969c2ca59ada5fa3371fd75
       item: obj.item,
       quantity: obj.quantity,
       price: obj.price,
       subtotal: obj.price * obj.quantity,
     }));
 
-<<<<<<< HEAD
     let LoungeResultWithSubTotal = mergeDuplicates(results2).map((obj) => ({
-=======
-    let LoungeResultWithSubTotal = (mergeDuplicates(results2)).map((obj) => ({
->>>>>>> 46491f86fcc0fe939969c2ca59ada5fa3371fd75
       item: obj.item,
       quantity: obj.quantity,
       price: obj.price,
@@ -114,7 +104,6 @@ const GeneralReport = () => {
     setLounge(LoungeResultWithSubTotal);
   }
 
-<<<<<<< HEAD
   function mergeDuplicates(array) {
     for (let i = 0; i < array.length; i++) {
       for (let j = 0; j < array.length; j++) {
@@ -141,37 +130,6 @@ const GeneralReport = () => {
     }
     return array;
   }
-=======
-
-function mergeDuplicates(array){
-  for(let i = 0; i < array.length; i++){
-    for(let j = 0; j < array.length; j++){
-      if(i !== j){
-        if(
-          array[i].item === array[j].item  && array[i].price === array[j].price
-        ){
-          // remove both matching duplicates and create a new array
-          let new_array = array.filter((item, index) => index === i || index === j ? null:item);
-          // add a sample of duplicate items with quantity merged together
-          new_array.push({
-            item: array[i].item,
-            price: array[i].price,
-            quantity: array[i].quantity + array[j].quantity,
-        });
-
-          return mergeDuplicates(new_array);
-
-
-        }
-
-      }
-
-    }
-  }
-  return array
-}
-
->>>>>>> 46491f86fcc0fe939969c2ca59ada5fa3371fd75
 
   function handledChange(event) {
     setDate(event.target.value);
@@ -215,10 +173,6 @@ function mergeDuplicates(array){
     }
   };
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 46491f86fcc0fe939969c2ca59ada5fa3371fd75
   // TOTAL PRODUCTS SOLD BAR
   let totalBar = bar.reduce((acc, curr) => {
     return acc + +curr.subtotal;
