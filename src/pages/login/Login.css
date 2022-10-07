@@ -10,6 +10,7 @@
 .logo {
   height: 250px;
   transform: translateY(-20%);
+  margin-bottom: 0;
   overflow-y: hidden;
 }
 
