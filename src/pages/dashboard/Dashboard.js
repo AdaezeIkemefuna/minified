@@ -1,0 +1,174 @@
+import { useEffect } from "react";
+import { useContext, useState } from "react";
+import DashboardCard from "../../components/dashboardcards/DashboardCard";
+import AuthContext from "../../context/AuthContext";
+import "./Dashboard.css";
+import SingleTableDetail from "../../components/details/SingleTableDetail";
+import TopMenu from "../../components/topbar/TopMenu";
+import { FaBell } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+const Dashboard = () => {
+  const {
+    user,
+    tables,
+    displayTables,
+    adminTables,
+    displayAdminTables,
+    getOrderCount,
+    cashPayments,
+    posPayments,
+    transferPayments,
+    totalRevenue,
+    orderCount,
+    adminCashPayments,
+    adminPosPayments,
+    adminTransferPayments,
+    adminTotalRevenue,
+    notifCount,
+  } = useContext(AuthContext);
+  const activeUser = user.username;
+  const activePasscode = user.passcode;
+  const [getUserCredit, setGetUserCredit] = useState({});
+
+  useEffect(() => {
+    if (user.role === "Super Admin") {
+      displayAdminTables(activeUser, activePasscode);
+    } else {
+      displayTables(activeUser);
+    }
+  }, [activeUser, activePasscode]);
+
+  useEffect(() => {
+    if (user.role === "Super Admin") {
+      getOrderCount(activeUser, activePasscode);
+    } else {
+      getOrderCount(activeUser, activePasscode);
+    }
+  }, [activePasscode]);
+
+  // FUNCTION TO GET USER CREDIT
+  const getCreditReport = async (activeUser) => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/user-credit",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            activeUser,
+          }),
+        }
+      );
+      const data = await response.json();
+      setGetUserCredit(data);
+    } catch (err) {
+      console.log(err, "Credit not fetched");
+    }
+  };
+
+  useEffect(() => {
+    getCreditReport(activeUser);
+  }, []);
+
+  return (
+    <>
+      <TopMenu />
+      {user.role === "Bar Man" && (
+        <Link to={"/notifications"}>
+          <div className="notifications">
+            <p>Notifications</p>
+            <FaBell size={30} />
+            <span className="notif">{notifCount}</span>
+          </div>
+        </Link>
+      )}
+      <div className="cards__container">
+        <DashboardCard
+          color="var(--primary-color)"
+          styling="dashboard__card"
+          numbers={`₦${
+            user.role === "Super Admin" ? adminTotalRevenue : totalRevenue
+          }`}
+          title="Total Revenue"
+        />
+        <DashboardCard
+          color="var(--primary-color)"
+          styling="dashboard__card"
+          numbers={`${orderCount}`}
+          title="Total Orders"
+        />
+        <DashboardCard
+          color="var(--primary-color)"
+          styling="dashboard__card"
+          numbers={`₦${
+            user.role === "Super Admin" ? adminPosPayments : posPayments
+          }`}
+          title="POS Payments"
+        />
+        <DashboardCard
+          color="var(--primary-color)"
+          styling="dashboard__card"
+          numbers={`₦${
+            user.role === "Super Admin" ? adminCashPayments : cashPayments
+          }`}
+          title="Cash Payments"
+        />
+        <DashboardCard
+          color="var(--primary-color)"
+          styling="dashboard__card"
+          numbers={`₦${
+            user.role === "Super Admin"
+              ? adminTransferPayments
+              : transferPayments
+          }`}
+          title="Transfer Payments"
+        />
+
+        <DashboardCard
+          color="var(--primary-color)"
+          styling="dashboard__card"
+          title={`Opening Credit: ₦ ${
+            getUserCredit.opening_credit === null
+              ? 0
+              : getUserCredit.opening_credit === undefined
+              ? 0
+              : getUserCredit.opening_credit
+          }`}
+          title2={`Total Credit Granted: ₦${
+            getUserCredit.credit_granted === null
+              ? 0
+              : getUserCredit.credit_granted === undefined
+              ? 0
+              : getUserCredit.credit_granted
+          }`}
+          title3={`Credit Remaining:  ₦ ${
+            getUserCredit.credit_remaining === null
+              ? 0
+              : getUserCredit.credit_remaining === undefined
+              ? 0
+              : getUserCredit.credit_remaining
+          }`}
+        />
+      </div>
+
+      {user.role === "Super Admin" ? (
+        <div className="tables">
+          {adminTables.map((t, index) => {
+            return <SingleTableDetail table={t} key={index} />;
+          })}
+        </div>
+      ) : (
+        <div className="tables">
+          {tables.map((t, index) => {
+            return <SingleTableDetail table={t} key={index} />;
+          })}
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Dashboard;
