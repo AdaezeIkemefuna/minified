@@ -9,7 +9,6 @@ import AuthContext from "../../../context/AuthContext";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 
 const GeneralReport = () => {
-  const [report, setReport] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const { toastOptions } = useContext(AuthContext);
   const [date, setDate] = useState("");
@@ -29,6 +28,7 @@ const GeneralReport = () => {
         const response = await fetch(url);
         const data = await response.json();
         // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
+        // filter property bar
         sortDuplicateValues(data);
       } catch (err) {
         console.log(err);
@@ -75,62 +75,27 @@ const GeneralReport = () => {
   // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
   function sortDuplicateValues(data) {
     let arr = data;
-    let result = [];
-    let barResult = [];
-    let loungeResult = [];
-    console.log(arr);
 
     // filter property bar
     const results = arr.filter((bar) => {
       return bar.department === "Bar";
     });
-
+      
+    
+    
     // filter property lounge
     const results2 = arr.filter((lounge) => {
       return lounge.department === "Lounge";
     });
 
-    arr.forEach(function (a) {
-      if (!this[a.item]) {
-        this[a.item] = { item: a.item, quantity: 0, price: a.price };
-        result.push(this[a.item]);
-      }
-      this[a.item].quantity += a.quantity;
-      this[a.item].price = a.price;
-    }, Object.create(null));
-
-    let resultWithSubTotal = result.map((obj) => ({
-      item: obj.item,
-      quantity: obj.quantity,
-      price: obj.price,
-      subtotal: obj.price * obj.quantity,
-    }));
-    setReport(resultWithSubTotal);
-
-    results.forEach(function (a) {
-      if (!this[a.item]) {
-        this[a.item] = { item: a.item, quantity: 0, price: a.price };
-        barResult.push(this[a.item]);
-      }
-      this[a.item].quantity += a.quantity;
-    }, Object.create(null));
-
-    results2.forEach(function (a) {
-      if (!this[a.item]) {
-        this[a.item] = { item: a.item, quantity: 0, price: a.price };
-        loungeResult.push(this[a.item]);
-      }
-      this[a.item].quantity += a.quantity;
-    }, Object.create(null));
-
-    let BarResultWithSubTotal = barResult.map((obj) => ({
+    let BarResultWithSubTotal = (mergeDuplicates(results)).map((obj) => ({
       item: obj.item,
       quantity: obj.quantity,
       price: obj.price,
       subtotal: obj.price * obj.quantity,
     }));
 
-    let LoungeResultWithSubTotal = loungeResult.map((obj) => ({
+    let LoungeResultWithSubTotal = (mergeDuplicates(results2)).map((obj) => ({
       item: obj.item,
       quantity: obj.quantity,
       price: obj.price,
@@ -140,6 +105,36 @@ const GeneralReport = () => {
     setBar(BarResultWithSubTotal);
     setLounge(LoungeResultWithSubTotal);
   }
+
+
+function mergeDuplicates(array){
+  for(let i = 0; i < array.length; i++){
+    for(let j = 0; j < array.length; j++){
+      if(i !== j){
+        if(
+          array[i].item === array[j].item  && array[i].price === array[j].price
+        ){
+          // remove both matching duplicates and create a new array
+          let new_array = array.filter((item, index) => index === i || index === j ? null:item);
+          // add a sample of duplicate items with quantity merged together
+          new_array.push({
+            item: array[i].item,
+            price: array[i].price,
+            quantity: array[i].quantity + array[j].quantity,
+        });
+
+          return mergeDuplicates(new_array);
+
+
+        }
+
+      }
+
+    }
+  }
+  return array
+}
+
 
   function handledChange(event) {
     setDate(event.target.value);
@@ -183,10 +178,6 @@ const GeneralReport = () => {
     }
   };
 
-  //  TOTAL PRODUCTS SOLD
-  let total = report.reduce((acc, curr) => {
-    return acc + +curr.subtotal;
-  }, 0);
 
   // TOTAL PRODUCTS SOLD BAR
   let totalBar = bar.reduce((acc, curr) => {
@@ -229,8 +220,6 @@ const GeneralReport = () => {
 
       <div ref={generalReportPageRef}>
         <GeneralReportPage
-          report={report}
-          total={total}
           bar={bar}
           lounge={lounge}
           barTotal={totalBar}
