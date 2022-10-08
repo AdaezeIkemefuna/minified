@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import AuthContext from "../../../context/AuthContext";
 import Company from "../../company/Company";
 import Orders from "./Orders";
+import { MdDeleteOutline } from "react-icons/md";
+import { FaMinus } from "react-icons/fa";
 import "../Modal.css";
 import { FaMoneyBill, FaRegCreditCard } from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
@@ -30,7 +32,6 @@ export default function TableDetailsModal({ table, closeModal }) {
   } = useContext(AuthContext);
   const {
     setAdminOrders,
-    barmanOrder,
     setBarmanOrders,
     getAdminDetails,
     state: { changedOrders, barmanOrders },
@@ -172,7 +173,12 @@ export default function TableDetailsModal({ table, closeModal }) {
         toast.success(`Table Closed`, toastOptions);
         if (user.role === "Super Admin") {
           displayAdminTables(activeUser, activePasscode);
+          getAdminDetails(activeUser, activePasscode, role, table_name);
+        } else if (user.role === "Bar Man") {
+          getBarman(activeUser, activePasscode, table_name);
+          displayTables(activeUser);
         } else {
+          getDetails(activeUser, activePasscode, table_name);
           displayTables(activeUser);
         }
       }
@@ -230,12 +236,47 @@ export default function TableDetailsModal({ table, closeModal }) {
             </tr>
           </thead>
           {changedOrders.map((t, index) => (
-            <Orders
-              order={t}
-              key={index}
-              table_name={table.table_name}
-              table={table}
-            />
+            <tr className="row__data" key={index}>
+              <td className="td">{t.item.product}</td>
+              <td className="td">₦{t.item.price}</td>
+              <td className="td">
+                {table.status === "OPEN" && (
+                  <>
+                    {user.role === "Super Admin" && (
+                      <FaMinus
+                        onClick={() => {
+                          dispatch({
+                            type: "DECREMENT_ORDER",
+                            payload: t,
+                          });
+                        }}
+                        size={15}
+                        color="#080808"
+                        className="receiptQty_btn"
+                      />
+                    )}
+                  </>
+                )}
+                {t.quantity}
+              </td>
+
+              <td className="td">₦{t.quantity * t.item.price}</td>
+
+              <td className="td">
+                {table?.status === "CLOSED" ? undefined : (
+                  <>
+                    {user.role === "Super Admin" && (
+                      <MdDeleteOutline
+                        size={20}
+                        style={{ marginTop: "2px" }}
+                        color="red"
+                        // onClick={deleteItem}
+                      />
+                    )}
+                  </>
+                )}
+              </td>
+            </tr>
           ))}
         </table>
       )}
@@ -252,13 +293,45 @@ export default function TableDetailsModal({ table, closeModal }) {
             </tr>
           </thead>
           {barmanOrders.map((t, index) => (
-            <Orders
-              order={t}
-              key={index}
-              table_name={table.table_name}
-              table={table}
-              orders={orders}
-            />
+            <tr className="row__data" key={index}>
+              <td className="td">{t.item.product}</td>
+              <td className="td">₦{t.item.price}</td>
+              <td className="td">
+                {table.status === "OPEN" && (
+                  <>
+                    {user.role === "Bar Man" && (
+                      <FaMinus
+                        onClick={() => {
+                          dispatch({
+                            type: "DECREMENT_BARMANORDER",
+                            payload: t,
+                          });
+                        }}
+                        size={15}
+                        color="#080808"
+                        className="receiptQty_btn"
+                      />
+                    )}
+                  </>
+                )}
+                {t.quantity}
+              </td>
+
+              <td className="td">₦{t.quantity * t.item.price}</td>
+
+              <td className="td">
+                {table?.status === "CLOSED" ? undefined : (
+                  <>
+                    <MdDeleteOutline
+                      size={20}
+                      style={{ marginTop: "2px" }}
+                      color="red"
+                      // onClick={deleteItem}
+                    />
+                  </>
+                )}
+              </td>
+            </tr>
           ))}
         </table>
       ) : (
@@ -275,13 +348,15 @@ export default function TableDetailsModal({ table, closeModal }) {
                 </tr>
               </thead>
               {orders.map((t, index) => (
-                <Orders
-                  order={t}
-                  key={index}
-                  table_name={table.table_name}
-                  table={table}
-                  orders={orders}
-                />
+                <tr className="row__data" key={index}>
+                  <td className="td">{t.item.product}</td>
+                  <td className="td">₦{t.item.price}</td>
+                  <td className="td">{t.quantity}</td>
+
+                  <td className="td">₦{t.quantity * t.item.price}</td>
+
+                  <td className="td"></td>
+                </tr>
               ))}
             </table>
           )}

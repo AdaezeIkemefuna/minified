@@ -7,9 +7,10 @@ import { toast } from "react-toastify";
 export default function AdminModal({ setShowModal }) {
   const navigate = useNavigate();
   const [code, setCode] = useState("");
-  const { user, toastOptions } = useContext(AuthContext);
+  const { user, toastOptions, toggleSideBar } = useContext(AuthContext);
   const activePasscode = user.passcode;
   const handleAuthorization = (e) => {
+    toggleSideBar(false);
     e.preventDefault();
     if (+code !== activePasscode) {
       toast(`Unauthorized`, toastOptions);
@@ -36,6 +37,7 @@ export default function AdminModal({ setShowModal }) {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               className="modal__input"
+              autoFocus
             />
             <button style={{ marginTop: "0.5rem", color: "white" }}>
               Enter

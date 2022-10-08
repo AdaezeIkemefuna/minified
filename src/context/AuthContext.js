@@ -29,6 +29,9 @@ export const AuthProvider = ({ children }) => {
     })
       .then((res) => {
         setLoading(false);
+        if (!res.ok) {
+          setErrMsg("Invalid login details");
+        }
         return res.json();
       })
       .then((data) => {

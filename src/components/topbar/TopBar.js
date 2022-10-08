@@ -17,6 +17,7 @@ const TopBar = () => {
     useContext(AuthContext);
   const {
     state: { cart },
+    user,
   } = useContext(AuthContext);
 
   const menuActions = () => {
@@ -40,21 +41,6 @@ const TopBar = () => {
       </form>
 
       <div className="date">{date}</div>
-
-      <div className="menu__icons cart">
-        <MdOutlineInventory
-          size={25}
-          onClick={() => {
-            toggleCartMenu((prevValue) => !prevValue);
-            toggleSideBar(false);
-          }}
-        />
-      </div>
-      <span onClick={() => {
-            toggleCartMenu((prevValue) => !prevValue);
-            toggleSideBar(false);
-          }}
-          className="cart__length">{cart.length}</span>
     </div>
   );
 };

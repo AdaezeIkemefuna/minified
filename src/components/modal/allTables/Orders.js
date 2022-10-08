@@ -59,10 +59,9 @@ const Orders = ({ order, table_name }) => {
       console.log(err);
     }
   };
-
   return (
     <>
-      <tr className="row__data">
+      {/* <tr className="row__data">
         <td className="td">{item.product}</td>
         <td className="td">₦{item.price}</td>
         <td className="td">
@@ -124,7 +123,7 @@ const Orders = ({ order, table_name }) => {
             </>
           )}
         </td>
-      </tr>
+      </tr> */}
     </>
   );
 };

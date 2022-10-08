@@ -127,7 +127,7 @@ const AddMenuProduct = () => {
               Select Category
             </option>
             <option value="Wines/whisky">Wines/Whisky</option>
-            <option value="Energy drinks">Energy drinks</option>
+            <option value="Energy drink">Energy drinks</option>
             <option value="Beers">Beers</option>
             <option value="Soft Drinks">Soft drinks</option>
             <option value="Meals">Meals</option>
