@@ -140,6 +140,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.clear();
     navigate("/");
     setAdminTables([]);
+    toggleSideBar(false);
+    toggleCartMenu(false);
+    setActiveCategory("All Menu");
   };
 
   // SIDEBAR DISPLAY

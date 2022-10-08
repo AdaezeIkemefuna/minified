@@ -64,6 +64,15 @@ const Login = () => {
         </form>
       </div>
       <div className="logo-2">
+        <small
+          style={{
+            fontWeight: "600",
+            textTransform: "uppercase",
+            marginLeft: "-1.8rem",
+          }}
+        >
+          powered by
+        </small>
         <img src="/1.png" alt="Uppist Logo" width={"100px"} />
       </div>
     </div>

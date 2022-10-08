@@ -1,5 +1,5 @@
 import React from "react";
-import Orders from "../modal/allTables/Orders";
+import Orders from "../modal/updateOldTable/Orders";
 import Company from "../company/Company";
 
 export const ComponentToPrint = React.forwardRef((props, ref) => {
@@ -24,18 +24,13 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
           </tr>
         </thead>
         {orders.map((t, index) => (
-          <Orders
-            order={t}
-            key={index}
-            table_name={table.table_name}
-            orders={orders}
-          />
+          <Orders order={t} key={index} />
         ))}
       </table>
 
       <div className="totals__data">
         <div>
-          <span style={{ color: "blueviolet" }}>Total </span>{" "}
+          <span style={{ color: "blueviolet" }}>Total </span>
           <span style={{ color: "green" }}>₦{Math.round(total)}</span>
         </div>
         <div>

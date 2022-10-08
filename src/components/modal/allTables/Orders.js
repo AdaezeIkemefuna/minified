@@ -3,7 +3,6 @@ import { MdDeleteOutline } from "react-icons/md";
 import AuthContext from "../../../context/AuthContext";
 import "../Modal.css";
 import { FaMinus } from "react-icons/fa";
-import { toast } from "react-toastify";
 import TableContext from "../../../context/TableContext";
 
 const Orders = ({ order, table_name }) => {

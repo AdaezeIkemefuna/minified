@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import AuthContext from "../../../context/AuthContext";
 import Company from "../../company/Company";
-import Orders from "./Orders";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaMinus } from "react-icons/fa";
 import "../Modal.css";
@@ -19,6 +18,7 @@ import { useReactToPrint } from "react-to-print";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import UpdateButton from "./UpdateButton";
 import TableContext from "../../../context/TableContext";
+import DeleteSingleOrder from "./DeleteSingleOrder";
 
 export default function TableDetailsModal({ table, closeModal }) {
   const {
@@ -62,6 +62,14 @@ export default function TableDetailsModal({ table, closeModal }) {
 
   const [compDrink, setCompDrink] = useState("");
   const [compQty, setCompQty] = useState(0);
+
+  const [deleteOrder, setDelete] = useState(false);
+
+  const closeDeleteModal = (e) => {
+    if (e.target.id === "bg-delete") {
+      setDelete(false);
+    }
+  };
 
   //CLOSING RECEIPT MODAL
   const closeModalAction = () => {
@@ -181,6 +189,8 @@ export default function TableDetailsModal({ table, closeModal }) {
           getDetails(activeUser, activePasscode, table_name);
           displayTables(activeUser);
         }
+      } else {
+        toast.error(`Could not close table`, toastOptions);
       }
     } catch (err) {
       console.log(err);
@@ -262,6 +272,24 @@ export default function TableDetailsModal({ table, closeModal }) {
 
               <td className="td">₦{t.quantity * t.item.price}</td>
 
+              {/* //DELETE ITEM MODAL(ADMIN) */}
+              {deleteOrder && (
+                <div
+                  className={deleteOrder ? "backdrop__container" : "close"}
+                  id="bg-delete"
+                  onClick={closeDeleteModal}
+                >
+                  <div>
+                    <DeleteSingleOrder
+                      order={t}
+                      index={index}
+                      closeModal={closeDeleteModal}
+                      table_name={table_name}
+                    />
+                  </div>
+                </div>
+              )}
+
               <td className="td">
                 {table?.status === "CLOSED" ? undefined : (
                   <>
@@ -270,7 +298,7 @@ export default function TableDetailsModal({ table, closeModal }) {
                         size={20}
                         style={{ marginTop: "2px" }}
                         color="red"
-                        // onClick={deleteItem}
+                        onClick={() => setDelete(true)}
                       />
                     )}
                   </>
@@ -292,10 +320,10 @@ export default function TableDetailsModal({ table, closeModal }) {
               <th className="th"></th>
             </tr>
           </thead>
-          {barmanOrders.map((t, index) => (
+          {barmanOrders.map((tbar, index, arr) => (
             <tr className="row__data" key={index}>
-              <td className="td">{t.item.product}</td>
-              <td className="td">₦{t.item.price}</td>
+              <td className="td">{tbar.item.product}</td>
+              <td className="td">₦{tbar.item.price}</td>
               <td className="td">
                 {table.status === "OPEN" && (
                   <>
@@ -304,7 +332,7 @@ export default function TableDetailsModal({ table, closeModal }) {
                         onClick={() => {
                           dispatch({
                             type: "DECREMENT_BARMANORDER",
-                            payload: t,
+                            payload: tbar,
                           });
                         }}
                         size={15}
@@ -314,10 +342,29 @@ export default function TableDetailsModal({ table, closeModal }) {
                     )}
                   </>
                 )}
-                {t.quantity}
+                {tbar.quantity}
+                {deleteOrder && (
+                  <div
+                    className={deleteOrder ? "backdrop__container" : "close"}
+                    id="bg-delete"
+                    onClick={closeDeleteModal}
+                  >
+                    <div>
+                      <DeleteSingleOrder
+                        order={tbar}
+                        index={index}
+                        arr={arr}
+                        closeModal={closeDeleteModal}
+                        table_name={table_name}
+                      />
+                    </div>
+                  </div>
+                )}
               </td>
 
-              <td className="td">₦{t.quantity * t.item.price}</td>
+              <td className="td">₦{tbar.quantity * tbar.item.price}</td>
+
+              {/* //DELETE ITEM MODAL(BARMAN) */}
 
               <td className="td">
                 {table?.status === "CLOSED" ? undefined : (
@@ -326,7 +373,7 @@ export default function TableDetailsModal({ table, closeModal }) {
                       size={20}
                       style={{ marginTop: "2px" }}
                       color="red"
-                      // onClick={deleteItem}
+                      onClick={() => setDelete(true)}
                     />
                   </>
                 )}
@@ -498,16 +545,29 @@ export default function TableDetailsModal({ table, closeModal }) {
               <button className="receipt__btn" onClick={handlePrint}>
                 Print Receipt
               </button>
-              <div style={{ display: "none" }}>
-                <ComponentToPrint
-                  table={table}
-                  orders={orders}
-                  ref={printRef}
-                  total={total}
-                  discont={discount}
-                  grandTotal={grandTotal}
-                />
-              </div>
+              {user.role === "Bar Man" ? (
+                <div style={{ display: "none" }}>
+                  <ComponentToPrint
+                    table={table}
+                    orders={barmanOrders}
+                    ref={printRef}
+                    total={total}
+                    discont={discount}
+                    grandTotal={grandTotal}
+                  />
+                </div>
+              ) : (
+                <div style={{ display: "none" }}>
+                  <ComponentToPrint
+                    table={table}
+                    orders={orders}
+                    ref={printRef}
+                    total={total}
+                    discont={discount}
+                    grandTotal={grandTotal}
+                  />
+                </div>
+              )}
             </>
           )}
         </>

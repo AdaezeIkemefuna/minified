@@ -7,8 +7,10 @@ import TableContext from "../../../context/TableContext";
 const UpdateButton = ({ closeModal }) => {
   const {
     state: { changedOrders, barmanOrders },
+    getAdminDetails,
+    getBarman,
   } = useContext(TableContext);
-  const { user, toastOptions } = useContext(AuthContext);
+  const { user, toastOptions, getDetails } = useContext(AuthContext);
   const activeUser = user.username;
   const activePasscode = user.passcode;
   const role = user.role;
@@ -38,9 +40,16 @@ const UpdateButton = ({ closeModal }) => {
         }
       );
       if (response.status === 200) {
-        if (user.role === "Super Admin") {
-          toast.success("Quantity Updated", toastOptions);
-        }
+        // if (user.role === "Super Admin") {
+        //   getAdminDetails(activeUser, activePasscode, role, tab_name);
+        // }
+        // else if (user.role === "Bar Man") {
+        getBarman(activeUser, activePasscode, tab_name);
+        // } else {
+        //   getDetails(activeUser, activePasscode, tab_name);
+        // }
+      } else {
+        toast.error("could not update quantity");
       }
     } catch (err) {
       console.log(err);
@@ -48,7 +57,7 @@ const UpdateButton = ({ closeModal }) => {
   };
   const updateQty = () => {
     updateQtyCall();
-    closeModal();
+    console.log();
   };
 
   const updateQtyBarman = async () => {
@@ -80,7 +89,6 @@ const UpdateButton = ({ closeModal }) => {
 
   const updateBarman = () => {
     updateQtyBarman();
-    closeModal();
   };
   return (
     <>

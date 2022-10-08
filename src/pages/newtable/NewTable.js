@@ -68,7 +68,7 @@ const NewTable = () => {
         setLoading(false);
       }
     } catch (err) {
-      console.log(err);
+      toast.warn("Please check your internet connection", toastOptions);
     }
   };
   return (

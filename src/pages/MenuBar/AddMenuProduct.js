@@ -126,7 +126,7 @@ const AddMenuProduct = () => {
             <option value="" hidden className="placeholderSelect">
               Select Category
             </option>
-            <option value="Wines/whisky">Wines/Whisky</option>
+            <option value="Wines">Wines/Whisky</option>
             <option value="Energy drink">Energy drinks</option>
             <option value="Beers">Beers</option>
             <option value="Soft Drinks">Soft drinks</option>
