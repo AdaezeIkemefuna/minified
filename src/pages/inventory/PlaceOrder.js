@@ -462,6 +462,7 @@ const PlaceOrder = () => {
                   <option value="Beers">Beers</option>
                   <option value="Soft Drinks">Soft drinks</option>
                   <option value="Meals">Meals</option>
+                  <option value="Cigarettes">Cigarettes</option>
                 </select>
               </div>
 
