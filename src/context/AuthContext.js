@@ -107,9 +107,9 @@ export const AuthProvider = ({ children }) => {
       );
     }
 
-    if (activeCategory === "Energy Drink") {
+    if (activeCategory === "Energy drink") {
       sortedProducts = sortedProducts.filter(
-        (item) => item.category === "Energy Drink"
+        (item) => item.category === "Energy drink"
       );
     }
 

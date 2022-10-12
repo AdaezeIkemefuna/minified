@@ -6,15 +6,39 @@ import { useState } from "react";
 import ReceiveOrder from "./modals/ReceiveOrder";
 import CancelOrder from "./modals/CancelOrder";
 import { FaCaretDown } from "react-icons/fa";
-import { BsPencilSquare } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
 import ImsDashboards from "./ImsDashboards";
 import AuthContext from "../../context/AuthContext";
 import UpdateQty from "./modals/UpdateQty";
 
 const Inventory = () => {
-  const { transformOrders, imsOrders, activeCategory, transactions } =
-    useContext(TableContext);
+  const {
+    transformOrders,
+    imsOrders,
+    activeCategory,
+    transactions,
+    allItemsFilter,
+    placedOrdersFilter,
+  } = useContext(TableContext);
+  console.log("transactions", transactions);
+  console.log("allitems", allItemsFilter);
+  console.log("pending", placedOrdersFilter);
+
+  const [receive, setReceive] = useState(false);
+  const [cancel, setCancel] = useState(false);
+  const [action, setAction] = useState(false);
+  const [updateQty, setUpdateQty] = useState(false);
+
+  const { user } = useContext(AuthContext);
+
+  const closeModal = (e) => {
+    if (e.target.id === "bg") {
+      setReceive(false);
+      setCancel(false);
+      setUpdateQty(false);
+    }
+  };
+
   return (
     <div className="form__wrapper">
       <ImsDashboards />
@@ -50,17 +74,219 @@ const Inventory = () => {
           </tr>
         </thead>
         <tbody>
-          {!transactions ? (
-            <>
-              {transformOrders(imsOrders).map((order, index) => (
-                <tr key={index} className="ims__body">
-                  <TableRow order={order} index={index} />
-                </tr>
-              ))}
-            </>
-          ) : (
-            <tr>{"hi"}</tr>
-          )}
+          <>
+            {(activeCategory === "ALL ITEMS" ||
+              activeCategory === "RECEIVED" ||
+              activeCategory === "CANCELLED") && (
+              <>
+                {!allItemsFilter ? (
+                  <>
+                    {transformOrders(imsOrders).map((order, index) => (
+                      <tr key={index} className="ims__body">
+                        <TableRow order={order} index={index} />
+                      </tr>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {allItemsFilter.filters.map((t, index) => (
+                      <tr key={index} className="ims__body">
+                        <td>0{index + 1}</td>
+                        <td>{t.product}</td>
+                        <td>{t.quantity}</td>
+                        <td>
+                          {t.size}
+                          {t.metric}
+                        </td>
+                        <td>{t.reorder}</td>
+                        <td>
+                          {t.quantity === 0 && (
+                            <span className="ims--outOfStock">
+                              Out of stock
+                            </span>
+                          )}
+                          {t.quantity < t.reorder && t.quantity !== 0 && (
+                            <span className="ims--lowStock">low stock</span>
+                          )}
+                          {t.quantity > t.reorder && (
+                            <span className="ims--inStock">In stock</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </>
+                )}
+              </>
+            )}
+
+            {activeCategory === "PENDING" && (
+              <>
+                {!placedOrdersFilter ? (
+                  <>
+                    {transformOrders(imsOrders).map((order, index) => (
+                      <tr key={index} className="ims__body">
+                        <TableRow order={order} index={index} />
+                      </tr>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {placedOrdersFilter.filters.map((t, index) => (
+                      <tr key={index} className="ims__body">
+                        <td>0{index + 1}</td>
+                        <td>{t.product}</td>
+                        {activeCategory === "RECEIVED" &&
+                        user.role === "Store Manager" ? (
+                          <td>
+                            {t.qty}
+                            <AiFillEdit
+                              color="var(--success)"
+                              size={15}
+                              className="edit__qty"
+                              onClick={() => {
+                                setUpdateQty(true);
+                              }}
+                            />
+                          </td>
+                        ) : (
+                          <td>{t.qty}</td>
+                        )}
+
+                        <td>
+                          {t.size}
+                          {t.metric}
+                        </td>
+                        <td>₦{t.unitprice?.toLocaleString("en-US")}</td>
+                        <td>
+                          ₦{(t.qty * t.unitprice)?.toLocaleString("en-US")}
+                        </td>
+                        <td>{t.date?.substring(0, 10)}</td>
+                        {t.status === "PENDING" && (
+                          <>
+                            {user.role === "Store Manager" ? (
+                              <td className="ims--action">
+                                <span className="ims__action">
+                                  Action
+                                  <FaCaretDown
+                                    onClick={() => setAction(!action)}
+                                  />
+                                  <span
+                                    className={
+                                      action ? "actions" : "no-display"
+                                    }
+                                  >
+                                    <span
+                                      style={{ marginBottom: "-0.5rem" }}
+                                      onClick={() => {
+                                        setReceive(true);
+                                        setAction(!action);
+                                      }}
+                                    >
+                                      Receive Order
+                                    </span>
+                                    <br />
+                                    <span
+                                      onClick={() => {
+                                        setCancel(true);
+                                        setAction(!action);
+                                      }}
+                                    >
+                                      Cancel Order
+                                    </span>
+                                  </span>
+                                </span>
+                              </td>
+                            ) : (
+                              <td>
+                                <span className="ims--pending">pending</span>
+                              </td>
+                            )}
+                          </>
+                        )}
+
+                        {t.status === "RECEIVED" && (
+                          <td>
+                            <span className="ims--received">received</span>
+                          </td>
+                        )}
+                        {t.status === "CANCELLED" && (
+                          <td>
+                            <span className="ims--cancelled">cancelled</span>
+                          </td>
+                        )}
+
+                        {receive && (
+                          <div
+                            className={
+                              receive ? "backdrop__container" : "close"
+                            }
+                            id="bg"
+                            onClick={closeModal}
+                          >
+                            <div>
+                              <ReceiveOrder order={t} closeModal={closeModal} />
+                            </div>
+                          </div>
+                        )}
+
+                        {cancel && (
+                          <div
+                            className={cancel ? "backdrop__container" : "close"}
+                            id="bg"
+                            onClick={closeModal}
+                          >
+                            <div>
+                              <CancelOrder order={t} closeModal={closeModal} />
+                            </div>
+                          </div>
+                        )}
+
+                        {updateQty && (
+                          <div
+                            className={
+                              updateQty ? "backdrop__container" : "close"
+                            }
+                            id="bg"
+                            onClick={closeModal}
+                          >
+                            <div>
+                              <UpdateQty order={t} closeModal={closeModal} />
+                            </div>
+                          </div>
+                        )}
+                      </tr>
+                    ))}
+                  </>
+                )}
+              </>
+            )}
+
+            {activeCategory === "TRANSACTIONS" && (
+              <>
+                {!transactions ? (
+                  <>
+                    {transformOrders(imsOrders).map((order, index) => (
+                      <tr key={index} className="ims__body">
+                        <TableRow order={order} index={index} />
+                      </tr>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {transactions.filters.map((t, index) => (
+                      <tr key={index} className="ims__body">
+                        <td>0{index + 1}</td>
+                        <td>{t.product}</td>
+                        <td>{t.quantity}</td>
+                        <td>{t.department}</td>
+                        <td>{t.date?.substring(0, 10)}</td>
+                      </tr>
+                    ))}
+                  </>
+                )}
+              </>
+            )}
+          </>
         </tbody>
       </table>
     </div>
@@ -75,7 +301,7 @@ const TableRow = ({ order, index }) => {
   const [action, setAction] = useState(false);
   const [updateQty, setUpdateQty] = useState(false);
 
-  const { activeCategory, transactions } = useContext(TableContext);
+  const { activeCategory } = useContext(TableContext);
   const { user } = useContext(AuthContext);
 
   const closeModal = (e) => {
@@ -86,7 +312,6 @@ const TableRow = ({ order, index }) => {
     }
   };
   const {
-    item,
     qty,
     unitprice,
     date,
@@ -176,7 +401,7 @@ const TableRow = ({ order, index }) => {
           ) : (
             <>
               <td>0{index + 1}</td>
-              <td>{item}</td>
+              <td>{product}</td>
               {activeCategory === "RECEIVED" &&
               user.role === "Store Manager" ? (
                 <td>

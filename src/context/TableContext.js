@@ -8,7 +8,6 @@ let pendingOrders = "...";
 let receivedOrders = "...";
 let cancelledOrders = "...";
 let sortedTransactions = "...";
-let sortedTransactionsBar = "...";
 let totalCancelled = "...";
 let totalPlaced = "...";
 let totalReceived = "...";
@@ -137,8 +136,42 @@ export const TableProvider = ({ children }) => {
     displayImsOrders();
   }, []);
 
+  //GET CANCELLED ORDERS
+  const [cancelledOrder, setCancelledOrder] = useState(0);
+
+  const getCancelledOrder = async () => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/ims/cancelled-order"
+      );
+      const data = await response.json();
+      setCancelledOrder(data.count);
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    getCancelledOrder();
+  }, []);
+
+  //GET RECEIVED ORDERS
+  const [receivedOrder, setReceivedOrder] = useState(0);
+
+  const getReceivedOrder = async () => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/ims/received-order"
+      );
+      const data = await response.json();
+      setReceivedOrder(data.count);
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    getReceivedOrder();
+  }, []);
+
   //FILTERING PLACED ORDERS
-  const [placedOrdersFilter, setPlacedOrdersFilter] = useState([]);
+  const [placedOrdersFilter, setPlacedOrdersFilter] = useState("");
   const getplacedOrdersFilter = async (from, to) => {
     try {
       const response = await fetch(
@@ -181,7 +214,7 @@ export const TableProvider = ({ children }) => {
   }, []);
 
   //FILTERING TRANSACTIONS
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState("");
   const getTransactions = async (from, to) => {
     try {
       const response = await fetch(
@@ -207,7 +240,7 @@ export const TableProvider = ({ children }) => {
   };
 
   //FILTERING ALL ITEMS
-  const [allItemsFilter, setAllItemsFilter] = useState([]);
+  const [allItemsFilter, setAllItemsFilter] = useState("");
   const getAllItemsFilter = async (from, to) => {
     try {
       const response = await fetch(
@@ -241,134 +274,81 @@ export const TableProvider = ({ children }) => {
   const transformOrders = (items) => {
     let sortedOrders = items;
 
-    if (searchQuery !== "") {
-      const searchProduct = sortedOrders.filter((prod) =>
-        prod.item.toLowerCase().includes(searchQuery.toLowerCase())
+    if (searchQuery !== "" && activeCategory === "ALL ITEMS") {
+      const searchProduct = imsItems.filter((prod) =>
+        prod.product.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      if (!searchProduct) return <div>Couldn't find that item</div>;
+      else return searchProduct;
+    }
+
+    if (searchQuery !== "" && allItemsFilter) {
+      const searchProduct = allItemsFilter.filters.filter((prod) =>
+        prod.product.toLowerCase().includes(searchQuery.toLowerCase())
       );
       if (!searchProduct) return <div>Couldn't find that item</div>;
       else return searchProduct;
     }
 
     if (activeCategory === "ALL ITEMS") {
-      if (!allItemsFilter.length) {
-        sortedOrders = imsItems;
-        return sortedOrders;
-      } else if (allItemsFilter) {
-        sortedOrders = allItemsFilter;
-        return sortedOrders;
-      }
+      sortedOrders = imsItems;
+      return sortedOrders;
     }
 
-    if (!placedOrdersFilter.length) {
-      if (activeCategory === "PENDING") {
-        pendingOrders = imsOrders;
-        totalPlaced = pendingOrders?.reduce(
-          (acc, curr) => acc + curr.qty * curr.unitprice,
-          0
-        );
+    if (activeCategory === "PENDING") {
+      pendingOrders = imsOrders;
+      totalPlaced = pendingOrders?.reduce(
+        (acc, curr) => acc + curr.qty * curr.unitprice,
+        0
+      );
 
-        return pendingOrders;
-      }
-      if (activeCategory === "RECEIVED") {
-        receivedOrders = sortedOrders.filter(
-          (item) => item.status === "RECEIVED"
-        );
+      return pendingOrders;
+    }
 
-        totalReceived = receivedOrders?.reduce(
-          (acc, curr) => acc + curr.qty * curr.unitprice,
-          0
-        );
-        return receivedOrders;
-      }
+    if (activeCategory === "RECEIVED") {
+      receivedOrders = sortedOrders.filter(
+        (item) => item.status === "RECEIVED"
+      );
 
-      if (activeCategory === "CANCELLED") {
-        cancelledOrders = sortedOrders.filter(
-          (item) => item.status === "CANCELLED"
-        );
-        totalCancelled = cancelledOrders?.reduce(
-          (acc, curr) => acc + curr.qty * curr.unitprice,
-          0
-        );
-        return cancelledOrders;
-      }
-    } else if (placedOrdersFilter) {
-      if (activeCategory === "PENDING") {
-        pendingOrders = placedOrdersFilter;
-        totalPlaced = pendingOrders?.reduce(
-          (acc, curr) => acc + curr.qty * curr.unitprice,
-          0
-        );
+      totalReceived = receivedOrders?.reduce(
+        (acc, curr) => acc + curr.qty * curr.unitprice,
+        0
+      );
+      return receivedOrders;
+    }
 
-        return pendingOrders;
-      }
-      if (activeCategory === "RECEIVED") {
-        receivedOrders = placedOrdersFilter.filter(
-          (item) => item.status === "RECEIVED"
-        );
-
-        totalReceived = receivedOrders?.reduce(
-          (acc, curr) => acc + curr.qty * curr.unitprice,
-          0
-        );
-        return receivedOrders;
-      }
-
-      if (activeCategory === "CANCELLED") {
-        cancelledOrders = placedOrdersFilter.filter(
-          (item) => item.status === "CANCELLED"
-        );
-        totalCancelled = cancelledOrders?.reduce(
-          (acc, curr) => acc + curr.qty * curr.unitprice,
-          0
-        );
-        return cancelledOrders;
-      }
+    if (activeCategory === "CANCELLED") {
+      cancelledOrders = sortedOrders.filter(
+        (item) => item.status === "CANCELLED"
+      );
+      totalCancelled = cancelledOrders?.reduce(
+        (acc, curr) => acc + curr.qty * curr.unitprice,
+        0
+      );
+      return cancelledOrders;
     }
 
     if (activeCategory === "TRANSACTIONS") {
-      if (!transactions.length) {
-        sortedTransactions = imsTransactions;
-        if (activeDept === "") {
-          sortedOrders = sortedTransactions;
-        }
-        if (activeDept === "Bar") {
-          sortedOrders = sortedTransactions.filter(
-            (item) => item.department === "Bar"
-          );
-        }
-        if (activeDept === "Lounge") {
-          sortedOrders = sortedTransactions?.filter(
-            (item) => item.department === "Lounge"
-          );
-        }
-        if (activeDept === "Kitchen") {
-          sortedOrders = sortedTransactions.filter(
-            (item) => item.department === "Kitchen"
-          );
-        }
-        return sortedOrders;
-      } else if (transactions) {
-        sortedTransactions = transactions;
-        if (activeDept === "") {
-          sortedOrders = sortedTransactions;
-        }
-        if (activeDept === "Bar") {
-          sortedOrders = sortedTransactions.filter(
-            (item) => item.department === "Bar"
-          );
-        }
-        if (activeDept === "Lounge") {
-          sortedOrders = sortedTransactions?.filter(
-            (item) => item.department === "Lounge"
-          );
-        }
-        if (activeDept === "Kitchen") {
-          sortedOrders = sortedTransactions.filter(
-            (item) => item.department === "Kitchen"
-          );
-        }
-        return sortedOrders;
+      sortedTransactions = imsTransactions;
+      if (activeDept === "") {
+        sortedOrders = sortedTransactions;
       }
+      if (activeDept === "Bar") {
+        sortedOrders = sortedTransactions.filter(
+          (item) => item.department === "Bar"
+        );
+      }
+      if (activeDept === "Lounge") {
+        sortedOrders = sortedTransactions?.filter(
+          (item) => item.department === "Lounge"
+        );
+      }
+      if (activeDept === "Kitchen") {
+        sortedOrders = sortedTransactions.filter(
+          (item) => item.department === "Kitchen"
+        );
+      }
+      return sortedOrders;
     }
   };
   //Filtering States
@@ -417,11 +397,19 @@ export const TableProvider = ({ children }) => {
     totalPlacedOrders,
     totalReceivedOrders,
     imsItems,
+    imsOrders,
     imsTransactions,
     getAllItemsFilter,
     deptState,
     deptDispatch,
     transactions,
+    allItemsFilter,
+    placedOrdersFilter,
+    setPlacedOrdersFilter,
+    setTransactions,
+    setAllItemsFilter,
+    cancelledOrder,
+    receivedOrder,
   };
 
   return (

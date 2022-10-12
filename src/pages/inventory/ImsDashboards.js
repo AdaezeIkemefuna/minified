@@ -16,8 +16,8 @@ const ImsDashboards = () => {
     searchQuery,
     setSearchQuery,
     pendingOrders,
-    receivedOrders,
-    cancelledOrders,
+    receivedOrder,
+    cancelledOrder,
     fromDate,
     setFromDate,
     toDate,
@@ -31,7 +31,20 @@ const ImsDashboards = () => {
     imsItems,
     getAllItemsFilter,
     imsTransactions,
+    transactions,
+    allItemsFilter,
+    imsOrders,
+    placedOrdersFilter,
+    setPlacedOrdersFilter,
+    setTransactions,
+    setAllItemsFilter,
   } = useContext(TableContext);
+
+  const clearFilters = () => {
+    setPlacedOrdersFilter("");
+    setTransactions("");
+    setAllItemsFilter("");
+  };
 
   return (
     <div className="ims">
@@ -51,7 +64,11 @@ const ImsDashboards = () => {
           >
             <span className="order__type">Placed Orders</span>
             <p className="order__count">
-              <span>{pendingOrders?.length}</span>
+              <span>
+                {!placedOrdersFilter
+                  ? imsOrders?.length
+                  : placedOrdersFilter?.count}
+              </span>
 
               <BsArrowRightSquare size={25} />
             </p>
@@ -65,7 +82,7 @@ const ImsDashboards = () => {
           >
             <span className="order__type">Recieved Orders</span>
             <p className="order__count">
-              <span>{receivedOrders?.length}</span>
+              <span>{receivedOrder}</span>
 
               <BsArrowRightSquare size={25} />
             </p>
@@ -79,7 +96,7 @@ const ImsDashboards = () => {
           >
             <span className="order__type">Cancelled Orders</span>
             <p className="order__count">
-              <span>{cancelledOrders?.length}</span>
+              <span>{cancelledOrder}</span>
 
               <BsArrowRightSquare size={25} />
             </p>
@@ -107,7 +124,9 @@ const ImsDashboards = () => {
           >
             <span className="order__type">Transactions</span>
             <p className="order__count">
-              <span>{imsTransactions?.length}</span>
+              <span>
+                {!transactions ? imsTransactions?.length : transactions?.count}
+              </span>
               <BsArrowRightSquare size={25} />
             </p>
           </div>
@@ -169,6 +188,16 @@ const ImsDashboards = () => {
                 >
                   Get date
                 </button>
+                <button
+                  onClick={clearFilters}
+                  style={{
+                    padding: "0.9rem 1rem",
+                    borderRadius: "5px",
+                    marginTop: "3px",
+                  }}
+                >
+                  clear filters
+                </button>
               </div>
             )}
 
@@ -214,6 +243,16 @@ const ImsDashboards = () => {
                 >
                   Get date
                 </button>
+                <button
+                  onClick={clearFilters}
+                  style={{
+                    padding: "0.9rem 1rem",
+                    borderRadius: "5px",
+                    marginTop: "3px",
+                  }}
+                >
+                  clear filters
+                </button>
               </div>
             )}
 
@@ -247,6 +286,16 @@ const ImsDashboards = () => {
                 >
                   Get date
                 </button>
+                <button
+                  onClick={clearFilters}
+                  style={{
+                    padding: "0.9rem 1rem",
+                    borderRadius: "5px",
+                    marginTop: "3px",
+                  }}
+                >
+                  clear filters
+                </button>
               </div>
             )}
             {/* CANCELLED */}
@@ -278,6 +327,16 @@ const ImsDashboards = () => {
                   }}
                 >
                   Get date
+                </button>
+                <button
+                  onClick={clearFilters}
+                  style={{
+                    padding: "0.9rem 1rem",
+                    borderRadius: "5px",
+                    marginTop: "3px",
+                  }}
+                >
+                  clear filters
                 </button>
               </div>
             )}
@@ -312,6 +371,16 @@ const ImsDashboards = () => {
                 >
                   Get date
                 </button>
+                <button
+                  onClick={clearFilters}
+                  style={{
+                    padding: "0.9rem 1rem",
+                    borderRadius: "5px",
+                    marginTop: "3px",
+                  }}
+                >
+                  clear filters
+                </button>
               </div>
             ) : undefined}
           </>
@@ -322,28 +391,34 @@ const ImsDashboards = () => {
           {activeCategory === "ALL ITEMS" && (
             <div className="ims--title">
               <span>All Items</span>
-              <span className="order__badge">{imsItems?.length}</span>
+              <span className="order__badge">
+                {!allItemsFilter ? imsItems?.length : allItemsFilter?.count}
+              </span>
             </div>
           )}
 
           {activeCategory === "PENDING" && (
             <div className="ims--title">
               <span>Placed Orders</span>
-              <span className="order__badge">{pendingOrders?.length}</span>
+              <span className="order__badge">
+                {!placedOrdersFilter
+                  ? imsOrders?.length
+                  : placedOrdersFilter?.count}
+              </span>
             </div>
           )}
 
           {activeCategory === "RECEIVED" && (
             <div className="ims--title">
               <span>Received Orders</span>
-              <span className="order__badge">{receivedOrders?.length}</span>
+              <span className="order__badge">{receivedOrder}</span>
             </div>
           )}
 
           {activeCategory === "CANCELLED" && (
             <div className="ims--title">
               <span>Cancel Order</span>
-              <span className="order__badge">{cancelledOrders?.length}</span>
+              <span className="order__badge">{cancelledOrder}</span>
             </div>
           )}
 

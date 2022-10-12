@@ -15,7 +15,7 @@ const ReceiveOrder = ({ order, closeModal }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          item: order.item,
+          product: order.product,
           status: "RECEIVED",
         }),
       }).then((res) => {
