@@ -362,6 +362,7 @@ const UpdateStaff = () => {
                 value={updatedUser.password}
                 placeholder="type here"
                 className="modal__input"
+                autoFocus
               />
 
               <div className="modal__buttons">
@@ -401,6 +402,7 @@ const UpdateStaff = () => {
                 type="text"
                 placeholder="type here"
                 className="modal__input"
+                autoFocus
               />
 
               <div className="modal__buttons">

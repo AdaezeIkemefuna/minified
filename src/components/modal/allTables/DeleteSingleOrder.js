@@ -5,20 +5,13 @@ import TableContext from "../../../context/TableContext";
 import AuthContext from "../../../context/AuthContext";
 import { MdDeleteOutline } from "react-icons/md";
 
-const DeleteSingleOrder = ({ order, closeModal, table_name, index, arr }) => {
+const DeleteSingleOrder = ({ order, table_name, arr }) => {
   const { getAdminDetails, getBarman } = useContext(TableContext);
   const { user, getDetails, toastOptions } = useContext(AuthContext);
   const activeUser = user.username;
   const activePasscode = user.passcode;
   const product = order.item.product;
   const role = user.role;
-
-  console.log(arr);
-
-  const handleClick = (event, key) => {
-    console.log(event.target);
-    console.log("key index: ", key);
-  };
 
   const deleteItemCall = async (
     activeUser,
@@ -69,7 +62,7 @@ const DeleteSingleOrder = ({ order, closeModal, table_name, index, arr }) => {
               display: "flex",
               justifyContent: "space-between",
               gap: "8px",
-              marginBottom: "3px",
+              marginBottom: "1rem",
             }}
           >
             {element.item.product}

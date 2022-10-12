@@ -64,6 +64,7 @@ export default function EditPriceModal({ item }) {
                 placeholder="type here"
                 value={newPrice}
                 onChange={(e) => setNewPrice(e.target.value)}
+                autoFocus
               />
 
               <button

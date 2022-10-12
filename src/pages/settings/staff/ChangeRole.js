@@ -152,7 +152,6 @@ const ChangeRole = () => {
                 <option vlaue="Store Manager">Store Manager</option>
                 <option vlaue="Bar Man">Bar Man</option>
                 <option vlaue="Accounts">Accounts</option>
-                <option vlaue="Waiter">Waiter</option>
               </select>
 
               <div className="modal__buttons">

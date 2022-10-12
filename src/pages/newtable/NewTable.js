@@ -68,7 +68,7 @@ const NewTable = () => {
         setLoading(false);
       }
     } catch (err) {
-      toast.warn("Please check your internet connection", toastOptions);
+      console.log(err);
     }
   };
   return (
@@ -85,6 +85,7 @@ const NewTable = () => {
               placeholder="Enter Table Name"
               value={table_name}
               onChange={(e) => setTableName(e.target.value)}
+              autoFocus
             />
             <button>{loading ? "Adding Table..." : "Add Table"}</button>
           </form>

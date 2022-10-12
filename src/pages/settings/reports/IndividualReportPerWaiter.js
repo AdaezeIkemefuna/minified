@@ -16,30 +16,31 @@ function IndividualReportPerWaiter() {
   const [report, setReport] = useState([]);
   const establishment = "Dbase";
 
+  // FUNCTION TO GET WAITER
+  const getWaiterReport = async (waiter) => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/individual-report",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            waiter,
+          }),
+        }
+      );
+      const data = await response.json();
+      // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
+      // filter property bar
+      sortDuplicateValues(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    // FUNCTION TO GET WAITER
-    const getWaiterReport = async (waiter) => {
-      try {
-        const response = await fetch(
-          "https://pos-server1.herokuapp.com/individual-report",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              waiter,
-            }),
-          }
-        );
-        const data = await response.json();
-        // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
-        // filter property bar
-        sortDuplicateValues(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     getWaiterReport(waiter);
   }, []);
 
@@ -84,7 +85,6 @@ function IndividualReportPerWaiter() {
   }
 
   const individualReportPageRef = useRef(null);
-
   const handleGeneratePdf = () => {
     const doc = new jsPDF({
       orientation: "landscape",
@@ -115,7 +115,10 @@ function IndividualReportPerWaiter() {
         axios
           .post("https://pos-server1.herokuapp.com/upload-report", formData)
           .then((res) => {
-            toast.success("Report Uploaded Successfully", toastOptions);
+            if (res.ok) {
+              getWaiterReport(waiter);
+              toast.success("Report Uploaded Successfully", toastOptions);
+            }
           });
       },
     });

@@ -2,20 +2,28 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { createContext, useReducer } from "react";
 import { toast } from "react-toastify";
-import { orderReducer } from "./Reducer";
+import { deptReducer, orderReducer } from "./Reducer";
 
 let pendingOrders = "...";
 let receivedOrders = "...";
 let cancelledOrders = "...";
-let totalCancelled;
-let totalPlaced;
-let totalReceived;
+let sortedTransactions = "...";
+let sortedTransactionsBar = "...";
+let totalCancelled = "...";
+let totalPlaced = "...";
+let totalReceived = "...";
 
 const TableContext = createContext();
 
 export default TableContext;
 
 export const TableProvider = ({ children }) => {
+  const initialDeptState = {
+    dept: "Bar",
+  };
+
+  const [deptState, deptDispatch] = useReducer(deptReducer, initialDeptState);
+
   const initialOrderState = {
     barmanOrders: [],
     changedOrders: [],
@@ -55,6 +63,8 @@ export const TableProvider = ({ children }) => {
     }
   };
 
+  //INPUT(BAR/LOUNGE) STATE
+
   const [adminOrders, setAdminOrders] = useState([]);
 
   const getAdminDetails = async (
@@ -93,31 +103,39 @@ export const TableProvider = ({ children }) => {
     } catch (error) {}
   };
 
-  //FILTERING TRANSACTIONS
-  const [transactions, setTransactions] = useState([]);
-  const getTransactions = async (from, to) => {
+  const [state, dispatch] = useReducer(orderReducer, initialOrderState);
+
+  //GET ALL ITEMS FOR IMS
+  const [imsItems, setImsItems] = useState([]);
+
+  const displayImsItems = async () => {
+    try {
+      const response = await fetch("https://pos-server1.herokuapp.com/items");
+      const data = await response.json();
+      setImsItems(data);
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    displayImsItems();
+  }, []);
+
+  //GET IMS ORDERS
+  const [imsOrders, setImsOrders] = useState([]);
+
+  const displayImsOrders = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/ims/transactions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            from,
-            to,
-          }),
-        }
+        "https://pos-server1.herokuapp.com/ims/all-orders"
       );
       const data = await response.json();
-      if (response.ok) {
-        setTransactions(data);
-      } else {
-        toast("Couldn't fetch transactions for this date");
-      }
-    } catch (error) {}
+      setImsOrders(data);
+    } catch (err) {}
   };
+
+  useEffect(() => {
+    displayImsOrders();
+  }, []);
 
   //FILTERING PLACED ORDERS
   const [placedOrdersFilter, setPlacedOrdersFilter] = useState([]);
@@ -145,38 +163,81 @@ export const TableProvider = ({ children }) => {
     } catch (error) {}
   };
 
-  const [state, dispatch] = useReducer(orderReducer, initialOrderState);
+  //GET ALL TRANSACTIONS FOR IMS
+  const [imsTransactions, setImsTransactions] = useState([]);
 
-  //INPUT(BAR/LOUNGE) STATE
-  const [input, setInput] = useState("Lounge");
-
-  //GET IMS ORDERS
-  const [imsOrders, setImsOrders] = useState([]);
-
-  const displayImsOrders = async () => {
+  const displayImsTransactions = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/ims/all-orders"
+        "https://pos-server1.herokuapp.com/ims/sent-items"
       );
       const data = await response.json();
-      setImsOrders(data);
+      setImsTransactions(data);
     } catch (err) {}
   };
 
   useEffect(() => {
-    displayImsOrders();
+    displayImsTransactions();
   }, []);
 
-  const [activeCategory, setActiveCategory] = useState("PENDING");
-  const [activeDept, setActiveDept] = useState("Bar");
+  //FILTERING TRANSACTIONS
+  const [transactions, setTransactions] = useState([]);
+  const getTransactions = async (from, to) => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/ims/transactions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from,
+            to,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setTransactions(data);
+      } else {
+        toast("Couldn't fetch transactions for this date");
+      }
+    } catch (error) {}
+  };
+
+  //FILTERING ALL ITEMS
+  const [allItemsFilter, setAllItemsFilter] = useState([]);
+  const getAllItemsFilter = async (from, to) => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/dates-filter",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from,
+            to,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setAllItemsFilter(data);
+      } else {
+        toast("Couldn't fetch transactions for this date");
+      }
+    } catch (error) {}
+  };
+
+  const [activeCategory, setActiveCategory] = useState("ALL ITEMS");
+  const [activeDept, setActiveDept] = useState("");
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  //DUMMY DATA
-  const dummyAllItems = [];
-
   //TRANSFORM ORDERS
-
   const transformOrders = (items) => {
     let sortedOrders = items;
 
@@ -189,67 +250,127 @@ export const TableProvider = ({ children }) => {
     }
 
     if (activeCategory === "ALL ITEMS") {
-      sortedOrders = items;
-    }
-
-    if (activeCategory === "PENDING") {
-      if (!placedOrdersFilter.length) {
-        pendingOrders = sortedOrders;
-      } else {
-        pendingOrders = placedOrdersFilter;
+      if (!allItemsFilter.length) {
+        sortedOrders = imsItems;
+        return sortedOrders;
+      } else if (allItemsFilter) {
+        sortedOrders = allItemsFilter;
+        return sortedOrders;
       }
-      totalPlaced = pendingOrders?.reduce(
-        (acc, curr) => acc + curr.qty * curr.unitprice,
-        0
-      );
-
-      return pendingOrders;
     }
 
-    if (activeCategory === "RECEIVED") {
-      receivedOrders = sortedOrders.filter(
-        (item) => item.status === "RECEIVED"
-      );
+    if (!placedOrdersFilter.length) {
+      if (activeCategory === "PENDING") {
+        pendingOrders = imsOrders;
+        totalPlaced = pendingOrders?.reduce(
+          (acc, curr) => acc + curr.qty * curr.unitprice,
+          0
+        );
 
-      totalReceived = receivedOrders?.reduce(
-        (acc, curr) => acc + curr.qty * curr.unitprice,
-        0
-      );
-      return receivedOrders;
-    }
+        return pendingOrders;
+      }
+      if (activeCategory === "RECEIVED") {
+        receivedOrders = sortedOrders.filter(
+          (item) => item.status === "RECEIVED"
+        );
 
-    if (activeCategory === "CANCELLED") {
-      cancelledOrders = sortedOrders.filter(
-        (item) => item.status === "CANCELLED"
-      );
-      totalCancelled = cancelledOrders?.reduce(
-        (acc, curr) => acc + curr.qty * curr.unitprice,
-        0
-      );
-      return cancelledOrders;
+        totalReceived = receivedOrders?.reduce(
+          (acc, curr) => acc + curr.qty * curr.unitprice,
+          0
+        );
+        return receivedOrders;
+      }
+
+      if (activeCategory === "CANCELLED") {
+        cancelledOrders = sortedOrders.filter(
+          (item) => item.status === "CANCELLED"
+        );
+        totalCancelled = cancelledOrders?.reduce(
+          (acc, curr) => acc + curr.qty * curr.unitprice,
+          0
+        );
+        return cancelledOrders;
+      }
+    } else if (placedOrdersFilter) {
+      if (activeCategory === "PENDING") {
+        pendingOrders = placedOrdersFilter;
+        totalPlaced = pendingOrders?.reduce(
+          (acc, curr) => acc + curr.qty * curr.unitprice,
+          0
+        );
+
+        return pendingOrders;
+      }
+      if (activeCategory === "RECEIVED") {
+        receivedOrders = placedOrdersFilter.filter(
+          (item) => item.status === "RECEIVED"
+        );
+
+        totalReceived = receivedOrders?.reduce(
+          (acc, curr) => acc + curr.qty * curr.unitprice,
+          0
+        );
+        return receivedOrders;
+      }
+
+      if (activeCategory === "CANCELLED") {
+        cancelledOrders = placedOrdersFilter.filter(
+          (item) => item.status === "CANCELLED"
+        );
+        totalCancelled = cancelledOrders?.reduce(
+          (acc, curr) => acc + curr.qty * curr.unitprice,
+          0
+        );
+        return cancelledOrders;
+      }
     }
 
     if (activeCategory === "TRANSACTIONS") {
-      sortedOrders = transactions;
-      if (activeDept === "Bar") {
-        sortedOrders = sortedOrders.filter((item) => item.department === "Bar");
+      if (!transactions.length) {
+        sortedTransactions = imsTransactions;
+        if (activeDept === "") {
+          sortedOrders = sortedTransactions;
+        }
+        if (activeDept === "Bar") {
+          sortedOrders = sortedTransactions.filter(
+            (item) => item.department === "Bar"
+          );
+        }
+        if (activeDept === "Lounge") {
+          sortedOrders = sortedTransactions?.filter(
+            (item) => item.department === "Lounge"
+          );
+        }
+        if (activeDept === "Kitchen") {
+          sortedOrders = sortedTransactions.filter(
+            (item) => item.department === "Kitchen"
+          );
+        }
         return sortedOrders;
-      }
-      if (activeDept === "Lounge") {
-        sortedOrders = sortedOrders.filter(
-          (item) => item.department === "Lounge"
-        );
-        return sortedOrders;
-      }
-      if (activeDept === "Kitchen") {
-        sortedOrders = sortedOrders.filter(
-          (item) => item.department === "Kitchen"
-        );
+      } else if (transactions) {
+        sortedTransactions = transactions;
+        if (activeDept === "") {
+          sortedOrders = sortedTransactions;
+        }
+        if (activeDept === "Bar") {
+          sortedOrders = sortedTransactions.filter(
+            (item) => item.department === "Bar"
+          );
+        }
+        if (activeDept === "Lounge") {
+          sortedOrders = sortedTransactions?.filter(
+            (item) => item.department === "Lounge"
+          );
+        }
+        if (activeDept === "Kitchen") {
+          sortedOrders = sortedTransactions.filter(
+            (item) => item.department === "Kitchen"
+          );
+        }
         return sortedOrders;
       }
     }
   };
-
   //Filtering States
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -273,8 +394,7 @@ export const TableProvider = ({ children }) => {
     getAdminDetails,
     imsOrders,
     displayImsOrders,
-    input,
-    setInput,
+    displayImsItems,
     setActiveCategory,
     setSearchQuery,
     searchQuery,
@@ -296,6 +416,12 @@ export const TableProvider = ({ children }) => {
     getplacedOrdersFilter,
     totalPlacedOrders,
     totalReceivedOrders,
+    imsItems,
+    imsTransactions,
+    getAllItemsFilter,
+    deptState,
+    deptDispatch,
+    transactions,
   };
 
   return (

@@ -16,29 +16,33 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
-  const loginUser = (username, password) => {
-    fetch("https://pos-server1.herokuapp.com/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    })
-      .then((res) => {
+
+  const loginUser = async (username, password) => {
+    try {
+      const response = await fetch("https://pos-server1.herokuapp.com/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
         setLoading(false);
-        if (!res.ok) {
-          setErrMsg("Invalid login details");
-        }
-        return res.json();
-      })
-      .then((data) => {
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
         navigate("/orders");
-      });
+      } else {
+        setLoading(false);
+        setErrMsg("Invalid login details");
+      }
+    } catch (err) {
+      setErrMsg("Network Error");
+      setLoading(false);
+    }
   };
 
   const initialCartState = {
@@ -70,10 +74,6 @@ export const AuthProvider = ({ children }) => {
       });
     } catch (err) {}
   };
-
-  useEffect(() => {
-    displayItems("Bar");
-  }, []);
 
   const [state, dispatch] = useReducer(cartReducer, initialCartState);
 
@@ -195,6 +195,7 @@ export const AuthProvider = ({ children }) => {
         }),
       });
       const data = await response.json();
+      console.log(data);
       setTables(data);
     } catch (err) {
       console.log(err);
@@ -257,6 +258,7 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       if (response.ok) {
         setAdminOrders(data);
+        console.log(data);
       }
     } catch (error) {}
   };
@@ -280,7 +282,7 @@ export const AuthProvider = ({ children }) => {
         }
       );
       const data = await response.json();
-      setOrderCount(data.Waiter_count);
+      setOrderCount(data.order_count[0].count);
     } catch (error) {}
   };
 
@@ -291,8 +293,8 @@ export const AuthProvider = ({ children }) => {
     autoClose: 2000,
     theme: "dark",
   };
-  console.log("i ran");
   //PAYMENTS SUMMATION
+
   const cashPayments = tables?.reduce((accumulator, obj) => {
     return accumulator + obj.cash;
   }, 0);

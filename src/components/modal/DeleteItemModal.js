@@ -40,7 +40,7 @@ export default function DeleteItemModal({ item, closeModal, setDeleteMode }) {
         displayItems(department);
         toast.success("Item deleted successfully", toastOptions);
       } else if (!response.ok) {
-        toast.error("Failed to delete Item", toastOptions);
+        toast.warn("Item Currently In Customers' Order", toastOptions);
       }
     } catch (err) {
       console.log(err);
@@ -61,7 +61,6 @@ export default function DeleteItemModal({ item, closeModal, setDeleteMode }) {
             id="bg"
             onClick={() => setDeleteMode(false)}
           >
-  
             <FaTimes size={25} />
           </button>
 

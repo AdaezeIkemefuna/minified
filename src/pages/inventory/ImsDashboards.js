@@ -28,11 +28,14 @@ const ImsDashboards = () => {
     getplacedOrdersFilter,
     totalPlacedOrders,
     totalReceivedOrders,
+    imsItems,
+    getAllItemsFilter,
+    imsTransactions,
   } = useContext(TableContext);
 
   return (
-    <div>
-      <div className="ims">
+    <div className="ims">
+      <div>
         <span
           className="ims__home"
           onClick={() => setActiveCategory("ALL ITEMS")}
@@ -104,7 +107,7 @@ const ImsDashboards = () => {
           >
             <span className="order__type">Transactions</span>
             <p className="order__count">
-              <span>300</span>
+              <span>{imsTransactions?.length}</span>
               <BsArrowRightSquare size={25} />
             </p>
           </div>
@@ -119,10 +122,166 @@ const ImsDashboards = () => {
                 placeholder="search by item name"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
               />
             </form>
           </div>
           <>
+            {/* ALL ITEMS */}
+            {/* ORDER BUTTON */}
+            {activeCategory === "ALL ITEMS" && (
+              <div
+                className="ims--place__order"
+                onClick={() => navigate("/inventory/placeorder")}
+              >
+                <span className="order__badge">
+                  <BsPlusCircle size={20} />
+                </span>
+                <span>Add Item</span>
+              </div>
+            )}
+            {activeCategory === "ALL ITEMS" && (
+              <div className="ims__date">
+                <span>From</span>
+                <span className="ims--place__order">
+                  <input
+                    type="date"
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                  />
+                </span>
+
+                <span>To</span>
+                <span className="ims--place__order">
+                  <input
+                    type="date"
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                  />
+                </span>
+                <button
+                  onClick={() => getAllItemsFilter(fromDate, toDate)}
+                  style={{
+                    padding: "0.9rem 1rem",
+                    borderRadius: "5px",
+                    marginTop: "3px",
+                  }}
+                >
+                  Get date
+                </button>
+              </div>
+            )}
+
+            {activeCategory === "TRANSACTIONS" && (
+              <div
+                className="ims--place__order"
+                onClick={() => navigate("/inventory/placeorder")}
+              >
+                <span className="order__badge">
+                  <BsPlusCircle size={20} />
+                </span>
+                <span>Send Item</span>
+              </div>
+            )}
+
+            {/* PENDING */}
+            {activeCategory === "PENDING" && (
+              <div className="ims__date">
+                <span>From</span>
+                <span className="ims--place__order">
+                  <input
+                    type="date"
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                  />
+                </span>
+
+                <span>To</span>
+                <span className="ims--place__order">
+                  <input
+                    type="date"
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                  />
+                </span>
+                <button
+                  onClick={() => getplacedOrdersFilter(fromDate, toDate)}
+                  style={{
+                    padding: "0.9rem 1rem",
+                    borderRadius: "5px",
+                    marginTop: "3px",
+                  }}
+                >
+                  Get date
+                </button>
+              </div>
+            )}
+
+            {/* RECEIVED */}
+            {activeCategory === "RECEIVED" && (
+              <div className="ims__date">
+                <span>From</span>
+                <span className="ims--place__order">
+                  <input
+                    type="date"
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                  />
+                </span>
+
+                <span>To</span>
+                <span className="ims--place__order">
+                  <input
+                    type="date"
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                  />
+                </span>
+                <button
+                  onClick={() => getplacedOrdersFilter(fromDate, toDate)}
+                  style={{
+                    padding: "0.9rem 1rem",
+                    borderRadius: "5px",
+                    marginTop: "3px",
+                  }}
+                >
+                  Get date
+                </button>
+              </div>
+            )}
+            {/* CANCELLED */}
+            {activeCategory === "CANCELLED" && (
+              <div className="ims__date">
+                <span>From</span>
+                <span className="ims--place__order">
+                  <input
+                    type="date"
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
+                  />
+                </span>
+
+                <span>To</span>
+                <span className="ims--place__order">
+                  <input
+                    type="date"
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                  />
+                </span>
+                <button
+                  onClick={() => getplacedOrdersFilter(fromDate, toDate)}
+                  style={{
+                    padding: "0.9rem 1rem",
+                    borderRadius: "5px",
+                    marginTop: "3px",
+                  }}
+                >
+                  Get date
+                </button>
+              </div>
+            )}
+
             {activeCategory === "TRANSACTIONS" &&
             user.role !== "Store Manager" ? (
               <div className="ims__date">
@@ -160,34 +319,47 @@ const ImsDashboards = () => {
 
         <div className="ims__topLabel">
           {/* ORDER TITLE */}
+          {activeCategory === "ALL ITEMS" && (
+            <div className="ims--title">
+              <span>All Items</span>
+              <span className="order__badge">{imsItems?.length}</span>
+            </div>
+          )}
+
           {activeCategory === "PENDING" && (
             <div className="ims--title">
               <span>Placed Orders</span>
-              <span className="order__badge">520</span>
+              <span className="order__badge">{pendingOrders?.length}</span>
             </div>
           )}
 
           {activeCategory === "RECEIVED" && (
             <div className="ims--title">
               <span>Received Orders</span>
-              <span className="order__badge">520</span>
+              <span className="order__badge">{receivedOrders?.length}</span>
             </div>
           )}
 
           {activeCategory === "CANCELLED" && (
             <div className="ims--title">
               <span>Cancel Order</span>
-              <span className="order__badge">520</span>
+              <span className="order__badge">{cancelledOrders?.length}</span>
             </div>
           )}
 
           {activeCategory === "TRANSACTIONS" && (
             <div className="ims__transactions">
-              <h2>All Items Distributed from the General Store</h2>
+              <h2
+                className={`${activeDept === "" ? "ims--title" : ""}`}
+                onClick={() => setActiveDept("")}
+                style={{ cursor: "pointer" }}
+              >
+                All Items Distributed from the General Store
+              </h2>
               <div>
                 <span
                   className={`${
-                    activeDept === "Bar" ? "ims--title" : "ims--noDisplay"
+                    activeDept === "Bar" ? "ims--title" : "ims--dept"
                   }`}
                   style={{
                     display: "inline",
@@ -199,7 +371,9 @@ const ImsDashboards = () => {
                   Bar
                 </span>
                 <span
-                  className={`${activeDept === "Lounge" ? "ims--title" : ""}`}
+                  className={`${
+                    activeDept === "Lounge" ? "ims--title" : "ims--dept"
+                  }`}
                   style={{
                     display: "inline",
                     marginRight: "0.5rem",
@@ -210,7 +384,9 @@ const ImsDashboards = () => {
                   Lounge
                 </span>
                 <span
-                  className={`${activeDept === "Kitchen" ? "ims--title" : ""}`}
+                  className={`${
+                    activeDept === "Kitchen" ? "ims--title" : "ims--dept"
+                  }`}
                   style={{
                     display: "inline",
                     marginRight: "0.5rem",
@@ -224,7 +400,6 @@ const ImsDashboards = () => {
             </div>
           )}
 
-          {/* ORDER BUTTON */}
           {user.role === "Store Manager" ? (
             <>
               {activeCategory === "PENDING" && (
@@ -239,31 +414,8 @@ const ImsDashboards = () => {
                 </div>
               )}
 
-              {activeCategory === "RECEIVED" && (
-                <div
-                  className="ims--place__order"
-                  onClick={() => navigate("/inventory/placeorder")}
-                >
-                  <span className="order__badge">
-                    <BsPlusCircle size={20} />
-                  </span>
-                  <span>Receive Order</span>
-                </div>
-              )}
-
-              {activeCategory === "CANCELLED" && (
-                <div
-                  className="ims--place__order"
-                  onClick={() => navigate("/inventory/placeorder")}
-                >
-                  <span className="order__badge">
-                    <BsPlusCircle size={20} />
-                  </span>
-                  <span>Cancel Order</span>
-                </div>
-              )}
-
-              {activeCategory === "TRANSACTIONS" && (
+              {/*
+               {activeCategory === "TRANSACTIONS" && (
                 <div
                   className="ims--place__order"
                   onClick={() => navigate("/inventory/placeorder")}
@@ -273,42 +425,11 @@ const ImsDashboards = () => {
                   </span>
                   <span>Send Item</span>
                 </div>
-              )}
+              )} 
+              */}
             </>
           ) : (
-            <>
-              {activeCategory !== "TRANSACTIONS" && (
-                <div className="ims__date">
-                  <span>From</span>
-                  <span className="ims--place__order">
-                    <input
-                      type="date"
-                      value={fromDate}
-                      onChange={(e) => setFromDate(e.target.value)}
-                    />
-                  </span>
-
-                  <span>To</span>
-                  <span className="ims--place__order">
-                    <input
-                      type="date"
-                      value={toDate}
-                      onChange={(e) => setToDate(e.target.value)}
-                    />
-                  </span>
-                  <button
-                    onClick={() => getplacedOrdersFilter(fromDate, toDate)}
-                    style={{
-                      padding: "0.9rem 1rem",
-                      borderRadius: "5px",
-                      marginTop: "3px",
-                    }}
-                  >
-                    Get date
-                  </button>
-                </div>
-              )}
-            </>
+            <></>
           )}
         </div>
       </div>

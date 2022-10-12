@@ -14,7 +14,7 @@ const SingleProduct = ({ items }) => {
       <img
         src={items.image}
         alt={items.product}
-        style={{ margin: "0.5rem 0rem" }}
+        style={{ margin: "0.5rem 0rem"}}
         width={"50px"}
         height={"75px"}
       />
@@ -28,7 +28,7 @@ const SingleProduct = ({ items }) => {
         <button
           style={{
             backgroundColor: "transparent",
-            border: "1px solid var(--yellow)",
+            border: "1px solid goldenrod",
             color: "black",
           }}
           onClick={() =>

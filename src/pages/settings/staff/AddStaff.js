@@ -91,6 +91,7 @@ const AddStaff = () => {
             placeholder="Enter Staff Username"
             onChange={handleChange}
             value={newUser.username}
+            autoFocus
           />
           <label htmlFor="input" className="control-label">
             Staff Username
@@ -126,6 +127,7 @@ const AddStaff = () => {
             onChange={handleChange}
             value={newUser.password}
             required
+            autoFocus
           />
           <label htmlFor="input" className="control-label">
             Enter Staff Password
@@ -141,6 +143,7 @@ const AddStaff = () => {
             onChange={handleChange}
             value={newUser.passcode}
             required
+            autoFocus
           />
           <label htmlFor="input" className="control-label">
             Enter Unique Pass Code

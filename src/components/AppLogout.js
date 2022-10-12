@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 const events = [
   "load",
@@ -11,6 +12,8 @@ const events = [
 
 const AppLogout = ({ children }) => {
   let timer;
+  const logoutTime = 3600000 * 18;
+  const { logoutUser } = useContext(AuthContext);
 
   // this function sets the timer that logs out the user after 10 secs
   const handleLogoutTimer = () => {
@@ -22,8 +25,8 @@ const AppLogout = ({ children }) => {
         window.removeEventListener(item, resetTimer);
       });
       // logs out user
-      logoutAction();
-    }, 3600000); // 30000ms = 10secs.
+      logoutUser();
+    }, logoutTime); // 1 hour.
   };
 
   // this resets the timer if it exists.
@@ -43,11 +46,6 @@ const AppLogout = ({ children }) => {
     });
   }, []);
 
-  // logs out user by clearing out auth token in localStorage and redirecting url to / page.
-  const logoutAction = () => {
-    localStorage.clear();
-    window.location.pathname = "/";
-  };
   return children;
 };
 export default AppLogout;

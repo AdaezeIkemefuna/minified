@@ -155,6 +155,7 @@ const StaffCredit = () => {
                 value={updatedUser.opening_credit}
                 placeholder="type here"
                 className="modal__input"
+                autoFocus
               />
 
               <div className="modal__buttons">

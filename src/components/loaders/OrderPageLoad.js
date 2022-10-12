@@ -85,7 +85,7 @@ const LoadingCard = () => {
 
       <button
         style={{
-          border: "1px solid var(--yellow)",
+          border: "1px solid goldenrod",
           width: "6rem",
           height: "1.5rem",
         }}

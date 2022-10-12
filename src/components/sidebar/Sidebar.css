@@ -12,12 +12,13 @@
 
 .nav__container .nav__logo {
   align-self: center;
-  height: 150px;
-  width: 150px;
-  margin: 0.5rem;
-  margin-bottom: 2rem;
   overflow-y: hidden;
   overflow-x: hidden;
+}
+
+.nav__container .nav__logo img {
+  width: 200px;
+  height: 150px;
 }
 
 .nav__container .nav__logo.uppist img {

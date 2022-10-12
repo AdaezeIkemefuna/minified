@@ -92,3 +92,28 @@ export const orderReducer = (state, action) => {
       return state;
   }
 };
+
+export const deptReducer = (state, action) => {
+  switch (action.type) {
+    case "BAR":
+      return {
+        ...state,
+        dept: "Bar",
+      };
+
+    case "LOUNGE":
+      return {
+        ...state,
+        dept: "Lounge",
+      };
+
+    case "KITCHEN":
+      return {
+        ...state,
+        dept: "Kitchen",
+      };
+
+    default:
+      return state;
+  }
+};

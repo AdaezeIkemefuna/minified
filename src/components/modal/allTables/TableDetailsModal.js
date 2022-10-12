@@ -16,7 +16,6 @@ import { ComponentToPrint } from "../../print/ComponentToPrint";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-import UpdateButton from "./UpdateButton";
 import TableContext from "../../../context/TableContext";
 import DeleteSingleOrder from "./DeleteSingleOrder";
 
@@ -34,6 +33,8 @@ export default function TableDetailsModal({ table, closeModal }) {
     setAdminOrders,
     setBarmanOrders,
     getAdminDetails,
+    barmanOrder,
+    adminOrders,
     state: { changedOrders, barmanOrders },
     dispatch,
     getBarman,
@@ -85,6 +86,7 @@ export default function TableDetailsModal({ table, closeModal }) {
       dispatch({
         type: "CLEAR_BARMANORDER",
       });
+      console.log(barmanOrders);
       localStorage.removeItem("table");
     } else {
       setOrders([]);
@@ -122,14 +124,14 @@ export default function TableDetailsModal({ table, closeModal }) {
   useEffect(() => {
     if (user.role === "Super Admin") {
       setTotal(
-        changedOrders?.reduce(
+        adminOrders?.reduce(
           (acc, curr) => acc + Number(curr.item.price) * curr.quantity,
           0
         )
       );
     } else if (user.role === "Bar Man") {
       setTotal(
-        barmanOrders?.reduce(
+        barmanOrder?.reduce(
           (acc, curr) => acc + Number(curr.item.price) * curr.quantity,
           0
         )
@@ -142,7 +144,7 @@ export default function TableDetailsModal({ table, closeModal }) {
         )
       );
     }
-  }, [orders, changedOrders, barmanOrders]);
+  }, [orders, adminOrders, barmanOrder]);
 
   //Variables
   const complimentary_qty = compQty;
@@ -179,13 +181,12 @@ export default function TableDetailsModal({ table, closeModal }) {
       );
       if (response.ok) {
         toast.success(`Table Closed`, toastOptions);
-        if (user.role === "Super Admin") {
-          displayAdminTables(activeUser, activePasscode);
-          getAdminDetails(activeUser, activePasscode, role, table_name);
-        } else if (user.role === "Bar Man") {
+        if (user.role === "Bar Man") {
+          closeModalAction();
           getBarman(activeUser, activePasscode, table_name);
           displayTables(activeUser);
         } else {
+          closeModalAction();
           getDetails(activeUser, activePasscode, table_name);
           displayTables(activeUser);
         }
@@ -217,6 +218,79 @@ export default function TableDetailsModal({ table, closeModal }) {
     }
   };
 
+  //UPDATE QUANTITY
+  const updateQtyCall = async () => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/apply-returns",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            activeUser,
+            activePasscode,
+            table_name,
+            order: changedOrders,
+          }),
+        }
+      );
+      if (response.status === 200) {
+        if (user.role === "Super Admin") {
+          getAdminDetails(activeUser, activePasscode, role, table_name);
+          closeModalAction();
+        } else if (user.role === "Bar Man") {
+          getBarman(activeUser, activePasscode, table_name);
+          closeModalAction();
+        } else {
+          getDetails(activeUser, activePasscode, table_name);
+          closeModalAction();
+        }
+        toast.success("Quantity Updated", toastOptions);
+      } else {
+        toast.error("could not update quantity");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const updateQty = () => {
+    updateQtyCall();
+  };
+
+  const updateQtyBarman = async () => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/apply-returns",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            activeUser,
+            activePasscode,
+            table_name,
+            order: barmanOrders,
+          }),
+        }
+      );
+      if (response.status === 200) {
+        if (user.role === "Bar Man") {
+          toast.success("Quantity Updated", toastOptions);
+          closeModalAction();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateBarman = () => {
+    updateQtyBarman();
+  };
+
   //PRINTING
   const printRef = useRef();
   const handleReactToPrint = useReactToPrint({
@@ -245,7 +319,7 @@ export default function TableDetailsModal({ table, closeModal }) {
               <th className="th"></th>
             </tr>
           </thead>
-          {changedOrders.map((t, index) => (
+          {changedOrders.map((t, index, arr) => (
             <tr className="row__data" key={index}>
               <td className="td">{t.item.product}</td>
               <td className="td">₦{t.item.price}</td>
@@ -283,6 +357,7 @@ export default function TableDetailsModal({ table, closeModal }) {
                     <DeleteSingleOrder
                       order={t}
                       index={index}
+                      arr={arr}
                       closeModal={closeDeleteModal}
                       table_name={table_name}
                     />
@@ -412,7 +487,18 @@ export default function TableDetailsModal({ table, closeModal }) {
 
       {table.status === "OPEN" && (
         <div>
-          <UpdateButton closeModal={closeModal} />
+          <>
+            {role === "Super Admin" && (
+              <button className="receipt__btn" onClick={updateQty}>
+                apply changes
+              </button>
+            )}
+            {role === "Bar Man" && (
+              <button className="receipt__btn" onClick={updateBarman}>
+                apply changes
+              </button>
+            )}
+          </>
         </div>
       )}
       <div className="totals__data">

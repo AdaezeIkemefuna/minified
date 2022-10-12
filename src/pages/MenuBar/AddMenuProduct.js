@@ -12,9 +12,10 @@ const AddMenuProduct = () => {
   const { user, toastOptions, displayItems } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState("");
-  const [department, setDepartment] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [metric, setMetric] = useState("");
+  const [reorder, setReorder] = useState(0);
+  const [size, setSize] = useState("");
   const [image, setImageFile] = useState("");
   const activeUser = user.username;
   const activePasscode = +user.passcode;
@@ -31,22 +32,16 @@ const AddMenuProduct = () => {
     toggleCartMenu(false);
   };
 
-  const navigate = useNavigate();
-
   const addProduct = (e) => {
     e.preventDefault();
-    if (product !== "" || department !== "" || category !== "" || price !== 0) {
+    if (product !== "") {
       setLoading(true);
-      setTimeout(addProductCall(), 3000);
+      setTimeout(addProductCall, 3000);
     } else {
       toast("All fields are required.", toastOptions);
     }
 
     setProduct("");
-    setDepartment("");
-    setCategory("");
-    setImageFile("");
-    setPrice("");
   };
 
   const addProductCall = async () => {
@@ -59,20 +54,23 @@ const AddMenuProduct = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            product,
-            department,
-            category,
             activeUser,
-            price: +price,
             activePasscode,
+            product,
+            quantity: +quantity,
+            size: +size,
+            reorder: +reorder,
+            metric,
             image,
           }),
         }
       );
-      if (response.ok) {
+      if (response.status === 401) {
+        toast.warn(`Product already exists`, toastOptions);
+        setLoading(false);
+      } else if (response.ok) {
         toast.success(`Product added successfully`, toastOptions);
         setLoading(false);
-        displayItems(department);
       } else {
         toast.error(`Failed to add product`, toastOptions);
         setLoading(false);
@@ -91,7 +89,7 @@ const AddMenuProduct = () => {
     });
   };
   return (
-    <div className="form__wrapper menubar__wrapper">
+    <div className="form__wrapper2 menubar__wrapper">
       <div className="add__header menu__close">
         <div className={showCartMenu ? "position" : "no-display"}>
           <FaTimes size={25} onClick={menuAction} />
@@ -103,65 +101,73 @@ const AddMenuProduct = () => {
         Add a new item to the system
       </p>
       <form className="form" onSubmit={addProduct}>
-        <div className="input-wrapper">
+        <div className="ims__inputContainer">
           <input
             type="text"
-            id="input"
+            className="ims__input"
+            placeholder="a"
             value={product}
             onChange={(e) => setProduct(e.target.value)}
-            className="form-control"
-            placeholder="Enter Product Name"
+            autoFocus
           />
-          <label htmlFor="input" className="control-label">
-            Product Name
+          <label htmlFor="" className="ims__label">
+            Enter Item Name
           </label>
         </div>
 
-        <div className="input-wrapper">
-          <select
-            className="form-control"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="" hidden className="placeholderSelect">
-              Select Category
-            </option>
-            <option value="Wines">Wines/Whisky</option>
-            <option value="Energy drink">Energy drinks</option>
-            <option value="Beers">Beers</option>
-            <option value="Soft Drinks">Soft drinks</option>
-            <option value="Meals">Meals</option>
-          </select>
-        </div>
-
-        <div className="input-wrapper">
-          <select
-            placeholder=""
-            className="form-control"
-            value={department}
-            onChange={(e) => setDepartment(e.target.value)}
-            required
-          >
-            <option value="" hidden className="placeholderSelect">
-              Select Department
-            </option>
-            <option value="Lounge">Lounge</option>
-            <option value="Bar">Bar</option>
-          </select>
-        </div>
-
-        <div className="input-wrapper">
+        <div className="ims__inputContainer">
           <input
             type="number"
-            id="input"
-            className="form-control"
-            placeholder="Enter Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
+            className="ims__input"
+            placeholder="a"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            autoFocus
           />
-          <label htmlFor="input" className="control-label">
-            Product Price
+          <label htmlFor="" className="ims__label">
+            Quantity
+          </label>
+        </div>
+
+        <div className="ims__inputContainer">
+          <input
+            type="number"
+            className="ims__input"
+            placeholder="a"
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
+            autoFocus
+          />
+          <label htmlFor="" className="ims__label">
+            Size
+          </label>
+        </div>
+
+        <div className="ims__inputContainer">
+          <input
+            type="text"
+            className="ims__input"
+            placeholder="a"
+            value={metric}
+            onChange={(e) => setMetric(e.target.value)}
+            autoFocus
+          />
+          <label htmlFor="" className="ims__label">
+            Unit Of Measurement (e.g ml, gram, litre, etc)
+          </label>
+        </div>
+
+        <div className="ims__inputContainer">
+          <input
+            type="number"
+            className="ims__input"
+            placeholder="a"
+            value={reorder}
+            onChange={(e) => setReorder(e.target.value)}
+            autoFocus
+          />
+          <label htmlFor="" className="ims__label">
+            Reorder Level
           </label>
         </div>
 
@@ -175,17 +181,10 @@ const AddMenuProduct = () => {
             id="file"
             className="inputTag"
             onChange={uploadFile}
-            required
           />
         </div>
 
-        <button
-          style={{
-            borderRadius: "5px",
-            padding: "2rem",
-            color: "var(--yellow)",
-          }}
-        >
+        <button style={{ borderRadius: "5px", padding: "2rem" }}>
           {loading ? "Adding Product..." : "Add Product"}
         </button>
       </form>

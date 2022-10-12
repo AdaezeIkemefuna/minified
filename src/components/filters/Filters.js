@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Filters.css";
-import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { MdWineBar } from "react-icons/md";
 import TableContext from "../../context/TableContext";
+import RadioFilters from "./RadioFilters";
 
 const Filters = () => {
-  const { input, setInput } = useContext(TableContext);
+  const {
+    deptState: { dept },
+    deptDispatch,
+  } = useContext(TableContext);
   const {
     activeCategory,
     setActiveCategory,
@@ -14,42 +17,88 @@ const Filters = () => {
     state: { items },
     dispatch,
   } = useContext(AuthContext);
-  const categories = ["all", ...new Set(items.map((item) => item.category))];
-  const [bar, toggleBar] = useState(true);
-  const changeDept = () => {
-    toggleBar(!bar);
-  };
+  const [activeDept, setActiveDept] = useState(dept);
 
-  const changeItems = () => {
+  const categories = ["all", ...new Set(items.map((item) => item.category))];
+
+  useEffect(() => {
+    changeItems();
+  }, [dept]);
+
+  function changeItems() {
     if (items) {
       dispatch({ type: "CLEAR_ITEMS" });
-      displayItems(input);
+      displayItems(dept);
     }
-  };
+  }
 
   return (
     <div id="filter__wrapper">
       <div className="filter__head">
         <p className="category_title">Choose Category:</p>
-        <label htmlFor="toggle" className="toggle">
-          <input
-            type="checkbox"
-            className="toggle__input"
-            id="toggle"
-            value={bar ? "Bar" : "Lounge"}
-            onChange={(e) => {
-              setInput(e.target.value);
-              changeDept();
-              changeItems();
-            }}
-          />
-          <div className="toggle__fill"></div>
-        </label>
-        <strong style={{ paddingLeft: "12px" }}>
-          {bar ? "Bar" : "Lounge"}
-        </strong>
-      </div>
+        <div className="radio-buttons">
+          <span>
+            <span
+              className={`${activeDept === "Bar" ? "ims--title" : "ims--dept"}`}
+              style={{
+                cursor: "pointer",
+                fontSize: "0.9rem",
+                marginRight: "5px",
+              }}
+              onClick={() => {
+                setActiveDept("Bar");
+                deptDispatch({
+                  type: "BAR",
+                });
+              }}
+            >
+              Bar
+            </span>
+          </span>
 
+          <span>
+            <span
+              className={`${
+                activeDept === "Lounge" ? "ims--title" : "ims--dept"
+              }`}
+              style={{
+                cursor: "pointer",
+                fontSize: "0.9rem",
+                marginRight: "5px",
+              }}
+              onClick={() => {
+                setActiveDept("Lounge");
+                deptDispatch({
+                  type: "LOUNGE",
+                });
+              }}
+            >
+              Lounge
+            </span>
+          </span>
+
+          <span>
+            <span
+              className={`${
+                activeDept === "Kitchen" ? "ims--title" : "ims--dept"
+              }`}
+              style={{
+                cursor: "pointer",
+                fontSize: "0.9rem",
+                marginRight: "5px",
+              }}
+              onClick={() => {
+                setActiveDept("Kitchen");
+                deptDispatch({
+                  type: "KITCHEN",
+                });
+              }}
+            >
+              Kitchen
+            </span>
+          </span>
+        </div>
+      </div>
       <div className="btn-container">
         {categories.map((category, index) => {
           return (

@@ -10,34 +10,64 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 
 const GeneralReport = () => {
   const [showModal, setShowModal] = useState(false);
-  const { toastOptions } = useContext(AuthContext);
+  const { user, toastOptions } = useContext(AuthContext);
   const [date, setDate] = useState("");
   const [bar, setBar] = useState([]);
   const [lounge, setLounge] = useState([]);
   const navigate = useNavigate();
 
+  const activeUser = user.username;
+  const activePasscode = user.passcode;
+
   const client = "Dbase";
+
+  const url = `https://pos-server1.herokuapp.com/overall-reports`;
+  const getAllReports = async () => {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
+      // filter property bar
+      sortDuplicateValues(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   var width = window.innerWidth > 0 ? window.innerWidth : window.screen.width;
 
   // A USE EFFECT FUNCTION THAT FETCHES ALL DATA FROM THE DATABASE
   useEffect(() => {
-    const url = `https://pos-server1.herokuapp.com/overall-reports`;
-    const getAllReports = async () => {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
-        // filter property bar
-        sortDuplicateValues(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     getAllReports();
   }, []);
 
   const generalReportPageRef = useRef(null);
+
+  // FUNCTION TO CLEAR GENERAL REPORTS
+  const clearDB = async (activeUser, activePasscode) => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/clear-db",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            activeUser,
+            activePasscode,
+          }),
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Individual table has been cleared", toastOptions);
+        getAllReports();
+      }
+    } catch (err) {
+      toast.error("Individual table has not been cleared", toastOptions);
+    }
+  };
 
   const handleGeneratePdf = () => {
     const doc = new jsPDF({
@@ -66,7 +96,11 @@ const GeneralReport = () => {
         axios
           .post("https://pos-server1.herokuapp.com/upload-report", formData)
           .then((res) => {
-            toast.success("Report Uploaded Successfully", toastOptions);
+            if (res.ok) {
+              toast.success("Report Uploaded Successfully", toastOptions);
+            }
+            clearDB(activeUser, activePasscode);
+            getAllReports();
           });
       },
     });
@@ -199,7 +233,13 @@ const GeneralReport = () => {
         </div>
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button className="reportbuttons" onClick={handleGeneratePdf}>
+          <button
+            className="reportbuttons"
+            onClick={() => {
+              getAllReports();
+              handleGeneratePdf();
+            }}
+          >
             Upload Report
           </button>
 

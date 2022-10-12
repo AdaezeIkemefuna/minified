@@ -1,6 +1,10 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { MdOutlineInventory, MdOutlineTableChart } from "react-icons/md";
+import {
+  MdOutlineInventory,
+  MdOutlineTableChart,
+  MdDashboardCustomize,
+} from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { BiLogOut } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
@@ -17,7 +21,7 @@ const SideBar = () => {
 
   const activeStyle = {
     backgroundColor: "var(--primary-color)",
-    color: "var(--yellow)",
+    color: "var(--whiteash)",
     fontWeight: "bold",
   };
 
@@ -107,7 +111,7 @@ const SideBar = () => {
               }}
               className="sidebar-link"
             >
-              <BiLogOut size={25} />
+              <MdDashboardCustomize size={25} />
               Inventory Management
             </NavLink>
           ) : undefined}
@@ -206,7 +210,7 @@ const SideBar = () => {
               }}
               className="sidebar-link"
             >
-              <BiLogOut size={25} />
+              <MdDashboardCustomize size={25} />
               Inventory Management
             </NavLink>
           ) : undefined}
@@ -227,6 +231,7 @@ const SideBar = () => {
           <small style={{ textTransform: "uppercase", fontWeight: "600" }}>
             powered by
           </small>
+          <br />
           <img src="/1.png" alt="" />
         </div>
       </div>

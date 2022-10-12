@@ -84,7 +84,7 @@ const Cart = () => {
                       });
                     }}
                     size={18}
-                    color="var(--primary-color)"
+                    color="blue"
                     className="minus__order"
                   />
 

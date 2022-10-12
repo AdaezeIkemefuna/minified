@@ -3,7 +3,7 @@
   margin-left: 1rem;
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 0rem;
   max-height: 100%;
 }
 
@@ -13,6 +13,10 @@
 
 .orders__left {
   width: 60%;
+}
+
+.orders__left--inventory {
+  width: 100%;
 }
 
 .orders__right {
