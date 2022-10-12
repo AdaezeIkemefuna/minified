@@ -16,7 +16,7 @@ const UpdateQty = ({ order, closeModal }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          item: order.item,
+          product: order.product,
           qty,
         }),
       }).then((res) => {

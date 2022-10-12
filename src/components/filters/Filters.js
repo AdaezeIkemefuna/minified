@@ -59,19 +59,19 @@ const Filters = () => {
           <span>
             <span
               className={`${
-                activeDept === "Lounge" ? "ims--title" : "ims--dept"
+                activeDept === "Lounge" ? "ims--title null" : "ims--dept null"
               }`}
               style={{
                 cursor: "pointer",
                 fontSize: "0.9rem",
                 marginRight: "5px",
               }}
-              onClick={() => {
-                setActiveDept("Lounge");
-                deptDispatch({
-                  type: "LOUNGE",
-                });
-              }}
+              // onClick={() => {
+              //   setActiveDept("Lounge");
+              //   deptDispatch({
+              //     type: "LOUNGE",
+              //   });
+              // }}
             >
               Lounge
             </span>

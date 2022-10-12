@@ -223,7 +223,7 @@ const PlaceOrder = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            item,
+            product: item,
             qty: +qty,
             size: +size,
             metric,
