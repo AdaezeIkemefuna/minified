@@ -3,7 +3,6 @@ import "./Filters.css";
 import AuthContext from "../../context/AuthContext";
 import { MdWineBar } from "react-icons/md";
 import TableContext from "../../context/TableContext";
-import RadioFilters from "./RadioFilters";
 
 const Filters = () => {
   const {
@@ -59,19 +58,19 @@ const Filters = () => {
           <span>
             <span
               className={`${
-                activeDept === "Lounge" ? "ims--title null" : "ims--dept null"
+                activeDept === "Lounge" ? "ims--title" : "ims--dept"
               }`}
               style={{
                 cursor: "pointer",
                 fontSize: "0.9rem",
                 marginRight: "5px",
               }}
-              // onClick={() => {
-              //   setActiveDept("Lounge");
-              //   deptDispatch({
-              //     type: "LOUNGE",
-              //   });
-              // }}
+              onClick={() => {
+                setActiveDept("Lounge");
+                deptDispatch({
+                  type: "LOUNGE",
+                });
+              }}
             >
               Lounge
             </span>

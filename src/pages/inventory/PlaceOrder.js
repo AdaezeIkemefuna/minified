@@ -463,6 +463,11 @@ const PlaceOrder = () => {
                   <option value="Soft Drinks">Soft drinks</option>
                   <option value="Meals">Meals</option>
                   <option value="Cigarettes">Cigarettes</option>
+                  <option value="Soups/Swallow">Soups/Swallow</option>
+                  <option value="Grills">Grills</option>
+                  <option value="Noodles">Noodles</option>
+                  <option value="Rice">Rice</option>
+                  <option value="Chips">Chips</option>
                 </select>
               </div>
 
