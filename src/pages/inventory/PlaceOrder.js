@@ -114,7 +114,7 @@ const PlaceOrder = () => {
   const [productCategories, setProductCategories] = useState([
     "Bar",
     "Lounge",
-    "kitchen",
+    "Kitchen",
   ]);
 
   function processRequestDep(searchValue) {
