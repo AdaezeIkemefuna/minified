@@ -50,7 +50,7 @@ const Inventory = () => {
           </tr>
         </thead>
         <tbody>
-          {!transactions ? (
+          {!transactions.length ? (
             <>
               {transformOrders(imsOrders).map((order, index) => (
                 <tr key={index} className="ims__body">
