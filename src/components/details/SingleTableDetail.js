@@ -26,7 +26,7 @@ const SingleTableDetail = ({ table }) => {
   const closeModalAction = (e) => {
     if (e.target.id === "bgs") {
       closeModal();
-      if (user.role === "Super Admin") {
+      if (user.role === "Super Admin" || user.role === "Administrator") {
         setAdminOrders([]);
         dispatch({
           type: "CLEAR_ORDER",

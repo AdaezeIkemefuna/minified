@@ -32,7 +32,7 @@ const Dashboard = () => {
   const [getUserCredit, setGetUserCredit] = useState({});
 
   useEffect(() => {
-    if (user.role === "Super Admin") {
+    if (user.role === "Super Admin" || user.role === "Administrator") {
       displayAdminTables(activeUser, activePasscode);
     } else {
       displayTables(activeUser);
@@ -40,7 +40,7 @@ const Dashboard = () => {
   }, [activeUser, activePasscode]);
 
   useEffect(() => {
-    if (user.role === "Super Admin") {
+    if (user.role === "Super Admin" || user.role === "Administrator") {
       getOrderCount(activeUser, activePasscode);
     } else {
       getOrderCount(activeUser, activePasscode);
@@ -90,7 +90,9 @@ const Dashboard = () => {
           color="var(--primary-color)"
           styling="dashboard__card"
           numbers={`₦${
-            user.role === "Super Admin" ? adminTotalRevenue : totalRevenue
+            user.role === "Super Admin" || user.role === "Administrator"
+              ? adminTotalRevenue
+              : totalRevenue
           }`}
           title="Total Revenue"
         />
@@ -104,7 +106,9 @@ const Dashboard = () => {
           color="var(--primary-color)"
           styling="dashboard__card"
           numbers={`₦${
-            user.role === "Super Admin" ? adminPosPayments : posPayments
+            user.role === "Super Admin" || user.role === "Administrator"
+              ? adminPosPayments
+              : posPayments
           }`}
           title="POS Payments"
         />
@@ -112,7 +116,9 @@ const Dashboard = () => {
           color="var(--primary-color)"
           styling="dashboard__card"
           numbers={`₦${
-            user.role === "Super Admin" ? adminCashPayments : cashPayments
+            user.role === "Super Admin" || user.role === "Administrator"
+              ? adminCashPayments
+              : cashPayments
           }`}
           title="Cash Payments"
         />
@@ -120,7 +126,7 @@ const Dashboard = () => {
           color="var(--primary-color)"
           styling="dashboard__card"
           numbers={`₦${
-            user.role === "Super Admin"
+            user.role === "Super Admin" || user.role === "Administrator"
               ? adminTransferPayments
               : transferPayments
           }`}
@@ -154,7 +160,7 @@ const Dashboard = () => {
         />
       </div>
 
-      {user.role === "Super Admin" ? (
+      {user.role === "Super Admin" || user.role === "Administrator" ? (
         <div className="tables">
           {adminTables.map((t, index) => {
             return <SingleTableDetail table={t} key={index} />;

@@ -147,11 +147,11 @@ const ChangeRole = () => {
                 <option value="" hidden className="placeholderSelect">
                   Select Role
                 </option>
-                <option vlaue="Super Admin">Super Admin</option>
-                <option vlaue="Supervisor">Supervisor</option>
-                <option vlaue="Store Manager">Store Manager</option>
-                <option vlaue="Bar Man">Bar Man</option>
-                <option vlaue="Accounts">Accounts</option>
+                <option value="Super Admin">Super Admin</option>
+                <option value="Administrator">Administrator</option>
+                <option value="Store Manager">Store Manager</option>
+                <option value="Accountant">Accountant</option>
+                <option value="Cashier">Waiter</option>
               </select>
 
               <div className="modal__buttons">

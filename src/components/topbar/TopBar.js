@@ -42,7 +42,7 @@ const TopBar = () => {
       </form>
 
       <div className="date">{date}</div>
-      {user.role === "Super Admin" ? (
+      {user.role === "Super Admin" || user.role === "Administrator" ? (
         <div
           className="menu__icons"
           // style={{

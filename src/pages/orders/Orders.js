@@ -27,7 +27,7 @@ const Orders = () => {
               : "orders__left"
           }
         >
-          {user.role === "Super Admin" ? (
+          {user.role === "Super Admin" || user.role === "Administrator" ? (
             <MenuBarCategory />
           ) : (
             <>
@@ -40,14 +40,14 @@ const Orders = () => {
           )}
         </div>
         <div className="orders__right">
-          {user.role === "Super Admin" ? (
+          {user.role === "Super Admin" || user.role === "Administrator" ? (
             <AddMenuProduct />
           ) : (
             <>{user.role === "Store Manager" ? <NoDisplay /> : <Cart />}</>
           )}
         </div>
         <div className={showCartMenu ? "orders__right mobile" : "no-display"}>
-          {user.role === "Super Admin" ? (
+          {user.role === "Super Admin" || user.role === "Administrator" ? (
             <AddMenuProduct />
           ) : (
             <>{user.role === "Store Manager" ? undefined : <Cart />}</>

@@ -110,11 +110,10 @@ const AddStaff = () => {
               Select Role
             </option>
             <option value="Super Admin">Super Admin</option>
-            <option value="Supervisor">Supervisor</option>
+            <option value="Administrator">Administrator</option>
             <option value="Store Manager">Store Manager</option>
-            <option value="Accounts">Accounts</option>
-            <option value="Bar Man">Bar Man</option>
-            <option value="Waiter">Waiter</option>
+            <option value="Accountant">Accountant</option>
+            <option value="Cashier">Waiter</option>
           </select>
         </div>
 

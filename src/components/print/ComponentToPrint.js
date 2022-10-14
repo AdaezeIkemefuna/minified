@@ -1,19 +1,51 @@
 import React from "react";
 import Orders from "../modal/updateOldTable/Orders";
-import Company from "../company/Company";
+import { MdLocationOn } from "react-icons/md";
+import { FaPhoneAlt } from "react-icons/fa";
 
 export const ComponentToPrint = React.forwardRef((props, ref) => {
   const { orders, table, total, discount, grandTotal } = props;
   return (
-    <div
-      className="table__receipt"
-      ref={ref}
-      style={{ fontSize: "2rem", color: "black" }}
-    >
+    <div className="table__receipt" ref={ref} style={{ color: "black" }}>
       <h4>Table Bill: {table.table_name}</h4>
       <hr />
-      <Company />
-      <table style={{ color: "black" }}>
+      <div className="company__wrapper">
+        <div className="nav__logo--company">
+          <img src="/logo.png" alt="" width={"100%"} />
+        </div>
+        <div className="company__details">
+          <div className="contact">
+            <MdLocationOn size={20} />
+            <span>
+              3D Igboeze Street, <br /> Independence Layout.
+            </span>
+          </div>{" "}
+          <br />
+          <div className="contact">
+            <FaPhoneAlt />
+            <span>09015290078</span>
+          </div>
+        </div>
+      </div>
+      <div className="waiter">
+        <div>
+          <h4 style={{ display: "inline" }}>Waiter's Name: </h4>
+          {table.waiter}
+        </div>
+
+        <div>
+          <h4 style={{ display: "inline" }}>Date: </h4>
+          {table.date}
+        </div>
+
+        <div className="waiter">
+          <div>
+            <h4 style={{ display: "inline" }}>Time: </h4>
+            <span>{table.time}</span>
+          </div>
+        </div>
+      </div>
+      <table style={{ color: "black", fontSize: "0.85rem" }}>
         <thead>
           <tr>
             <th>Description</th>
@@ -30,16 +62,16 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
 
       <div className="totals__data">
         <div>
-          <span style={{ color: "blueviolet" }}>Total </span>
-          <span style={{ color: "green" }}>₦{Math.round(total)}</span>
+          <span style={{ color: "black" }}>Total </span>
+          <span style={{ color: "black" }}>₦{Math.round(total)}</span>
         </div>
         <div>
           <span>Discount </span>
           <span style={{ color: "red" }}>₦{Math.round(discount)}</span>
         </div>
         <div>
-          <span style={{ color: "blueviolet" }}>GrandTotal </span>
-          <span style={{ color: "green" }}>₦{Math.round(grandTotal)}</span>
+          <span style={{ color: "black" }}>GrandTotal </span>
+          <span style={{ color: "black" }}>₦{Math.round(grandTotal)}</span>
         </div>
       </div>
     </div>

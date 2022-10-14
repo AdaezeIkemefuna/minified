@@ -37,7 +37,7 @@ const DeleteSingleOrder = ({ order, table_name, arr }) => {
       );
       if (response.status === 200) {
         toast.success("Item successfully deleted from order", toastOptions);
-        if (user.role === "Super Admin") {
+        if (user.role === "Super Admin" || user.role === "Administrator") {
           getAdminDetails(activeUser, activePasscode, role, table_name);
         } else if (user.role === "Bar Man") {
           getBarman(activeUser, activePasscode, table_name);
