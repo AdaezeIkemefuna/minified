@@ -1,29 +1,30 @@
-import React from "react";
+import { useEffect } from "react";
 import "./Inventory.css";
 import { useContext } from "react";
 import TableContext from "../../context/TableContext";
 import { useState } from "react";
 import ReceiveOrder from "./modals/ReceiveOrder";
 import CancelOrder from "./modals/CancelOrder";
-import { FaCaretDown } from "react-icons/fa";
+import { FaCaretDown, FaSearch } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
-import ImsDashboards from "./ImsDashboards";
 import AuthContext from "../../context/AuthContext";
 import UpdateQty from "./modals/UpdateQty";
 import UpdateAllItemsQty from "./modals/UpdateAllItemsQty";
+import Transactions from "./Transactions";
+import { useNavigate } from "react-router";
 
 const Inventory = () => {
   const {
     transformOrders,
     imsOrders,
+    imsItems,
     activeCategory,
     transactions,
-    allItemsFilter,
+    searchQuery,
+    setSearchQuery,
     placedOrdersFilter,
+    displayImsItems,
   } = useContext(TableContext);
-  console.log("transactions", transactions);
-  console.log("allitems", allItemsFilter);
-  console.log("pending", placedOrdersFilter);
 
   const [receive, setReceive] = useState(false);
   const [cancel, setCancel] = useState(false);
@@ -31,6 +32,7 @@ const Inventory = () => {
   const [updateQty, setUpdateQty] = useState(false);
 
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const closeModal = (e) => {
     if (e.target.id === "bg") {
@@ -40,9 +42,36 @@ const Inventory = () => {
     }
   };
 
+  useEffect(() => {
+    displayImsItems();
+  }, []);
+
   return (
     <div className="form__wrapper ims__wrapper">
-      <ImsDashboards />
+      {/* <ImsDashboards /> */}
+
+      <div className="ims__topPage">
+        <div className="ims--title imsPage">
+          <span>All Items</span>
+          <span className="order__badge">{imsItems?.length}</span>
+        </div>
+
+        <div className="ims__search">
+          <form>
+            <FaSearch size={15} className="search__icon" color="#343f50" />
+            <input
+              type="text"
+              placeholder="search by item name"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              autoFocus
+            />
+          </form>
+        </div>
+
+        <div onClick={() => navigate("/transactions")}>Transactions</div>
+      </div>
+
       <table className="ims__table">
         <thead className="ims__thead">
           <tr className="table__header__ims">
@@ -61,6 +90,7 @@ const Inventory = () => {
                   <>
                     <th>Reorder Level</th>
                     <th>Status</th>
+                    <th></th>
                   </>
                 ) : (
                   <>
@@ -76,20 +106,19 @@ const Inventory = () => {
         </thead>
         <tbody>
           <>
-            {(activeCategory === "ALL ITEMS" ||
-              activeCategory === "RECEIVED" ||
-              activeCategory === "CANCELLED") && (
+            {transformOrders(imsItems).map((order, index) => (
+              <tr key={index} className="ims__body">
+                <TableRow order={order} index={index} />
+              </tr>
+            ))}
+            {activeCategory === "ALL ITEMS" && (
               <>
-                {!allItemsFilter ? (
-                  <>
-                    {transformOrders(imsOrders).map((order, index) => (
-                      <tr key={index} className="ims__body">
-                        <TableRow order={order} index={index} />
-                      </tr>
-                    ))}
-                  </>
-                ) : (
-                  <>
+                {/* {!allItemsFilter ? (
+                  <> */}
+
+                {/* </>
+                ) : ( */}
+                {/* <>
                     {allItemsFilter.filters.map((t, index) => (
                       <tr key={index} className="ims__body">
                         <td>0{index + 1}</td>
@@ -116,7 +145,7 @@ const Inventory = () => {
                       </tr>
                     ))}
                   </>
-                )}
+                )} */}
               </>
             )}
 
@@ -302,6 +331,7 @@ const TableRow = ({ order, index }) => {
   const [action, setAction] = useState(false);
   const [updateQty, setUpdateQty] = useState(false);
   const [updateQuantity, setUpdateQuantity] = useState(false);
+  const [send, setSend] = useState(false);
 
   const { activeCategory } = useContext(TableContext);
   const { user } = useContext(AuthContext);
@@ -311,6 +341,8 @@ const TableRow = ({ order, index }) => {
       setReceive(false);
       setCancel(false);
       setUpdateQty(false);
+      setUpdateQuantity(false);
+      setSend(false);
     }
   };
 
@@ -385,6 +417,18 @@ const TableRow = ({ order, index }) => {
         </div>
       )}
 
+      {send && (
+        <div
+          className={send ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={closeModal}
+        >
+          <div>
+            <Transactions order={order} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+
       {activeCategory === "TRANSACTIONS" ? (
         <>
           <td>0{index + 1}</td>
@@ -426,6 +470,9 @@ const TableRow = ({ order, index }) => {
                 {quantity > reorder && (
                   <span className="ims--inStock">In stock</span>
                 )}
+              </td>
+              <td className="ims__send" onClick={() => setSend(true)}>
+                Send
               </td>
             </>
           ) : (

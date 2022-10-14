@@ -5,13 +5,12 @@ import TableContext from "../../../context/TableContext";
 
 const UpdateAllItemsQty = ({ order, closeModal }) => {
   const [quantity, setQuantity] = useState(order.qty);
-  const {user, toastOptions } = useContext(AuthContext);
-  const { displayImsItems, displayImsOrders } = useContext(TableContext);
+  const { user, toastOptions } = useContext(AuthContext);
+  const { displayImsItems } = useContext(TableContext);
 
   const activeUser = user.username;
   const activePasscode = user.passcode;
 
-  console.log(order)
   const _updateQuantity = async () => {
     try {
       fetch("https://pos-server1.herokuapp.com/update-quantity", {
@@ -20,7 +19,7 @@ const UpdateAllItemsQty = ({ order, closeModal }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          activeUser : activeUser,
+          activeUser: activeUser,
           activePasscode: activePasscode,
           product: order.product,
           quantity,
@@ -28,7 +27,6 @@ const UpdateAllItemsQty = ({ order, closeModal }) => {
       }).then((res) => {
         if (res.ok) {
           displayImsItems();
-          displayImsOrders();
           toast.success("Quantity Updated", toastOptions);
         } else toast.error("Failed to update quantity", toastOptions);
       });
@@ -51,4 +49,3 @@ const UpdateAllItemsQty = ({ order, closeModal }) => {
 };
 
 export default UpdateAllItemsQty;
-

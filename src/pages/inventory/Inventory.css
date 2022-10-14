@@ -258,15 +258,12 @@
 }
 
 .ims__table {
-  margin-top: 26rem;
   border: 1px solid var(--whiteash);
   border-collapse: collapse;
   border-radius: 10px !important;
 }
 .table__header__ims {
   background-color: var(--whiteash);
-  position: sticky;
-  top: 25rem;
 }
 .table__header__ims > th {
   padding: 1.5rem;
@@ -540,4 +537,18 @@
 
 .edit__qty:hover {
   background-color: rgb(204, 202, 202);
+}
+
+.imsPage {
+  margin-bottom: 2rem;
+  width: fit-content;
+}
+
+.ims__send {
+  color: goldenrod;
+  cursor: pointer;
+}
+
+.ims__send:hover {
+  color: rgb(97, 97, 7);
 }

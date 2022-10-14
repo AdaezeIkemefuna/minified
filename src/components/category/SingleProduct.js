@@ -11,10 +11,11 @@ const SingleProduct = ({ items }) => {
   return (
     <div className="menu-item">
       <p style={{ fontSize: "1rem" }}>{items.department}</p>
+      <small>{items.quantity}</small>
       <img
         src={items.image}
         alt={items.product}
-        style={{ margin: "0.5rem 0rem"}}
+        style={{ margin: "0.5rem 0rem" }}
         width={"50px"}
         height={"75px"}
       />
