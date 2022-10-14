@@ -21,7 +21,7 @@ const SideBar = () => {
 
   const activeStyle = {
     backgroundColor: "var(--primary-color)",
-    color: "var(--whiteash)",
+    color: "var(--yellow)",
     fontWeight: "bold",
   };
 
@@ -44,6 +44,15 @@ const SideBar = () => {
   const [activeTab, setActiveTab] = useState("orders");
   return (
     <>
+      {showModal && (
+        <div
+          className={showModal ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={closeModal}
+        >
+          <AdminModal setShowModal={setShowModal} />
+        </div>
+      )}
       <div className="nav__container desktop">
         <div className="nav__logo">
           <img src="/logo.png" alt="" width={"100%"} />
@@ -89,16 +98,6 @@ const SideBar = () => {
             >
               <FiSettings size={25} />
               Settings
-            </div>
-          )}
-
-          {showModal && (
-            <div
-              className={showModal ? "backdrop__container" : "close"}
-              id="bg"
-              onClick={closeModal}
-            >
-              <AdminModal setShowModal={setShowModal} />
             </div>
           )}
 
@@ -187,16 +186,6 @@ const SideBar = () => {
             >
               <FiSettings size={25} />
               Settings
-            </div>
-          )}
-
-          {showModal && (
-            <div
-              className={showModal ? "backdrop__container" : "close"}
-              id="bg"
-              onClick={closeModal}
-            >
-              <AdminModal setShowModal={setShowModal} />
             </div>
           )}
 

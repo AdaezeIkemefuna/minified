@@ -20,7 +20,7 @@
   gap: 3rem;
   padding: 0 1rem;
   padding-top: 0.5rem !important;
-  color: var(--whiteash);
+  color: var(--yellow);
   border-radius: 11px;
   font-weight: 600;
   box-shadow: 0px 1.37817px 2.75634px rgba(0, 0, 0, 0.25),
@@ -103,7 +103,7 @@
 }
 
 .ims--title > .order__badge {
-  color: var(--whiteash);
+  color: var(--yellow);
   background-color: var(--primary-color);
   border-radius: 10px;
   padding: 0.2rem 0.5rem;

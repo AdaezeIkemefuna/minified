@@ -1,14 +1,12 @@
-
 .cart__wrapper {
   padding: 1rem;
   background-color: white;
   position: fixed;
-  top:8rem;
-  right:1.3rem;
+  top: 8rem;
+  right: 1.3rem;
   overflow-y: scroll;
-  height: 70%;
+  height: 90%;
 }
-
 
 .cart__wrapper::-webkit-scrollbar {
   width: 1em;
@@ -16,14 +14,14 @@
 }
 
 .cart__wrapper::-webkit-scrollbar-track {
-  background: #EC9C04;
+  background: #ec9c04;
   border-radius: 100vw;
   margin-block: 0.5em;
 }
 
 .cart__wrapper::-webkit-scrollbar-thumb {
-  background: #EC9C04;
-  border: 0.25em solid #EC9C04;
+  background: #ec9c04;
+  border: 0.25em solid #ec9c04;
   border-radius: 100vw;
 }
 
@@ -31,24 +29,22 @@
   background: hsl(120 100% 10% / 1);
 }
 
-
- .table {
+.table {
   border-collapse: collapse;
   width: 100%;
   margin-top: 2rem;
 }
 
-
 .table__header__row {
   border-radius: 10px;
-  background-color: #e2e9fa;
+  background-color: var(--yellow);
   border: none;
   outline: none;
   width: 100%;
 }
 
 .table__header__row > * {
-  color: #2155cd;
+  color: var(--primary-color);
 }
 
 .th {
@@ -87,7 +83,6 @@
   width: 85%;
 }
 
-
 .place__order {
   display: flex;
   flex-direction: column;
@@ -115,13 +110,14 @@
 }
 
 .minus__order {
-  background-color: whitesmoke;
+  background-color: var(--yellow);
   cursor: pointer;
   border-radius: 50%;
   padding: 0.3rem;
   margin-top: 3px;
   margin-right: 3px;
   display: inline;
+  color: var(--primary-color);
 }
 
 .plus__order {
@@ -151,49 +147,48 @@
   right: 1rem;
 }
 
-@media (max-width:600px){
+@media (max-width: 600px) {
   .cart__wrapper {
     padding: 0.1rem;
     background-color: white;
     overflow-y: scroll;
     position: relative;
-    top:1rem;
-    right:0rem;
+    top: 1rem;
+    right: 0rem;
     height: 100%;
   }
-
 
   .cart__wrapper::-webkit-scrollbar {
     width: 0.5em;
     height: 0.2em;
   }
-  
+
   .cart__wrapper::-webkit-scrollbar-track {
-    background: #EC9C04;
+    background: #ec9c04;
     border-radius: 100vw;
     margin-block: 0.5em;
   }
-  
+
   .cart__wrapper::-webkit-scrollbar-thumb {
-    background: #EC9C04;
-    border: 0.25em solid #EC9C04;
+    background: #ec9c04;
+    border: 0.25em solid #ec9c04;
     border-radius: 100vw;
   }
-  
+
   .cart__wrapper::-webkit-scrollbar-thumb:hover {
     background: hsl(120 100% 10% / 1);
   }
 
-
   .minus__order {
-    background-color: whitesmoke;
+    background-color: var(--yellow);
     cursor: pointer;
     border-radius: 50%;
     padding: 0.3rem;
     margin-top: 3px;
     margin-right: 3px;
+    color: var(--primary-color);
   }
-  
+
   .plus__order {
     background-color: var(--primary-color);
     cursor: pointer;

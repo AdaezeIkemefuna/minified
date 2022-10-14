@@ -119,6 +119,42 @@ export const AuthProvider = ({ children }) => {
       );
     }
 
+    if (activeCategory === "Cigarettes") {
+      sortedProducts = sortedProducts.filter(
+        (item) => item.category === "Cigarettes"
+      );
+    }
+
+    if (activeCategory === "Soups/Swallow") {
+      sortedProducts = sortedProducts.filter(
+        (item) => item.category === "Soups/Swallow"
+      );
+    }
+
+    if (activeCategory === "Grills") {
+      sortedProducts = sortedProducts.filter(
+        (item) => item.category === "Grills"
+      );
+    }
+
+    if (activeCategory === "Noodles") {
+      sortedProducts = sortedProducts.filter(
+        (item) => item.category === "Noodles"
+      );
+    }
+
+    if (activeCategory === "Rice") {
+      sortedProducts = sortedProducts.filter(
+        (item) => item.category === "Rice"
+      );
+    }
+
+    if (activeCategory === "Chips") {
+      sortedProducts = sortedProducts.filter(
+        (item) => item.category === "Chips"
+      );
+    }
+
     if (searchQuery !== "") {
       sortedProducts = items.filter((prod) =>
         prod.product.toLowerCase().includes(searchQuery.toLowerCase())
@@ -258,7 +294,6 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       if (response.ok) {
         setAdminOrders(data);
-        console.log(data);
       }
     } catch (error) {}
   };
@@ -282,7 +317,7 @@ export const AuthProvider = ({ children }) => {
         }
       );
       const data = await response.json();
-      setOrderCount(data.order_count[0].count);
+      setOrderCount(data.Waiter_count);
     } catch (error) {}
   };
 
