@@ -10,6 +10,7 @@ import { AiFillEdit } from "react-icons/ai";
 import ImsDashboards from "./ImsDashboards";
 import AuthContext from "../../context/AuthContext";
 import UpdateQty from "./modals/UpdateQty";
+import UpdateAllItemsQty from "./modals/UpdateAllItemsQty";
 
 const Inventory = () => {
   const {
@@ -300,6 +301,7 @@ const TableRow = ({ order, index }) => {
   const [cancel, setCancel] = useState(false);
   const [action, setAction] = useState(false);
   const [updateQty, setUpdateQty] = useState(false);
+  const [updateQuantity, setUpdateQuantity] = useState(false);
 
   const { activeCategory } = useContext(TableContext);
   const { user } = useContext(AuthContext);
@@ -309,6 +311,12 @@ const TableRow = ({ order, index }) => {
       setReceive(false);
       setCancel(false);
       setUpdateQty(false);
+    }
+  };
+
+  const closeModal2 = (e) => {
+    if (e.target.id === "bg") {
+      setUpdateQuantity(false);
     }
   };
   const {
@@ -365,6 +373,18 @@ const TableRow = ({ order, index }) => {
         </div>
       )}
 
+      {updateQuantity && (
+        <div
+          className={updateQuantity ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={closeModal2}
+        >
+          <div>
+            <UpdateAllItemsQty order={order} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+
       {activeCategory === "TRANSACTIONS" ? (
         <>
           <td>0{index + 1}</td>
@@ -380,7 +400,17 @@ const TableRow = ({ order, index }) => {
             <>
               <td>0{index + 1}</td>
               <td>{product}</td>
-              <td>{quantity}</td>
+              <td>
+                {quantity}{" "}
+                <AiFillEdit
+                  color="var(--success)"
+                  size={15}
+                  className="edit__qty"
+                  onClick={() => {
+                    setUpdateQuantity(true);
+                  }}
+                />
+              </td>
               <td>
                 {size}
                 {metric}

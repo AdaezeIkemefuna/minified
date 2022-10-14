@@ -84,6 +84,7 @@ export const AuthProvider = ({ children }) => {
   // PRODUCTS FILTER
   const transformItems = (items) => {
     let sortedProducts = items;
+    console.log(sortedProducts)
 
     if (activeCategory === "All Menu") {
       sortedProducts = items;

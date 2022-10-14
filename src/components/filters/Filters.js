@@ -86,12 +86,6 @@ const Filters = () => {
                 fontSize: "0.9rem",
                 marginRight: "5px",
               }}
-              onClick={() => {
-                setActiveDept("Kitchen");
-                deptDispatch({
-                  type: "KITCHEN",
-                });
-              }}
             >
               Kitchen
             </span>

@@ -10,17 +10,22 @@ function GeneralReportPage({bar, lounge, barTotal, loungeTotal}) {
     adminTransferPayments,
     adminTotalRevenue, user, adminTables, displayAdminTables, displayTables} = useContext(AuthContext);
 
-
+    let startTime = "";
     console.log(adminTables);
-    console.log(adminTables.forEach((element,index) => {
-      if(index === 0){
-        console.log(element.date, element.time);
-      }
-    }));
+  adminTables.find((element,index) => {
+          if(element.status === "CLOSED" && index === 1){
+            startTime = `${element.time}`
+          }
+        })
 
-      console.log(adminTables.forEach((element,index, arr) => {
-      console.log(arr.length)
-    }));
+    let closeTime = "";
+
+       adminTables.find((element,index, arr) => {
+          if(element.status === "CLOSED" && index === arr.length - 1){
+           closeTime = `${element.date} ${element.time} `
+
+          }
+        })
 
     const activeUser = user.username;
     const activePasscode = user.passcode;
@@ -49,6 +54,7 @@ const current = new Date();
               
               <div className="general__reportTable">
               <div style={{display:"flex", flexDirection:"column", gap:"2rem", paddingLeft:'2rem'}}>
+              <div style={{fontSize:"1.2rem"}}><span>Start Time:</span> <b>{startTime}</b></div>
               <div style={{fontSize:"1.2rem"}}><span>Bar Total:</span> <b>N{barTotal.toLocaleString("en-US")}</b></div>
               <div style={{fontSize:"1.2rem"}}><span>Lounge Total:</span> <b>N{loungeTotal.toLocaleString("en-US")}</b></div>
               <hr></hr>
@@ -56,6 +62,7 @@ const current = new Date();
                 </div>
  
               <div style={{display:"flex", flexDirection:"column", gap:"2rem", paddingRight:'2rem'}}>
+              <div style={{fontSize:"1.2rem"}}><span>Closing Time:</span> <b>{closeTime}</b></div>
               <div style={{fontSize:"1.2rem"}}><span>Cash Payments:</span> <b>N{adminCashPayments.toLocaleString("en-US")} </b></div>
               <div style={{fontSize:"1.2rem"}}><span>POS Payments:</span> <b>N{adminPosPayments.toLocaleString("en-US")} </b></div>
               <div style={{fontSize:"1.2rem"}}><span>Transfer Payments:</span> <b>N{adminTransferPayments.toLocaleString("en-US")}</b></div>
