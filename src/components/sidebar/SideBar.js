@@ -71,7 +71,9 @@ const SideBar = () => {
             }
           >
             <MdOutlineInventory size={25} />
-            {user.role === "Super Admin" ? "Menu Manager" : "New Orders"}
+            {user.role === "Super Admin" || user.role === "Administrator"
+              ? "Menu Manager"
+              : "New Orders"}
           </NavLink>
 
           <NavLink
@@ -90,7 +92,7 @@ const SideBar = () => {
             Table Manager
           </NavLink>
 
-          {user.role === "Super Admin" && (
+          {(user.role === "Super Admin" || user.role === "Administrator") && (
             <div
               style={activeTab === "settings" ? activeStyle : undefined}
               onClick={settingsAction}
@@ -101,7 +103,9 @@ const SideBar = () => {
             </div>
           )}
 
-          {user.role === "Super Admin" || user.role === "Store Manager" ? (
+          {user.role === "Super Admin" ||
+          user.role === "Store Manager" ||
+          user.role === "Administrator" ? (
             <NavLink
               to={"/inventory"}
               style={activeTab === "inventory" ? activeStyle : undefined}
@@ -158,7 +162,13 @@ const SideBar = () => {
             }
           >
             <MdOutlineInventory size={25} />
+<<<<<<< HEAD
             {user.role === "Super Admin" || "Supervisor" ? "Menu Manager" : "New Orders"}
+=======
+            {user.role === "Super Admin" || user.role === "Administrator"
+              ? "Menu Manager"
+              : "New Orders"}
+>>>>>>> 31a5a66d966b0a665f25a642f9272b11704e0130
           </NavLink>
 
           <NavLink
@@ -178,18 +188,21 @@ const SideBar = () => {
             Table Manager
           </NavLink>
 
-          {user.role === "Super Admin" && (
-            <div
-              style={activeTab === "settings" ? activeStyle : undefined}
-              onClick={settingsAction}
-              className="sidebar-link"
-            >
-              <FiSettings size={25} />
-              Settings
-            </div>
-          )}
+          {user.role === "Super Admin" ||
+            (user.role === "Administrator" && (
+              <div
+                style={activeTab === "settings" ? activeStyle : undefined}
+                onClick={settingsAction}
+                className="sidebar-link"
+              >
+                <FiSettings size={25} />
+                Settings
+              </div>
+            ))}
 
-          {user.role === "Super Admin" || user.role === "Store Manager" ? (
+          {user.role === "Super Admin" ||
+          user.role === "Store Manager" ||
+          user.role === "Administrator" ? (
             <NavLink
               to={"/inventory"}
               style={activeTab === "inventory" ? activeStyle : undefined}

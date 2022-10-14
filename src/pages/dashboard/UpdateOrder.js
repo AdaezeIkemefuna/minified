@@ -12,7 +12,7 @@ const UpdateOrder = () => {
   const activePasscode = user.passcode;
 
   useEffect(() => {
-    if (user.role === "Super Admin") {
+    if (user.role === "Super Admin" || user.role === "Administrator") {
       displayAdminTables(activeUser, activePasscode);
     } else {
       displayTables(activeUser);
@@ -23,7 +23,7 @@ const UpdateOrder = () => {
     <>
       <TopMenu />
       <div className="tables">
-        {user.role === "Super Admin" ? (
+        {user.role === "Super Admin" || user.role === "Administrator" ? (
           <div className="tables">
             {adminTables.map((t, index) => {
               return <UpdateSingleTable table={t} key={index} />;

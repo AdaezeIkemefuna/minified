@@ -21,18 +21,7 @@ const OrderPageLoad = () => {
     }
   };
   return (
-    <div className="category__heading loading">
-      <LoadingCard />
-      <LoadingCard />
-      <LoadingCard />
-      <LoadingCard />
-      <LoadingCard />
-      <LoadingCard />
-      <LoadingCard />
-      <LoadingCard />
-      <LoadingCard />
-      <LoadingCard />
-      <LoadingCard />
+    <>
       {reload && (
         <div
           className={reload ? "backdrop__container" : "close"}
@@ -44,7 +33,21 @@ const OrderPageLoad = () => {
           </div>
         </div>
       )}
-    </div>
+
+      <div className="category__heading loading">
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+      </div>
+    </>
   );
 };
 

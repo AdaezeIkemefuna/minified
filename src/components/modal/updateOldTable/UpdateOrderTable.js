@@ -58,7 +58,7 @@ export default function UpdateOrderTable({ table, closeModal }) {
         setOrder([]);
         dispatch({ type: "CLEAR_CART" });
 
-        if (user.role === "Super Admin") {
+        if (user.role === "Super Admin" || user.role === "Administrator") {
           getAdminDetails(activeUser, activePasscode, role, table_name);
         } else {
           getDetails(activeUser, activePasscode, table_name);
@@ -75,7 +75,7 @@ export default function UpdateOrderTable({ table, closeModal }) {
   console.log(order);
 
   useEffect(() => {
-    if (user.role === "Super Admin") {
+    if (user.role === "Super Admin" || user.role === "Administrator") {
       getAdminDetails(activeUser, activePasscode, role, table_name);
     } else {
       getDetails(activeUser, activePasscode, table_name);
@@ -89,7 +89,7 @@ export default function UpdateOrderTable({ table, closeModal }) {
         <h4>Table Bill: {table.table_name}</h4>
         <hr />
         <Company />
-        {user.role === "Super Admin" ? (
+        {user.role === "Super Admin" || user.role === "Administrator" ? (
           <table className="table">
             <thead className="thead">
               <tr className="table__header__row">

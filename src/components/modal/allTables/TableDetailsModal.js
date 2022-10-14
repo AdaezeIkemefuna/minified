@@ -80,7 +80,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   //CLOSING RECEIPT MODAL
   const closeModalAction = () => {
     closeModal();
-    if (user.role === "Super Admin") {
+    if (user.role === "Super Admin" || user.role === "Administrator") {
       setAdminOrders([]);
       dispatch({
         type: "CLEAR_ORDER",
@@ -111,7 +111,7 @@ export default function TableDetailsModal({ table, closeModal }) {
 
   //FETCHING DETAILS ON LOAD
   useEffect(() => {
-    if (user.role === "Super Admin") {
+    if (user.role === "Super Admin" || user.role === "Administrator") {
       getAdminDetails(activeUser, activePasscode, role, table_name);
     } else if (user.role === "Bar Man") {
       getBarman(activeUser, activePasscode, table_name);
@@ -127,7 +127,7 @@ export default function TableDetailsModal({ table, closeModal }) {
 
   //CALCULATING TOTALS
   useEffect(() => {
-    if (user.role === "Super Admin") {
+    if (user.role === "Super Admin" || user.role === "Administrator") {
       setTotal(
         adminOrders?.reduce(
           (acc, curr) => acc + Number(curr.item.price) * curr.quantity,
@@ -242,7 +242,7 @@ export default function TableDetailsModal({ table, closeModal }) {
         }
       );
       if (response.status === 200) {
-        if (user.role === "Super Admin") {
+        if (user.role === "Super Admin" || user.role === "Administrator") {
           getAdminDetails(activeUser, activePasscode, role, table_name);
           closeModalAction();
         } else if (user.role === "Bar Man") {
@@ -346,7 +346,7 @@ export default function TableDetailsModal({ table, closeModal }) {
       </div>
       <div className="waiter">
         <div>
-          <h4 style={{ display: "inline" }}>Name: </h4>
+          <h4 style={{ display: "inline" }}>Waiter's Name: </h4>
           {table.waiter}
         </div>
 
@@ -363,7 +363,7 @@ export default function TableDetailsModal({ table, closeModal }) {
         </div>
       </div>
 
-      {user.role === "Super Admin" && (
+      {(user.role === "Super Admin" || user.role === "Administrator") && (
         <table className="table">
           <thead>
             <tr className="table__header__row">
@@ -381,7 +381,8 @@ export default function TableDetailsModal({ table, closeModal }) {
               <td className="td">
                 {table.status === "OPEN" && (
                   <>
-                    {user.role === "Super Admin" && (
+                    {(user.role === "Super Admin" ||
+                      user.role === "Administrator") && (
                       <FaMinus
                         onClick={() => {
                           dispatch({
@@ -423,7 +424,8 @@ export default function TableDetailsModal({ table, closeModal }) {
               <td className="td">
                 {table?.status === "CLOSED" ? undefined : (
                   <>
-                    {user.role === "Super Admin" && (
+                    {(user.role === "Super Admin" ||
+                      user.role === "Administrator") && (
                       <MdDeleteOutline
                         size={20}
                         style={{ marginTop: "2px" }}
@@ -513,7 +515,7 @@ export default function TableDetailsModal({ table, closeModal }) {
         </table>
       ) : (
         <>
-          {user.role !== "Super Admin" && (
+          {user.role !== "Super Admin" && user.role !== "Administrator" && (
             <table className="table">
               <thead>
                 <tr className="table__header__row">
@@ -543,7 +545,7 @@ export default function TableDetailsModal({ table, closeModal }) {
       {table.status === "OPEN" && (
         <div>
           <>
-            {role === "Super Admin" && (
+            {(role === "Super Admin" || role === "Administrator") && (
               <button className="receipt__btn" onClick={updateQty}>
                 apply changes
               </button>
@@ -571,7 +573,9 @@ export default function TableDetailsModal({ table, closeModal }) {
         </div>
       </div>
 
-      {table.status === "OPEN" && user.role !== "Super Admin" ? (
+      {table.status === "OPEN" &&
+      user.role !== "Super Admin" &&
+      user.role !== "Administrator" ? (
         <>
           <div className="payment__method">
             <p>Select a payment method</p>
@@ -675,13 +679,44 @@ export default function TableDetailsModal({ table, closeModal }) {
             </div>
           </div>
 
+          {user.role !== "Super Admin" && user.role !== "Administrator" && (
+            <>
+              <button className="receipt__btn" onClick={handlePrint}>
+                Print Invoice
+              </button>
+              {user.role === "Bar Man" ? (
+                <div style={{ display: "none" }}>
+                  <ComponentToPrint
+                    table={table}
+                    orders={barmanOrders}
+                    ref={printRef}
+                    total={total}
+                    discont={discount}
+                    grandTotal={grandTotal}
+                  />
+                </div>
+              ) : (
+                <div style={{ display: "none" }}>
+                  <ComponentToPrint
+                    table={table}
+                    orders={orders}
+                    ref={printRef}
+                    total={total}
+                    discont={discount}
+                    grandTotal={grandTotal}
+                  />
+                </div>
+              )}
+            </>
+          )}
+
           <button className="receipt__btn" onClick={closeTable}>
             close table
           </button>
         </>
       ) : (
         <>
-          {user.role !== "Super Admin" && (
+          {user.role !== "Super Admin" && user.role !== "Administrator" && (
             <>
               <button className="receipt__btn" onClick={handlePrint}>
                 Print Receipt

@@ -1,8 +1,14 @@
+.ims__wrapper {
+  margin-top: 0;
+  padding-top: 0;
+  background-color: white;
+}
+
 .ims {
   position: fixed;
   background-color: var(--white);
   width: 84vw;
-  padding-bottom: 0.5rem;
+  padding-bottom: 2rem;
 }
 
 .ims__topDashBoard {
@@ -112,16 +118,18 @@
 }
 
 .ims--place__order {
-  color: var(--text-color);
+  color: var(--yellow);
   padding: 0.1rem 0.6rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   border-radius: 8px;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  margin-left: 0.2rem;
   font-weight: 500;
   border: 1px solid var(--blue-border);
   cursor: pointer;
+  background-color: var(--primary-color);
 }
 
 .ims--place__order > .order__badge {
@@ -250,7 +258,7 @@
 }
 
 .ims__table {
-  margin-top: 23.5rem;
+  margin-top: 26rem;
   border: 1px solid var(--whiteash);
   border-collapse: collapse;
   border-radius: 10px !important;
@@ -258,7 +266,7 @@
 .table__header__ims {
   background-color: var(--whiteash);
   position: sticky;
-  top: 25.3rem;
+  top: 25rem;
 }
 .table__header__ims > th {
   padding: 1.5rem;
