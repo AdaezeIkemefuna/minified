@@ -11,7 +11,6 @@ const UpdateAllItemsQty = ({ order, closeModal }) => {
   const activeUser = user.username;
   const activePasscode = user.passcode;
 
-  console.log(order)
   const _updateQuantity = async () => {
     try {
       fetch("https://pos-server1.herokuapp.com/update-quantity", {

@@ -162,13 +162,10 @@ const SideBar = () => {
             }
           >
             <MdOutlineInventory size={25} />
-<<<<<<< HEAD
-            {user.role === "Super Admin" || "Supervisor" ? "Menu Manager" : "New Orders"}
-=======
+
             {user.role === "Super Admin" || user.role === "Administrator"
               ? "Menu Manager"
               : "New Orders"}
->>>>>>> 31a5a66d966b0a665f25a642f9272b11704e0130
           </NavLink>
 
           <NavLink
