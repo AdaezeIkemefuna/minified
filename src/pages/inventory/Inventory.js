@@ -40,7 +40,7 @@ const Inventory = () => {
   };
 
   return (
-    <div className="form__wrapper">
+    <div className="form__wrapper ims__wrapper">
       <ImsDashboards />
       <table className="ims__table">
         <thead className="ims__thead">

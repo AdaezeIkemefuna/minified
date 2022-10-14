@@ -4,6 +4,7 @@
   gap: 0.5rem;
   height: 100vh !important;
   width: 100vw;
+  overflow-x: hidden;
 }
 
 .home__left.mobile {
@@ -14,9 +15,8 @@
   display: none;
 }
 
-
 .backdrop__container {
-display: none;
+  display: none;
 }
 
 /* Responsive Design For Tablet */
@@ -68,5 +68,4 @@ display: none;
     justify-content: center;
     align-items: center;
   }
-
 }

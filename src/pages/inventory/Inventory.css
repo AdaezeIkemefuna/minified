@@ -1,8 +1,14 @@
+.ims__wrapper {
+  margin-top: 0;
+  padding-top: 0;
+  background-color: white;
+}
+
 .ims {
   position: fixed;
   background-color: var(--white);
   width: 84vw;
-  padding-bottom: 1rem;
+  padding-bottom: 2rem;
 }
 
 .ims__topDashBoard {
@@ -260,7 +266,7 @@
 .table__header__ims {
   background-color: var(--whiteash);
   position: sticky;
-  top: 27rem;
+  top: 25rem;
 }
 .table__header__ims > th {
   padding: 1.5rem;
