@@ -679,6 +679,37 @@ export default function TableDetailsModal({ table, closeModal }) {
             </div>
           </div>
 
+          {user.role !== "Super Admin" && user.role !== "Administrator" && (
+            <>
+              <button className="receipt__btn" onClick={handlePrint}>
+                Print Invoice
+              </button>
+              {user.role === "Bar Man" ? (
+                <div style={{ display: "none" }}>
+                  <ComponentToPrint
+                    table={table}
+                    orders={barmanOrders}
+                    ref={printRef}
+                    total={total}
+                    discont={discount}
+                    grandTotal={grandTotal}
+                  />
+                </div>
+              ) : (
+                <div style={{ display: "none" }}>
+                  <ComponentToPrint
+                    table={table}
+                    orders={orders}
+                    ref={printRef}
+                    total={total}
+                    discont={discount}
+                    grandTotal={grandTotal}
+                  />
+                </div>
+              )}
+            </>
+          )}
+
           <button className="receipt__btn" onClick={closeTable}>
             close table
           </button>
