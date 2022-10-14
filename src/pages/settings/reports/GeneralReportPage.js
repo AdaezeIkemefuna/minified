@@ -8,7 +8,19 @@ function GeneralReportPage({bar, lounge, barTotal, loungeTotal}) {
   const {adminCashPayments,
     adminPosPayments,
     adminTransferPayments,
-    adminTotalRevenue, user, displayAdminTables, displayTables} = useContext(AuthContext);
+    adminTotalRevenue, user, adminTables, displayAdminTables, displayTables} = useContext(AuthContext);
+
+
+    console.log(adminTables);
+    console.log(adminTables.forEach((element,index) => {
+      if(index === 0){
+        console.log(element.date, element.time);
+      }
+    }));
+
+      console.log(adminTables.forEach((element,index, arr) => {
+      console.log(arr.length)
+    }));
 
     const activeUser = user.username;
     const activePasscode = user.passcode;
