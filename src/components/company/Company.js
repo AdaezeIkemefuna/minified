@@ -24,13 +24,13 @@ const Company = () => {
           <div className="contact">
             <MdLocationOn size={20} />
             <span>
-              78 Aguleri Street, <br /> Independence Layout.
+              3D Igboeze Street, <br /> Independence Layout.
             </span>
           </div>{" "}
           <br />
           <div className="contact">
             <FaPhoneAlt />
-            <span>07082836846</span>
+            <span>09015290078</span>
           </div>
         </div>
       </div>

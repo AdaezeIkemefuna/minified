@@ -19,6 +19,8 @@
 }
 
 .nav__logo--company {
-  width: 250px;
+  width: 150px;
   height: 150px;
+  margin-right: 2.5rem;
+  margin-left: -0.5rem;
 }

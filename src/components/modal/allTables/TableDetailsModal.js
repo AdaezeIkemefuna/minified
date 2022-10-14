@@ -1,23 +1,28 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import AuthContext from "../../../context/AuthContext";
-import Company from "../../company/Company";
-import { MdDeleteOutline } from "react-icons/md";
-import { FaMinus } from "react-icons/fa";
-import "../Modal.css";
-import { FaMoneyBill, FaRegCreditCard } from "react-icons/fa";
+import TableContext from "../../../context/TableContext";
+import { toast } from "react-toastify";
+import {
+  MdDeleteOutline,
+  MdLocationOn,
+  MdOutlineCreditCardOff,
+  MdOutlineArrowBackIos,
+} from "react-icons/md";
+import {
+  FaMoneyBill,
+  FaRegCreditCard,
+  FaMinus,
+  FaPhoneAlt,
+} from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
-import { MdOutlineCreditCardOff } from "react-icons/md";
 import CashModal from "../payments/CashModal";
 import PosModal from "../payments/posModal";
 import CreditModal from "../payments/CreditModal";
 import TransferModal from "../payments/TransferModal";
-import { toast } from "react-toastify";
 import { ComponentToPrint } from "../../print/ComponentToPrint";
-import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { MdOutlineArrowBackIos } from "react-icons/md";
-import TableContext from "../../../context/TableContext";
 import DeleteSingleOrder from "./DeleteSingleOrder";
+import "../Modal.css";
 
 export default function TableDetailsModal({ table, closeModal }) {
   const {
@@ -301,12 +306,62 @@ export default function TableDetailsModal({ table, closeModal }) {
     handleReactToPrint();
   };
 
+  const currentDate = new Date();
+  const date = `${currentDate.toLocaleString("en-US", {
+    weekday: "long",
+  })}, ${currentDate.toLocaleString("en-US", {
+    month: "long",
+  })} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
+
+  const currentTime = new Date();
+  const time = currentTime.toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
   return (
     <div className="table__receipt">
       <MdOutlineArrowBackIos size={30} onClick={closeModalAction} />
       <h4>Table Bill: {table.table_name}</h4>
       <hr />
-      <Company />
+
+      <div className="company__wrapper">
+        <div className="nav__logo--company">
+          <img src="/logo.png" alt="" width={"100%"} />
+        </div>
+        <div className="company__details">
+          <div className="contact">
+            <MdLocationOn size={20} />
+            <span>
+              3D Igboeze Street, <br /> Independence Layout.
+            </span>
+          </div>{" "}
+          <br />
+          <div className="contact">
+            <FaPhoneAlt />
+            <span>09015290078</span>
+          </div>
+        </div>
+      </div>
+      <div className="waiter">
+        <div>
+          <h4 style={{ display: "inline" }}>Name: </h4>
+          {table.waiter}
+        </div>
+
+        <div>
+          <h4 style={{ display: "inline" }}>Date: </h4>
+          {table.date ? table.date : date}
+        </div>
+
+        <div className="waiter">
+          <div>
+            <h4 style={{ display: "inline" }}>Time: </h4>
+            <span>{table.time ? table.time : time}</span>
+          </div>
+        </div>
+      </div>
 
       {user.role === "Super Admin" && (
         <table className="table">
