@@ -132,9 +132,9 @@ export const TableProvider = ({ children }) => {
     } catch (err) {}
   };
 
-  useEffect(() => {
-    displayImsOrders();
-  }, []);
+  // useEffect(() => {
+  //   displayImsOrders();
+  // }, []);
 
   //GET CANCELLED ORDERS
   const [cancelledOrder, setCancelledOrder] = useState(0);
@@ -149,9 +149,9 @@ export const TableProvider = ({ children }) => {
     } catch (err) {}
   };
 
-  useEffect(() => {
-    getCancelledOrder();
-  }, []);
+  // useEffect(() => {
+  //   getCancelledOrder();
+  // }, []);
 
   //GET RECEIVED ORDERS
   const [receivedOrder, setReceivedOrder] = useState(0);
@@ -166,9 +166,9 @@ export const TableProvider = ({ children }) => {
     } catch (err) {}
   };
 
-  useEffect(() => {
-    getReceivedOrder();
-  }, []);
+  // useEffect(() => {
+  //   getReceivedOrder();
+  // }, []);
 
   //FILTERING PLACED ORDERS
   const [placedOrdersFilter, setPlacedOrdersFilter] = useState("");
@@ -274,82 +274,86 @@ export const TableProvider = ({ children }) => {
   const transformOrders = (items) => {
     let sortedOrders = items;
 
-    if (searchQuery !== "" && activeCategory === "ALL ITEMS") {
-      const searchProduct = imsItems.filter((prod) =>
+    if (searchQuery !== "") {
+      sortedOrders = items.filter((prod) =>
         prod.product.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      if (!searchProduct) return <div>Couldn't find that item</div>;
-      else return searchProduct;
     }
 
-    if (searchQuery !== "" && allItemsFilter) {
-      const searchProduct = allItemsFilter.filters.filter((prod) =>
-        prod.product.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      if (!searchProduct) return <div>Couldn't find that item</div>;
-      else return searchProduct;
-    }
+    // if (searchQuery !== "" && activeCategory === "ALL ITEMS") {
+    //   const searchProduct = imsItems.filter((prod) =>
+    //     prod.product.toLowerCase().includes(searchQuery.toLowerCase())
+    //   );
+    //   if (!searchProduct) return <div>Couldn't find that item</div>;
+    //   else return searchProduct;
+    // }
 
-    if (activeCategory === "ALL ITEMS") {
-      sortedOrders = imsItems;
-      return sortedOrders;
-    }
+    // if (searchQuery !== "" && allItemsFilter) {
+    //   const searchProduct = allItemsFilter.filters.filter((prod) =>
+    //     prod.product.toLowerCase().includes(searchQuery.toLowerCase())
+    //   );
+    //   if (!searchProduct) return <div>Couldn't find that item</div>;
+    //   else return searchProduct;
+    // }
 
-    if (activeCategory === "PENDING") {
-      pendingOrders = imsOrders;
-      totalPlaced = pendingOrders?.reduce(
-        (acc, curr) => acc + curr.qty * curr.unitprice,
-        0
-      );
+    // }
 
-      return pendingOrders;
-    }
+    // if (activeCategory === "PENDING") {
+    //   pendingOrders = imsOrders;
+    //   totalPlaced = pendingOrders?.reduce(
+    //     (acc, curr) => acc + curr.qty * curr.unitprice,
+    //     0
+    //   );
 
-    if (activeCategory === "RECEIVED") {
-      receivedOrders = sortedOrders.filter(
-        (item) => item.status === "RECEIVED"
-      );
+    //   return pendingOrders;
+    // }
 
-      totalReceived = receivedOrders?.reduce(
-        (acc, curr) => acc + curr.qty * curr.unitprice,
-        0
-      );
-      return receivedOrders;
-    }
+    // if (activeCategory === "RECEIVED") {
+    //   receivedOrders = sortedOrders.filter(
+    //     (item) => item.status === "RECEIVED"
+    //   );
 
-    if (activeCategory === "CANCELLED") {
-      cancelledOrders = sortedOrders.filter(
-        (item) => item.status === "CANCELLED"
-      );
-      totalCancelled = cancelledOrders?.reduce(
-        (acc, curr) => acc + curr.qty * curr.unitprice,
-        0
-      );
-      return cancelledOrders;
-    }
+    //   totalReceived = receivedOrders?.reduce(
+    //     (acc, curr) => acc + curr.qty * curr.unitprice,
+    //     0
+    //   );
+    //   return receivedOrders;
+    // }
 
-    if (activeCategory === "TRANSACTIONS") {
-      sortedTransactions = imsTransactions;
-      if (activeDept === "") {
-        sortedOrders = sortedTransactions;
-      }
-      if (activeDept === "Bar") {
-        sortedOrders = sortedTransactions.filter(
-          (item) => item.department === "Bar"
-        );
-      }
-      if (activeDept === "Lounge") {
-        sortedOrders = sortedTransactions?.filter(
-          (item) => item.department === "Lounge"
-        );
-      }
-      if (activeDept === "Kitchen") {
-        sortedOrders = sortedTransactions.filter(
-          (item) => item.department === "Kitchen"
-        );
-      }
-      return sortedOrders;
-    }
+    // if (activeCategory === "CANCELLED") {
+    //   cancelledOrders = sortedOrders.filter(
+    //     (item) => item.status === "CANCELLED"
+    //   );
+    //   totalCancelled = cancelledOrders?.reduce(
+    //     (acc, curr) => acc + curr.qty * curr.unitprice,
+    //     0
+    //   );
+    //   return cancelledOrders;
+    // }
+
+    // if (activeCategory === "TRANSACTIONS") {
+    //   sortedTransactions = imsTransactions;
+    //   if (activeDept === "") {
+    //     sortedOrders = sortedTransactions;
+    //   }
+    //   if (activeDept === "Bar") {
+    //     sortedOrders = sortedTransactions.filter(
+    //       (item) => item.department === "Bar"
+    //     );
+    //   }
+    //   if (activeDept === "Lounge") {
+    //     sortedOrders = sortedTransactions?.filter(
+    //       (item) => item.department === "Lounge"
+    //     );
+    //   }
+    //   if (activeDept === "Kitchen") {
+    //     sortedOrders = sortedTransactions.filter(
+    //       (item) => item.department === "Kitchen"
+    //     );
+    //   }
+    //   return sortedOrders;
+    // }
+    return sortedOrders;
   };
   //Filtering States
   const [fromDate, setFromDate] = useState("");

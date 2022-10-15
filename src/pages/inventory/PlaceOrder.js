@@ -101,7 +101,7 @@ const PlaceOrder = () => {
       setErrorMessage(true);
       setErrorMessage2(true);
     } else if (result && result2) {
-      sendItems();
+      // sendItems();
     } else if (!result) {
       setLoading(false);
       setErrorMessage(true);
@@ -247,43 +247,6 @@ const PlaceOrder = () => {
     } catch (err) {
       console.log(err);
       setLoading(false);
-    }
-  };
-
-  // SEND ITEMS TO DEPARTMENTS
-  const sendItems = async () => {
-    try {
-      const response = await fetch(
-        "https://pos-server1.herokuapp.com/ims/send-items",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            product: item,
-            quantity: +qty,
-            department,
-            category,
-            price: +price,
-          }),
-        }
-      );
-      if (response.ok) {
-        toast.success(`Item sent successfully`, toastOptions);
-        setLoading(false);
-        setItem("");
-        setQty("");
-        setPrice("");
-        setDepartment("");
-        setCategory("");
-        displayItems(department);
-      } else {
-        toast.error(`Failed to send item`, toastOptions);
-        setLoading(false);
-      }
-    } catch (err) {
-      console.log(err);
     }
   };
 
@@ -576,11 +539,11 @@ const PlaceOrder = () => {
             </button>
           )}
 
-          {activeCategory === "TRANSACTIONS" && (
+          {/* {activeCategory === "TRANSACTIONS" && (
             <button className="ims__submitBtn" onClick={handleSubmit}>
               {loading ? "Sending Item..." : "Send Item"}
             </button>
-          )}
+          )} */}
         </form>
       </div>
     </div>

@@ -25,9 +25,9 @@ import Notifications from "./pages/notifications/Notifications";
 import WaiterNotif from "./pages/notifications/WaiterNotif";
 import Inventory from "./pages/inventory/Inventory";
 import PlaceOrder from "./pages/inventory/PlaceOrder";
+import DeptTransactions from "./pages/inventory/DeptTransactions";
 
 function App() {
-
   return (
     <div className="App">
       <AuthProvider>
@@ -43,11 +43,11 @@ function App() {
               <Route path="/notifications/:waiter" element={<WaiterNotif />} />
               <Route path="/inventory" element={<Inventory />} />
               <Route path="/inventory/placeorder" element={<PlaceOrder />} />
-
+              <Route path="/transactions" element={<DeptTransactions />} />
             </Route>
             <Route path="/updateorder" element={<UpdateOrder />} />
             <Route path="/settings" element={<Settings />} />
- 
+
             {/* staff routes */}
             <Route path="/settings/staff" element={<StaffManager />} />
             <Route path="/settings/staff/add" element={<AddStaff />} />
