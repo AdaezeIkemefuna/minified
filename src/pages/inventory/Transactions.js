@@ -101,7 +101,7 @@ const Transactions = ({ order, closeModal }) => {
         autoFocus
       />
       <button id="bg" onClick={sendItemsCall}>
-        Enter
+        Send
       </button>
     </div>
   );
