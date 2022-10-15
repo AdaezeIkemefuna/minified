@@ -61,6 +61,7 @@ const Transactions = ({ order, closeModal }) => {
   return (
     <div id="payments">
       {/* <p>Enter Update Quantity:</p> */}
+      <input type="text" value={order.product} autoFocus />
       <select
         value={department}
         onChange={(e) => setDepartment(e.target.value)}
@@ -91,8 +92,8 @@ const Transactions = ({ order, closeModal }) => {
         type="number"
         placeholder="Enter Quantity"
         value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
         autoFocus
+        onChange={(e) => setQuantity(e.target.value)}
       />
 
       <input
@@ -100,7 +101,6 @@ const Transactions = ({ order, closeModal }) => {
         placeholder="Enter Price"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
-        autoFocus
       />
       <button id="bg" onClick={sendItemsCall}>
         Send
