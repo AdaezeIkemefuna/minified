@@ -1,5 +1,9 @@
 import { useContext, useEffect } from "react";
 import TableContext from "../../context/TableContext";
+import { useNavigate } from "react-router-dom";
+import { MdOutlineArrowBackIos } from "react-icons/md";
+
+
 
 const DeptTransactions = () => {
   const {
@@ -20,6 +24,8 @@ const DeptTransactions = () => {
     setToDate("");
     setFromDate("");
   };
+
+  const navigate = useNavigate();
 
   const transformTransactions = (trans) => {
     let sortedTrans = trans;
@@ -57,6 +63,11 @@ const DeptTransactions = () => {
   return (
     <>
       <div className="ims__transactions">
+      <div className="transactions__backbutton" onClick={() => navigate(-1)}>
+          <MdOutlineArrowBackIos size={25} />
+          <p className="goback__text">Go Back</p>
+        </div>
+        <div style={{display:"flex"}}>
         <h2
           className={`${activeDept === "" ? "ims--title" : ""}`}
           onClick={() => setActiveDept("")}
@@ -103,6 +114,7 @@ const DeptTransactions = () => {
             Kitchen
           </span>
         </div>
+        </div>
       </div>
 
       <div className="ims__date">
@@ -129,6 +141,7 @@ const DeptTransactions = () => {
             padding: "0.9rem 1rem",
             borderRadius: "5px",
             marginTop: "3px",
+            background: "transparent",
           }}
         >
           Get date
@@ -139,6 +152,7 @@ const DeptTransactions = () => {
             padding: "0.9rem 1rem",
             borderRadius: "5px",
             marginTop: "3px",
+            background: "transparent",
           }}
         >
           clear filters

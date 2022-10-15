@@ -89,6 +89,7 @@
 .placeorder__wrapper {
   background-color: var(--white);
   height: 100vh;
+  overflow: hidden;
 }
 .ims__topLabel {
   display: flex;
@@ -167,6 +168,7 @@
   border-radius: 11.0253px;
   background-color: var(--white);
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .ims__title {
@@ -388,8 +390,8 @@
 
 .ims__transactions {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: space-between;
+  gap: 0rem;
   align-items: center;
   position: sticky;
   top:0;
@@ -449,8 +451,17 @@
   align-items: center;
   font-size: 1.2rem;
   position: sticky;
-  top:4rem;
+  top:5rem;
   background-color: (--white);
+}
+
+
+.ims__Itemdate {
+  align-self: flex-end;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 1.2rem;
 }
 
 .ims__date .ims--place__order > input[type="date"] {
@@ -586,7 +597,7 @@
 
 .ims__transactions__thead{
   position: sticky !important;
-  top: 7.8rem !important;
+  top: 8.8rem !important;
   background-color: var(--white);
 }
 
@@ -600,3 +611,18 @@
   font-weight: bold;
 }
 
+
+.transactions__backbutton{
+  font-size: 1.5rem;
+  border: 1px solid var(--black);
+  padding: 1rem;
+  border-radius: 10px;
+  cursor:pointer;
+  font-weight: bold;
+  display: flex;
+}
+
+
+/* .ims__addItem{
+  margin-top: 5rem;
+} */

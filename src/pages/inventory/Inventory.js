@@ -12,6 +12,7 @@ import UpdateQty from "./modals/UpdateQty";
 import UpdateAllItemsQty from "./modals/UpdateAllItemsQty";
 import Transactions from "./Transactions";
 import { useNavigate } from "react-router";
+import {  BsPlusCircle } from "react-icons/bs";
 
 const Inventory = () => {
   const {
@@ -69,6 +70,16 @@ const Inventory = () => {
           </form>
         </div>
 
+
+              <div
+                className="ims--place__order"
+                onClick={() => navigate("/inventory/placeorder")}
+              >
+                <span className="order__badge">
+                  <BsPlusCircle size={20} />
+                </span>
+                <span>Add Item</span>
+              </div>
         <div className="ims__transactions__page" onClick={() => navigate("/transactions")}>Transactions</div>
       </div>
 
