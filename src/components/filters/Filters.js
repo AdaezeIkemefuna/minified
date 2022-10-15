@@ -75,21 +75,6 @@ const Filters = () => {
               Lounge
             </span>
           </span>
-
-          <span>
-            <span
-              className={`${
-                activeDept === "Kitchen" ? "ims--title" : "ims--dept"
-              }`}
-              style={{
-                cursor: "pointer",
-                fontSize: "0.9rem",
-                marginRight: "5px",
-              }}
-            >
-              Kitchen
-            </span>
-          </span>
         </div>
       </div>
       <div className="btn-container">

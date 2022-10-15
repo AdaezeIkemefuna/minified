@@ -89,6 +89,7 @@
 .placeorder__wrapper {
   background-color: var(--white);
   height: 100vh;
+  overflow: hidden;
 }
 .ims__topLabel {
   display: flex;
@@ -144,6 +145,7 @@
   padding-top: 0.5rem;
   margin-left: 1rem;
   margin-bottom: 0.5rem;
+  background-color: var(--white);
 }
 
 .ims__back {
@@ -166,6 +168,7 @@
   border-radius: 11.0253px;
   background-color: var(--white);
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .ims__title {
@@ -261,9 +264,12 @@
   border: 1px solid var(--whiteash);
   border-collapse: collapse;
   border-radius: 10px !important;
+
 }
 .table__header__ims {
   background-color: var(--whiteash);
+  position: sticky;
+  top:5rem;
 }
 .table__header__ims > th {
   padding: 1.5rem;
@@ -384,9 +390,13 @@
 
 .ims__transactions {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: space-between;
+  gap: 0rem;
   align-items: center;
+  position: sticky;
+  top:0;
+  background-color: var(--white);
+  padding:1rem;
 }
 
 .ims__modalCenter {
@@ -440,6 +450,18 @@
   gap: 1rem;
   align-items: center;
   font-size: 1.2rem;
+  position: sticky;
+  top:5rem;
+  background-color: (--white);
+}
+
+
+.ims__Itemdate {
+  align-self: flex-end;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 1.2rem;
 }
 
 .ims__date .ims--place__order > input[type="date"] {
@@ -447,6 +469,9 @@
   margin: 0.5rem;
   font-size: 1.2rem;
   font-family: inherit;
+  position: sticky;
+  top:5rem;
+  background-color: (--white);
 }
 
 .ims__mid {
@@ -552,3 +577,52 @@
 .ims__send:hover {
   color: rgb(97, 97, 7);
 }
+
+.ims__topPage{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0rem;
+  position: sticky;
+  top:0;
+  background-color: var(--white);
+}
+
+.ims__thead{
+  position: sticky;
+  top: 7rem;
+  background-color: var(--white);
+}
+
+.ims__transactions__thead{
+  position: sticky !important;
+  top: 8.8rem !important;
+  background-color: var(--white);
+}
+
+
+.ims__transactions__page{
+  font-size: 1.5rem;
+  border: 1px solid var(--black);
+  padding: 1rem;
+  border-radius: 10px;
+  cursor:pointer;
+  font-weight: bold;
+}
+
+
+.transactions__backbutton{
+  font-size: 1.5rem;
+  border: 1px solid var(--black);
+  padding: 1rem;
+  border-radius: 10px;
+  cursor:pointer;
+  font-weight: bold;
+  display: flex;
+}
+
+
+/* .ims__addItem{
+  margin-top: 5rem;
+} */

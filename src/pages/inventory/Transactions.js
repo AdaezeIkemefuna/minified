@@ -31,6 +31,7 @@ const Transactions = ({ order, closeModal }) => {
       );
       if (response.ok) {
         toast.success(`Item sent successfully`, toastOptions);
+        displayImsItems()
         // setLoading(false);
         // setItem("");
         // setQty("");
@@ -48,10 +49,14 @@ const Transactions = ({ order, closeModal }) => {
 
   const sendItemsCall = () => {
     if (quantity > order.quantity) {
+<<<<<<< HEAD
       toast.warn(
         "Quantity is insufficient to send to department",
         toastOptions
       );
+=======
+      toast.warn("Quantity is insufficient to send to department");
+>>>>>>> 96de7d0e6b049abcda125220f16556ef6505eff5
     } else {
       sendItems();
     }
@@ -69,7 +74,6 @@ const Transactions = ({ order, closeModal }) => {
         </option>
         <option value="Bar">Bar</option>
         <option value="Lounge">Lounge</option>
-        <option value="Kitchen">Kitchen</option>
       </select>
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value="" hidden className="placeholderSelect">
@@ -103,7 +107,7 @@ const Transactions = ({ order, closeModal }) => {
         autoFocus
       />
       <button id="bg" onClick={sendItemsCall}>
-        Enter
+        Send
       </button>
     </div>
   );

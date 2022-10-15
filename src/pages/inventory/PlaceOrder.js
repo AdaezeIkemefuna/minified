@@ -262,10 +262,10 @@ const PlaceOrder = () => {
 
   return (
     <div className="placeorder__wrapper">
-      <div className="ims__date">{date}</div>
+      <div className="ims__Itemdate">{date}</div>
       <div className="ims__back">
         <MdOutlineArrowBackIos size={28} onClick={() => navigate(-1)} />
-        {activeCategory === "ALL ITEMS" && <span>Add Item</span>}
+        {activeCategory === "ALL ITEMS" && <span className="ims__addItem">Add Item</span>}
         {activeCategory === "PENDING" && <span>Place Order</span>}
         {activeCategory === "TRANSACTIONS" && <span>Send Item</span>}
       </div>
