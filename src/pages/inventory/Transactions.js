@@ -31,17 +31,16 @@ const Transactions = ({ order, closeModal }) => {
       );
       if (response.ok) {
         toast.success(`Item sent successfully`, toastOptions);
-        displayImsItems()
+        displayImsItems();
         // setLoading(false);
         // setItem("");
         // setQty("");
         // setPrice("");
         // setDepartment("");
         // setCategory("");
-        // displayItems(department);
+        displayImsItems();
       } else {
         toast.error(`Failed to send item`, toastOptions);
-        // setLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -50,7 +49,10 @@ const Transactions = ({ order, closeModal }) => {
 
   const sendItemsCall = () => {
     if (quantity > order.quantity) {
-      toast.warn("Quantity is insufficient to send to department");
+      toast.warn(
+        "Quantity is insufficient to send to department",
+        toastOptions
+      );
     } else {
       sendItems();
     }
@@ -59,6 +61,7 @@ const Transactions = ({ order, closeModal }) => {
   return (
     <div id="payments">
       {/* <p>Enter Update Quantity:</p> */}
+      <input type="text" value={order.product} autoFocus />
       <select
         value={department}
         onChange={(e) => setDepartment(e.target.value)}
@@ -89,8 +92,8 @@ const Transactions = ({ order, closeModal }) => {
         type="number"
         placeholder="Enter Quantity"
         value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
         autoFocus
+        onChange={(e) => setQuantity(e.target.value)}
       />
 
       <input
@@ -98,7 +101,6 @@ const Transactions = ({ order, closeModal }) => {
         placeholder="Enter Price"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
-        autoFocus
       />
       <button id="bg" onClick={sendItemsCall}>
         Send
