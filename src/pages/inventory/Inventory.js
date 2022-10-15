@@ -80,7 +80,7 @@ const Inventory = () => {
                 </span>
                 <span>Add Item</span>
               </div>
-        <div className="ims__transactions__page" onClick={() => navigate("/transactions")}>Transactions</div>
+        <div className="ims__transactions__page" onClick={() => {navigate("/transactions");window.location.reload()}}>Transactions</div>
       </div>
 
       <table className="ims__table">

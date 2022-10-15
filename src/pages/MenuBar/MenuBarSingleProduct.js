@@ -60,7 +60,7 @@ const MenuBarSingleproduct = ({ items }) => {
       )}
       <div style={{textAlign:"center",position:"relative",}}>
       <p style={{ fontSize: "1rem", fontWeight:"bold", position:"absolute", left:"0",top:"50%", transform:"translateY(-50%)"}}>{items.quantity}</p>
-      <p style={{fontSize: "1rem", padding:"0 50px"}}>{items.department}</p>
+      <p style={{fontSize: "1rem", padding:"0 40px"}}>{items.department}</p>
       </div>
       <img
         src={items.image}

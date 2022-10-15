@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect} from "react";
 import TableContext from "../../context/TableContext";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineArrowBackIos } from "react-icons/md";
@@ -25,7 +25,9 @@ const DeptTransactions = () => {
     setFromDate("");
   };
 
+  
   const navigate = useNavigate();
+ 
 
   const transformTransactions = (trans) => {
     let sortedTrans = trans;
