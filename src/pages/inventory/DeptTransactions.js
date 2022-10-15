@@ -129,6 +129,7 @@ const DeptTransactions = () => {
             borderRadius: "5px",
             marginTop: "3px",
             background: "transparent",
+            cursor: "pointer",
           }}
         >
           Get date
