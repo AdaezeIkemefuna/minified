@@ -37,10 +37,9 @@ const Transactions = ({ order, closeModal }) => {
         // setPrice("");
         // setDepartment("");
         // setCategory("");
-        // displayItems(department);
+        displayImsItems();
       } else {
         toast.error(`Failed to send item`, toastOptions);
-        // setLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -48,8 +47,11 @@ const Transactions = ({ order, closeModal }) => {
   };
 
   const sendItemsCall = () => {
-    if (quantity < order.quantity) {
-      toast.warn("Quantity is insufficient to send to department");
+    if (quantity > order.quantity) {
+      toast.warn(
+        "Quantity is insufficient to send to department",
+        toastOptions
+      );
     } else {
       sendItems();
     }

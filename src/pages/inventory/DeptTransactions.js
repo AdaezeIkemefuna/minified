@@ -124,7 +124,10 @@ const DeptTransactions = () => {
           />
         </span>
         <button
-          onClick={() => getTransactions(fromDate, toDate)}
+          onClick={() => {
+            setActiveDept("");
+            getTransactions(fromDate, toDate);
+          }}
           style={{
             padding: "0.9rem 1rem",
             borderRadius: "5px",
