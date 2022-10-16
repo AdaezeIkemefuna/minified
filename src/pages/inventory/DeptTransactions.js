@@ -53,10 +53,10 @@ const DeptTransactions = () => {
     <div className="form__wrapper">
       <div className="ims__transactions">
         <div className="transactions__backbutton" onClick={() => navigate(-1)}>
-          <MdOutlineArrowBackIos size={25} />
-          <p className="goback__text">Go Back</p>
+          <MdOutlineArrowBackIos size={22} />
+          <p style={{ fontSize: "1.2rem", margin: "0rem" }}>Go Back</p>
         </div>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", gap: "1rem" }}>
           <h2
             className={`${activeDept === "" ? "ims--title" : ""}`}
             onClick={() => setActiveDept("")}
@@ -112,6 +112,7 @@ const DeptTransactions = () => {
           />
         </span>
         <button
+          className="date__btn"
           onClick={() => {
             setActiveDept("");
             getTransactions(fromDate, toDate);
@@ -130,6 +131,7 @@ const DeptTransactions = () => {
           Get date
         </button>
         <button
+          className="date__btn"
           onClick={clearFilters}
           style={{
             padding: "0.9rem 1rem",
@@ -143,7 +145,7 @@ const DeptTransactions = () => {
             backgroundColor: "var(--primary-color)",
           }}
         >
-          clear filters
+          Clear filters
         </button>
       </div>
 
