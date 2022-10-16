@@ -13,7 +13,7 @@ const ReorderQty = ({ order }) => {
 
   const _updateQuantity = async () => {
     try {
-      fetch("https://pos-server1.herokuapp.com/update-quantity", {
+      fetch("https://pos-server1.herokuapp.com/update-reorder-level", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -22,7 +22,7 @@ const ReorderQty = ({ order }) => {
           activeUser: activeUser,
           activePasscode: activePasscode,
           product: order.product,
-          quantity,
+          reorder: +quantity,
         }),
       }).then((res) => {
         if (res.ok) {

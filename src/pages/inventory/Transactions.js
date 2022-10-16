@@ -7,8 +7,8 @@ const Transactions = ({ order, closeModal }) => {
   const { toastOptions } = useContext(AuthContext);
   const { displayImsItems, displayImsTransactions } = useContext(TableContext);
   const [quantity, setQuantity] = useState("");
-  const [department, setDepartment] = useState();
-  const [category, setCategory] = useState();
+  const [department, setDepartment] = useState("");
+  const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
 
   const sendItems = async () => {
