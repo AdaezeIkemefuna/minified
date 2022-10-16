@@ -4,12 +4,12 @@ import AuthContext from "../../context/AuthContext";
 import TableContext from "../../context/TableContext";
 
 const Transactions = ({ order, closeModal }) => {
-  const { user, toastOptions } = useContext(AuthContext);
-  const { displayImsItems } = useContext(TableContext);
-  const [quantity, setQuantity] = useState();
+  const { toastOptions } = useContext(AuthContext);
+  const { displayImsItems, displayImsTransactions } = useContext(TableContext);
+  const [quantity, setQuantity] = useState("");
   const [department, setDepartment] = useState();
   const [category, setCategory] = useState();
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState("");
 
   const sendItems = async () => {
     try {
@@ -32,13 +32,7 @@ const Transactions = ({ order, closeModal }) => {
       if (response.ok) {
         toast.success(`Item sent successfully`, toastOptions);
         displayImsItems();
-        // setLoading(false);
-        // setItem("");
-        // setQty("");
-        // setPrice("");
-        // setDepartment("");
-        // setCategory("");
-        displayImsItems();
+        displayImsTransactions();
       } else {
         toast.error(`Failed to send item`, toastOptions);
       }
@@ -53,6 +47,13 @@ const Transactions = ({ order, closeModal }) => {
         "Quantity is insufficient to send to department",
         toastOptions
       );
+    } else if (
+      department === "" ||
+      category === "" ||
+      quantity === "" ||
+      price === ""
+    ) {
+      toast.warn("All fields are required", toastOptions);
     } else {
       sendItems();
     }
@@ -61,7 +62,7 @@ const Transactions = ({ order, closeModal }) => {
   return (
     <div id="payments">
       {/* <p>Enter Update Quantity:</p> */}
-      <input type="text" value={order.product} autoFocus />
+      <input type="text" value={order.product} />
       <select
         value={department}
         onChange={(e) => setDepartment(e.target.value)}
@@ -73,7 +74,7 @@ const Transactions = ({ order, closeModal }) => {
         <option value="Lounge">Lounge</option>
       </select>
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
-        <option value="" hidden className="placeholderSelect">
+        <option value="" hidden style={{ color: "red" }}>
           Select Category
         </option>
         <option value="Wines">Wines/Whisky</option>
@@ -92,7 +93,6 @@ const Transactions = ({ order, closeModal }) => {
         type="number"
         placeholder="Enter Quantity"
         value={quantity}
-        autoFocus
         onChange={(e) => setQuantity(e.target.value)}
       />
 
@@ -102,9 +102,7 @@ const Transactions = ({ order, closeModal }) => {
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
-      <button id="bg" onClick={sendItemsCall}>
-        Send
-      </button>
+      <button onClick={sendItemsCall}>Send</button>
     </div>
   );
 };
