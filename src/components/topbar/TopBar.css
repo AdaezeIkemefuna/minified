@@ -7,7 +7,7 @@
   width: 100%;
   max-width: 100% !important;
   padding-top: 2rem;
-  z-index: -0.9;
+  z-index: 1;
   background-color: whitesmoke;
 }
 

@@ -23,16 +23,18 @@ const GeneralReport = () => {
 
   const url = `https://pos-server1.herokuapp.com/overall-reports`;
   const getAllReports = async () => {
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
-      // filter property bar
-      sortDuplicateValues(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
+        // filter property bar
+        sortDuplicateValues(data);
+        console.log(data)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
 
   var width = window.innerWidth > 0 ? window.innerWidth : window.screen.width;
 
@@ -59,10 +61,10 @@ const GeneralReport = () => {
           }),
         }
       );
-
-      if (response.status === 200) {
+         if (response.status === 200) {
         toast.success("Individual table has been cleared", toastOptions);
-        getAllReports();
+        setBar([]);
+        setLounge([]);
       }
     } catch (err) {
       toast.error("Individual table has not been cleared", toastOptions);
@@ -100,7 +102,6 @@ const GeneralReport = () => {
               toast.success("Report Uploaded Successfully", toastOptions);
             }
             clearDB(activeUser, activePasscode);
-            getAllReports();
           });
       },
     });
@@ -303,3 +304,4 @@ const GeneralReport = () => {
 };
 
 export default GeneralReport;
+

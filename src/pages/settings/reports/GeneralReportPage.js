@@ -117,18 +117,6 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
 
           </div>
 
-          {bar.length === 0 && lounge.length === 0 && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <h1 style={{ fontSize: "2rem" }}>No Report Available</h1>
-            </div>
-          )}
-
 {bar.length === 0  && lounge.length === 0 && <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}><h1 style={{fontSize:"2rem"}}>No Report Available</h1></div>}
 
 { bar.length > 0 && <div >
