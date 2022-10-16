@@ -80,10 +80,11 @@ const Inventory = () => {
           <span>Add Item</span>
         </div>
         <div
-          className="ims__transactions__page"
+        style={{padding:"0.5rem"}}
+          className="ims--place__order"
           onClick={() => navigate("/transactions")}
         >
-          Transactions
+          Go To Transactions
         </div>
       </div>
 
