@@ -30,28 +30,22 @@ const Orders = () => {
           {user.role === "Super Admin" || user.role === "Administrator" ? (
             <MenuBarCategory />
           ) : (
-            <>
-              {user.role === "Store Manager" ? (
-                navigate("/inventory")
-              ) : (
-                <Category />
-              )}
-            </>
+            <Category />
           )}
         </div>
         <div className="orders__right">
           {user.role === "Super Admin" || user.role === "Administrator" ? (
             <AddMenuProduct />
           ) : (
-            <>{user.role === "Store Manager" ? <NoDisplay /> : <Cart />}</>
+            <Cart />
           )}
         </div>
         <div className={showCartMenu ? "orders__right mobile" : "no-display"}>
           {user.role === "Super Admin" || user.role === "Administrator" ? (
             <AddMenuProduct />
           ) : (
-            <>{user.role === "Store Manager" ? undefined : <Cart />}</>
-          )}{" "}
+            <Cart />
+          )}
         </div>
       </div>
     </>
@@ -59,7 +53,3 @@ const Orders = () => {
 };
 
 export default Orders;
-
-const NoDisplay = () => {
-  return <div style={{ display: "none" }}>Store Manager</div>;
-};

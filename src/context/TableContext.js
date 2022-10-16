@@ -379,6 +379,7 @@ export const TableProvider = ({ children }) => {
     imsOrders,
     displayImsOrders,
     displayImsItems,
+    displayImsTransactions,
     setActiveCategory,
     setSearchQuery,
     searchQuery,

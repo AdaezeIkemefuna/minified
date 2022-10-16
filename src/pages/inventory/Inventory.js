@@ -12,7 +12,7 @@ import UpdateQty from "./modals/UpdateQty";
 import UpdateAllItemsQty from "./modals/UpdateAllItemsQty";
 import Transactions from "./Transactions";
 import { useNavigate } from "react-router";
-import {  BsPlusCircle } from "react-icons/bs";
+import { BsPlusCircle } from "react-icons/bs";
 
 const Inventory = () => {
   const {
@@ -70,17 +70,21 @@ const Inventory = () => {
           </form>
         </div>
 
-
-              <div
-                className="ims--place__order"
-                onClick={() => navigate("/inventory/placeorder")}
-              >
-                <span className="order__badge">
-                  <BsPlusCircle size={20} />
-                </span>
-                <span>Add Item</span>
-              </div>
-        <div className="ims__transactions__page" onClick={() => {navigate("/transactions"); window.location.reload()}}>Transactions</div>
+        <div
+          className="ims--place__order"
+          onClick={() => navigate("/inventory/placeorder")}
+        >
+          <span className="order__badge">
+            <BsPlusCircle size={20} />
+          </span>
+          <span>Add Item</span>
+        </div>
+        <div
+          className="ims__transactions__page"
+          onClick={() => navigate("/transactions")}
+        >
+          Transactions
+        </div>
       </div>
 
       <table className="ims__table">
@@ -416,30 +420,6 @@ const TableRow = ({ order, index }) => {
         </div>
       )}
 
-      {updateQuantity && (
-        <div
-          className={updateQuantity ? "backdrop__container" : "close"}
-          id="bg"
-          onClick={closeModal2}
-        >
-          <div>
-            <UpdateAllItemsQty order={order} closeModal={closeModal} />
-          </div>
-        </div>
-      )}
-
-      {send && (
-        <div
-          className={send ? "backdrop__container" : "close"}
-          id="bg"
-          onClick={closeModal}
-        >
-          <div>
-            <Transactions order={order} closeModal={closeModal} />
-          </div>
-        </div>
-      )}
-
       {activeCategory === "TRANSACTIONS" ? (
         <>
           <td>0{index + 1}</td>
@@ -564,6 +544,32 @@ const TableRow = ({ order, index }) => {
             </>
           )}
         </>
+      )}
+
+      {/* update all items quantity */}
+      {updateQuantity && (
+        <div
+          className={updateQuantity ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={closeModal2}
+        >
+          <div>
+            <UpdateAllItemsQty order={order} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+
+      {/* send to department */}
+      {send && (
+        <div
+          className={send ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={closeModal}
+        >
+          <div>
+            <Transactions order={order} closeModal={closeModal} />
+          </div>
+        </div>
       )}
     </>
   );
