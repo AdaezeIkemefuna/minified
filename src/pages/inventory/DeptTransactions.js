@@ -63,7 +63,7 @@ const DeptTransactions = () => {
     return sortedTrans;
   };
   return (
-    <>
+   <div className="form__wrapper">
       <div className="ims__transactions">
       <div className="transactions__backbutton" onClick={() => navigate(-1)}>
           <MdOutlineArrowBackIos size={25} />
@@ -133,8 +133,13 @@ const DeptTransactions = () => {
             padding: "0.9rem 1rem",
             borderRadius: "5px",
             marginTop: "3px",
-            background: "transparent",
             cursor: "pointer",
+            color: "var(--yellow)",
+            borderRadius: "8px",
+            fontWeight: "500",
+            border: "1px solid var(--blue-border)",
+            cursor: "pointer",
+            backgroundColor: "var(--primary-color)",
           }}
         >
           Get date
@@ -146,6 +151,13 @@ const DeptTransactions = () => {
             borderRadius: "5px",
             marginTop: "3px",
             background: "transparent",
+            cursor: "pointer",
+            color: "var(--yellow)",
+            borderRadius: "8px",
+            fontWeight: "500",
+            border: "1px solid var(--blue-border)",
+            cursor: "pointer",
+            backgroundColor: "var(--primary-color)",
           }}
         >
           clear filters
@@ -170,7 +182,7 @@ const DeptTransactions = () => {
           ))}
         </tbody>
       </table>
-    </>
+      </div>
   );
 };
 
