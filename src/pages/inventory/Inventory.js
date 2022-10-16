@@ -13,6 +13,7 @@ import UpdateAllItemsQty from "./modals/UpdateAllItemsQty";
 import Transactions from "./Transactions";
 import { useNavigate } from "react-router";
 import { BsPlusCircle } from "react-icons/bs";
+import ReorderQty from "./modals/ReorderQty";
 
 const Inventory = () => {
   const {
@@ -346,6 +347,7 @@ const TableRow = ({ order, index }) => {
   const [action, setAction] = useState(false);
   const [updateQty, setUpdateQty] = useState(false);
   const [updateQuantity, setUpdateQuantity] = useState(false);
+  const [reorderQuantity, setReorderQuantity] = useState(false);
   const [send, setSend] = useState(false);
 
   const { activeCategory } = useContext(TableContext);
@@ -358,14 +360,10 @@ const TableRow = ({ order, index }) => {
       setUpdateQty(false);
       setUpdateQuantity(false);
       setSend(false);
+      setReorderQuantity(false);
     }
   };
 
-  const closeModal2 = (e) => {
-    if (e.target.id === "bg") {
-      setUpdateQuantity(false);
-    }
-  };
   const {
     qty,
     unitprice,
@@ -408,6 +406,7 @@ const TableRow = ({ order, index }) => {
         </div>
       )}
 
+      {/* update received quantity */}
       {updateQty && (
         <div
           className={updateQty ? "backdrop__container" : "close"}
@@ -436,7 +435,7 @@ const TableRow = ({ order, index }) => {
               <td>0{index + 1}</td>
               <td>{product}</td>
               <td>
-                {quantity}{" "}
+                {quantity}
                 <AiFillEdit
                   color="var(--success)"
                   size={15}
@@ -450,7 +449,17 @@ const TableRow = ({ order, index }) => {
                 {size}
                 {metric}
               </td>
-              <td>{reorder}</td>
+              <td>
+                {reorder}
+                <AiFillEdit
+                  color="var(--success)"
+                  size={15}
+                  className="edit__qty"
+                  onClick={() => {
+                    setReorderQuantity(true);
+                  }}
+                />
+              </td>
               <td>
                 {quantity === 0 && (
                   <span className="ims--outOfStock">Out of stock</span>
@@ -551,7 +560,7 @@ const TableRow = ({ order, index }) => {
         <div
           className={updateQuantity ? "backdrop__container" : "close"}
           id="bg"
-          onClick={closeModal2}
+          onClick={closeModal}
         >
           <div>
             <UpdateAllItemsQty order={order} closeModal={closeModal} />
@@ -568,6 +577,19 @@ const TableRow = ({ order, index }) => {
         >
           <div>
             <Transactions order={order} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+
+      {/* update reorder quantity */}
+      {reorderQuantity && (
+        <div
+          className={reorderQuantity ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={closeModal}
+        >
+          <div>
+            <ReorderQty order={order} closeModal={closeModal} />
           </div>
         </div>
       )}
