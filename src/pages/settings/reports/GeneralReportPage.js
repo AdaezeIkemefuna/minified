@@ -26,6 +26,7 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
   adminTables.find((element, index, arr) => {
     if (element.status === "CLOSED" && index === arr.length - 1) {
       closeTime = `${element.date} ${element.time} `;
+      console.log(closeTime)
     }
   });
 

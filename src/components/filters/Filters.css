@@ -51,11 +51,12 @@
   padding: 0.5rem;
   gap: 1rem;
   color: black;
+  width: 750px;
 }
 
 .btn-container::-webkit-scrollbar {
   width: 2em;
-  height: 0.2em;
+  height: 0.8em;
 }
 
 .btn-container::-webkit-scrollbar-track {
