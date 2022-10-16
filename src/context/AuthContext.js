@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }) => {
     items: [],
     cart: [],
   };
+  const [activeCategory, setActiveCategory] = useState("All Menu");
 
   const displayItems = async (department) => {
     try {
@@ -72,6 +73,7 @@ export const AuthProvider = ({ children }) => {
           items: data,
         },
       });
+      setActiveCategory("All Menu");
     } catch (err) {}
   };
 
@@ -79,12 +81,9 @@ export const AuthProvider = ({ children }) => {
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [activeCategory, setActiveCategory] = useState("All Menu");
-
   // PRODUCTS FILTER
   const transformItems = (items) => {
     let sortedProducts = items;
-    console.log(sortedProducts)
 
     if (activeCategory === "All Menu") {
       sortedProducts = items;
