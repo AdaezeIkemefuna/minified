@@ -22,7 +22,7 @@ const UpdateAllItemsQty = ({ order }) => {
           activeUser: activeUser,
           activePasscode: activePasscode,
           product: order.product,
-          quantity,
+          quantity: +quantity,
         }),
       }).then((res) => {
         if (res.ok) {

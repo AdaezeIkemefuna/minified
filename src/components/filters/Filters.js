@@ -15,6 +15,7 @@ const Filters = () => {
     displayItems,
     state: { items },
     dispatch,
+    setSearchQuery,
   } = useContext(AuthContext);
   const [activeDept, setActiveDept] = useState(dept);
 
@@ -88,7 +89,10 @@ const Filters = () => {
                   : "filter-btn"
               }`}
               key={index}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => {
+                setSearchQuery("");
+                setActiveCategory(category);
+              }}
             >
               <span className="filter__bar">
                 <MdWineBar className="filter__icons" size={20} /> {category}

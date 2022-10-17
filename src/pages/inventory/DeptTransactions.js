@@ -73,6 +73,7 @@ const DeptTransactions = () => {
               cursor: "pointer",
             }}
             onClick={() => setActiveDept("Bar")}
+
           >
               Bar
             </span>
@@ -131,7 +132,7 @@ const DeptTransactions = () => {
           Get date
         </button>
         <button
-         className="date__btn"
+          className="date__btn"
           onClick={clearFilters}
           style={{
             padding: "0.9rem 1rem",

@@ -51,6 +51,8 @@ export const AuthProvider = ({ children }) => {
   };
   const [activeCategory, setActiveCategory] = useState("All Menu");
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   const displayItems = async (department) => {
     try {
       const response = await fetch(
@@ -74,12 +76,11 @@ export const AuthProvider = ({ children }) => {
         },
       });
       setActiveCategory("All Menu");
+      setSearchQuery("");
     } catch (err) {}
   };
 
   const [state, dispatch] = useReducer(cartReducer, initialCartState);
-
-  const [searchQuery, setSearchQuery] = useState("");
 
   // PRODUCTS FILTER
   const transformItems = (items) => {
@@ -179,6 +180,7 @@ export const AuthProvider = ({ children }) => {
     toggleSideBar(false);
     toggleCartMenu(false);
     setActiveCategory("All Menu");
+    setSearchQuery("");
   };
 
   // SIDEBAR DISPLAY
