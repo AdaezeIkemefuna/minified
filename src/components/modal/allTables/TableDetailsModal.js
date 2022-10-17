@@ -392,7 +392,11 @@ export default function TableDetailsModal({ table, closeModal }) {
                         }}
                         size={15}
                         color="#080808"
-                        className="receiptQty_btn"
+                        className={
+                          t.quantity === 1
+                            ? "receiptQty_btn null"
+                            : "receiptQty_btn"
+                        }
                       />
                     )}
                   </>
@@ -469,7 +473,11 @@ export default function TableDetailsModal({ table, closeModal }) {
                         }}
                         size={15}
                         color="#080808"
-                        className="receiptQty_btn"
+                        className={
+                          tbar.quantity === 1
+                            ? "receiptQty_btn null"
+                            : "receiptQty_btn"
+                        }
                       />
                     )}
                   </>
