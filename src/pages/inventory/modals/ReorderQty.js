@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 import AuthContext from "../../../context/AuthContext";
 import TableContext from "../../../context/TableContext";
 
-const UpdateAllItemsQty = ({ order }) => {
-  const [quantity, setQuantity] = useState(order.quantity);
+const ReorderQty = ({ order }) => {
+  const [quantity, setQuantity] = useState(order.reorder);
   const { user, toastOptions } = useContext(AuthContext);
   const { displayImsItems } = useContext(TableContext);
 
@@ -27,14 +27,14 @@ const UpdateAllItemsQty = ({ order }) => {
       }).then((res) => {
         if (res.ok) {
           displayImsItems();
-          toast.success("Quantity Updated", toastOptions);
-        } else toast.error("Failed to update quantity", toastOptions);
+          toast.success("Reorder level Updated", toastOptions);
+        } else toast.error("Failed to update reorder level", toastOptions);
       });
     } catch (error) {}
   };
   return (
     <div id="payments">
-      <p>Enter Update Quantity:</p>
+      <p>New Reorder Level:</p>
       <input
         type="number"
         value={quantity}
@@ -48,4 +48,4 @@ const UpdateAllItemsQty = ({ order }) => {
   );
 };
 
-export default UpdateAllItemsQty;
+export default ReorderQty;

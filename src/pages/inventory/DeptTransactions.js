@@ -1,9 +1,7 @@
-import { useContext, useEffect} from "react";
+import { useContext} from "react";
 import TableContext from "../../context/TableContext";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-
-
 
 const DeptTransactions = () => {
   const {
@@ -17,7 +15,6 @@ const DeptTransactions = () => {
     imsTransactions,
     getTransactions,
     setTransactions,
-    displayImsTransactions,
   } = useContext(TableContext);
   const clearFilters = () => {
     setTransactions("");
@@ -25,9 +22,7 @@ const DeptTransactions = () => {
     setFromDate("");
   };
 
-  
   const navigate = useNavigate();
- 
 
   const transformTransactions = (trans) => {
     let sortedTrans = trans;
@@ -38,9 +33,6 @@ const DeptTransactions = () => {
     if (activeDept === "Lounge") {
       sortedTrans = trans.filter((item) => item.department === "Lounge");
     }
-    // if (activeDept === "Kitchen") {
-    //   sortedTrans = trans.filter((item) => item.department === "Kitchen");
-    // }
 
     if (transactions) {
       sortedTrans = transactions.filters;
@@ -54,16 +46,11 @@ const DeptTransactions = () => {
           (item) => item.department === "Lounge"
         );
       }
-      // if (activeDept === "Kitchen") {
-      //   sortedTrans = transactions.filters.filter(
-      //     (item) => item.department === "Kitchen"
-      //   );
-      // }
     }
     return sortedTrans;
   };
   return (
-   <div className="form__wrapper">
+   <>
       <div className="ims__transactions">
       <div className="transactions__backbutton" onClick={() => navigate(-1)}>
           <MdOutlineArrowBackIos  size={22} />
@@ -87,22 +74,22 @@ const DeptTransactions = () => {
             }}
             onClick={() => setActiveDept("Bar")}
           >
-            Bar
-          </span>
-          <span
-            className={`${
-              activeDept === "Lounge" ? "ims--title" : "ims--dept"
-            }`}
-            style={{
-              display: "inline",
-              marginRight: "0.5rem",
-              cursor: "pointer",
-            }}
-            onClick={() => setActiveDept("Lounge")}
-          >
-            Lounge
-          </span>
-        </div>
+              Bar
+            </span>
+            <span
+              className={`${
+                activeDept === "Lounge" ? "ims--title" : "ims--dept"
+              }`}
+              style={{
+                display: "inline",
+                marginRight: "0.5rem",
+                cursor: "pointer",
+              }}
+              onClick={() => setActiveDept("Lounge")}
+            >
+              Lounge
+            </span>
+          </div>
         </div>
       </div>
 
@@ -133,7 +120,6 @@ const DeptTransactions = () => {
           style={{
             padding: "0.9rem 1rem",
             marginTop: "3px",
-            cursor: "pointer",
             color: "var(--yellow)",
             borderRadius: "8px",
             fontWeight: "500",
@@ -151,7 +137,6 @@ const DeptTransactions = () => {
             padding: "0.9rem 1rem",
             marginTop: "3px",
             background: "transparent",
-            cursor: "pointer",
             color: "var(--yellow)",
             borderRadius: "8px",
             fontWeight: "500",
@@ -182,26 +167,14 @@ const DeptTransactions = () => {
           ))}
         </tbody>
       </table>
-      </div>
+      </>
   );
 };
 
 export default DeptTransactions;
 
 const TableRow = ({ order, index }) => {
-  const {
-    qty,
-    unitprice,
-    date,
-    status,
-    size,
-    metric,
-    department,
-    product,
-    quantity,
-    category,
-    reorder,
-  } = order;
+  const { date, department, product, quantity } = order;
 
   const formattedDate = date?.substring(0, 10);
 

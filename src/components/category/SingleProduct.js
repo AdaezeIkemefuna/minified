@@ -46,6 +46,7 @@ const SingleProduct = ({ items }) => {
         </button>
       ) : (
         <button
+        disabled={items.quantity === 0}
           onClick={() =>
             dispatch({
               type: "ADD_TO_CART",
