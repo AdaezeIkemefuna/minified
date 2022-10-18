@@ -68,7 +68,7 @@ const AddStaff = () => {
 
   return (
     <div className="form__wrapper">
-      <div className="add__header">
+      <div style={{margin:"0"}} className="add__header">
         <div className="back__button" onClick={() => navigate(-1)}>
           <MdOutlineArrowBackIos size={22} />
           <p className="goback__text">Go Back</p>
@@ -91,6 +91,7 @@ const AddStaff = () => {
             placeholder="Enter Staff Username"
             onChange={handleChange}
             value={newUser.username}
+            autoFocus
           />
           <label htmlFor="input" className="control-label">
             Staff Username
