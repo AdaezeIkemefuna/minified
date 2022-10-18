@@ -108,7 +108,6 @@ const AddMenuProduct = () => {
             placeholder="a"
             value={product}
             onChange={(e) => setProduct(e.target.value)}
-            autoFocus
           />
           <label htmlFor="" className="ims__label">
             Enter Item Name
