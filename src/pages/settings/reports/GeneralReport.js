@@ -229,7 +229,7 @@ const GeneralReport = () => {
         }}
       >
         <div className="back__button" onClick={() => navigate(-1)}>
-          <MdOutlineArrowBackIos size={25} />
+          <MdOutlineArrowBackIos size={22} />
           <p className="goback__text">Go Back</p>
         </div>
 

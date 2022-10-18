@@ -70,7 +70,7 @@ const AddStaff = () => {
     <div className="form__wrapper">
       <div className="add__header">
         <div className="back__button" onClick={() => navigate(-1)}>
-          <MdOutlineArrowBackIos size={25} />
+          <MdOutlineArrowBackIos size={22} />
           <p className="goback__text">Go Back</p>
         </div>
         <h1 className="page__name">Staff Manager</h1>
