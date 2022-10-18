@@ -122,7 +122,6 @@ const AddMenuProduct = () => {
             placeholder="a"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
-            autoFocus
           />
           <label htmlFor="" className="ims__label">
             Quantity
@@ -136,7 +135,6 @@ const AddMenuProduct = () => {
             placeholder="a"
             value={size}
             onChange={(e) => setSize(e.target.value)}
-            autoFocus
           />
           <label htmlFor="" className="ims__label">
             Size
@@ -150,7 +148,6 @@ const AddMenuProduct = () => {
             placeholder="a"
             value={metric}
             onChange={(e) => setMetric(e.target.value)}
-            autoFocus
           />
           <label htmlFor="" className="ims__label">
             Unit Of Measurement (e.g ml, gram, litre, etc)
@@ -164,7 +161,6 @@ const AddMenuProduct = () => {
             placeholder="a"
             value={reorder}
             onChange={(e) => setReorder(e.target.value)}
-            autoFocus
           />
           <label htmlFor="" className="ims__label">
             Reorder Level
