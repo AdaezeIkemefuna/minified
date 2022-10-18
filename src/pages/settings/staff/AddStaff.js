@@ -91,7 +91,6 @@ const AddStaff = () => {
             placeholder="Enter Staff Username"
             onChange={handleChange}
             value={newUser.username}
-            autoFocus
           />
           <label htmlFor="input" className="control-label">
             Staff Username
