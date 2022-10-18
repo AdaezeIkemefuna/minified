@@ -68,6 +68,7 @@
   pointer-events: none;
   user-select: none;
   cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 /* Responsive Design for Tablet  */

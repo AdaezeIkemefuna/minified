@@ -2,10 +2,8 @@ import { useContext } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/AuthContext";
-import TableContext from "../../context/TableContext";
 
 export default function EditPriceModal({ item }) {
-  const { input } = useContext(TableContext);
   const { user, toastOptions, displayItems } = useContext(AuthContext);
   const [newPrice, setNewPrice] = useState(item.price);
   const product = item.product;
@@ -13,13 +11,7 @@ export default function EditPriceModal({ item }) {
   const activePasscode = user.passcode;
   const activeUser = user.username;
 
-  const changePrice = async (
-    product,
-    department,
-    activeUser,
-    newPrice,
-    activePasscode
-  ) => {
+  const changePrice = async () => {
     try {
       const response = await fetch(
         "https://pos-server1.herokuapp.com/update-item",
@@ -49,7 +41,7 @@ export default function EditPriceModal({ item }) {
   };
 
   const handlePriceChange = () => {
-    changePrice(product, department, activeUser, newPrice, activePasscode);
+    changePrice();
   };
 
   return (

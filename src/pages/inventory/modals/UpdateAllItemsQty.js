@@ -32,6 +32,14 @@ const UpdateAllItemsQty = ({ order }) => {
       });
     } catch (error) {}
   };
+
+  const updateQty = () => {
+    if (quantity < order.quantity) {
+      toast.warn("Cannot set a value below current quantity", toastOptions);
+    } else {
+      _updateQuantity();
+    }
+  };
   return (
     <div id="payments">
       <p>Enter Update Quantity:</p>
@@ -41,7 +49,7 @@ const UpdateAllItemsQty = ({ order }) => {
         onChange={(e) => setQuantity(e.target.value)}
         autoFocus
       />
-      <button id="bg" onClick={_updateQuantity}>
+      <button id="bg" onClick={updateQty}>
         Enter
       </button>
     </div>

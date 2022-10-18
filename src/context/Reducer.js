@@ -5,15 +5,13 @@ export const cartReducer = (state, action) => {
     case "ADD_TO_CART":
       return {
         ...state,
-        cart: [...state.cart, { ...action.payload, quantity: 1 }],
+        cart: [...state.cart, { ...action.payload, qty: 1 }],
       };
     case "INCREMENT_QTY":
       return {
         ...state,
         cart: state.cart.map((x) =>
-          x.product === action.payload.product
-            ? { ...x, quantity: x.quantity + 1 }
-            : x
+          x.product === action.payload.product ? { ...x, qty: x.qty + 1 } : x
         ),
       };
     case "DECREMENT_QTY":
@@ -23,7 +21,7 @@ export const cartReducer = (state, action) => {
           x.product === action.payload.product
             ? {
                 ...x,
-                quantity: x.quantity > 1 ? x.quantity - 1 : (x.quantity = 1),
+                qty: x.qty > 1 ? x.qty - 1 : (x.qty = 1),
               }
             : x
         ),
