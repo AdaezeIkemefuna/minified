@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { BiTime } from "react-icons/bi";
 import AuthContext from "../../../context/AuthContext";
 
 function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
@@ -17,7 +18,10 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
   console.log(adminTables);
   adminTables.find((element, index) => {
     if (element.status === "CLOSED" && index === 1) {
-      startTime = `${element.date} - ${element.time} `;
+      let hour = element.time.split(":")[0];
+      let hours = hour >= 12 ? "PM" : "AM";
+      let time = element.time + " " + hours;
+      startTime = `${element.date} - ${time} `;
     }
   });
 
@@ -25,9 +29,22 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
 
   adminTables.find((element, index, arr) => {
     if (element.status === "CLOSED" && index === arr.length - 1) {
-      closeTime = `${element.date} - ${element.time} `;
+      let hour = element.time.split(":")[0];
+      let hours = hour >= 12 ? "PM" : "AM";
+      let time = element.time + " " + hours;
+      closeTime = `${element.date} - ${time} `;
     }
   });
+
+  const activeUser = user.username;
+  const activePasscode = user.passcode;
+  useEffect(() => {
+    if (user.role === "Super Admin" || user.role === "Administrator") {
+      displayAdminTables(activeUser, activePasscode);
+    } else {
+      displayTables(activeUser);
+    }
+  }, );
 
   const current = new Date();
   const date = `${current.toLocaleString("en-US", {
@@ -36,7 +53,7 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
     month: "long",
   })} ${current.getDate()}, ${current.getFullYear()}`;
 
-  // / A FUCTION TO FILTER BASED ON TIME
+  
   const getTime = (e) => {
     console.log(e.target.value);
   }
