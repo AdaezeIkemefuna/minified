@@ -102,11 +102,7 @@ const Cart = () => {
                       }}
                       size={18}
                       color="white"
-                      className={
-                        item.quantity === item.qty
-                          ? "plus__order null"
-                          : "plus__order"
-                      }
+                      className="plus__order"
                     />
                   </td>
                   <td className="td">₦{item.qty * Math.round(item.price)}</td>
