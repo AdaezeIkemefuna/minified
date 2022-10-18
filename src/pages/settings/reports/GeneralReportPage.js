@@ -17,7 +17,7 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
   console.log(adminTables);
   adminTables.find((element, index) => {
     if (element.status === "CLOSED" && index === 1) {
-      startTime = `${element.date} ${element.time} `;
+      startTime = `${element.date} - ${element.time} `;
     }
   });
 
@@ -25,29 +25,9 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
 
   adminTables.find((element, index, arr) => {
     if (element.status === "CLOSED" && index === arr.length - 1) {
-      closeTime = `${element.date} ${element.time} `;
-      console.log(closeTime)
+      closeTime = `${element.date} - ${element.time} `;
     }
   });
-
-
-  adminTables.filter((element, index, arr) => {
-    let closeTime2 = ""
-    if (element.status === "CLOSED") {
-      closeTime2 = `${element.date} ${element.time} `;
-      console.log(closeTime2)
-    }
-  });
-
-  const activeUser = user.username;
-  const activePasscode = user.passcode;
-  useEffect(() => {
-    if (user.role === "Super Admin" || user.role === "Administrator") {
-      displayAdminTables(activeUser, activePasscode);
-    } else {
-      displayTables(activeUser);
-    }
-  }, [activeUser, activePasscode]);
 
   const current = new Date();
   const date = `${current.toLocaleString("en-US", {
@@ -56,8 +36,24 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
     month: "long",
   })} ${current.getDate()}, ${current.getFullYear()}`;
 
+  // / A FUCTION TO FILTER BASED ON TIME
+  const getTime = (e) => {
+    console.log(e.target.value);
+  }
+
   return (
     <div style={{ background: "white" }}>
+      {/* <div style={{display:"flex", gap:"3rem"}}>
+      <div className="startTime__header" style={{display:"flex"}}>
+        <p>Start Time :</p>
+      <input type="time" onClick={getTime}/>
+      </div>
+
+      <div className="endTime__header" style={{display:"flex"}}>
+        <p>End Time :</p>
+      <input type="time" onClick={getTime}/>
+      </div>
+      </div> */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h1
           style={{

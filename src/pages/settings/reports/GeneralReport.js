@@ -19,7 +19,7 @@ const GeneralReport = () => {
   const activeUser = user.username;
   const activePasscode = user.passcode;
 
-  const client = "Dbase";
+  const client = "SwiftLounge";
 
   const url = `https://pos-server1.herokuapp.com/overall-reports`;
   const getAllReports = async () => {
