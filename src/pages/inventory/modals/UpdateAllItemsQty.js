@@ -33,12 +33,8 @@ const UpdateAllItemsQty = ({ order }) => {
     } catch (error) {}
   };
 
-  const updateQty = () => {
-    if (quantity < order.quantity) {
-      toast.warn("Cannot set a value below current quantity", toastOptions);
-    } else {
+  const updateQty = () => {   
       _updateQuantity();
-    }
   };
   return (
     <div id="payments">
