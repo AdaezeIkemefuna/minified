@@ -17,10 +17,11 @@ const Cart = () => {
     toggleSideBar,
   } = useContext(AuthContext);
   const [total, setTotal] = useState();
+  console.log(cart);
 
   useEffect(() => {
     setTotal(
-      cart.reduce((acc, curr) => acc + Number(curr.price) * curr.quantity, 0)
+      cart.reduce((acc, curr) => acc + Number(curr.price) * curr.qty, 0)
     );
   }, [cart]);
   const menuAction = () => {
@@ -90,7 +91,7 @@ const Cart = () => {
                     />
 
                     <span style={{ margin: "0 0.5rem", fontSize: "1.5rem" }}>
-                      {item.quantity}
+                      {item.qty}
                     </span>
                     <FaPlus
                       onClick={() => {
@@ -101,12 +102,14 @@ const Cart = () => {
                       }}
                       size={18}
                       color="white"
-                      className="plus__order"
+                      className={
+                        item.quantity === item.qty
+                          ? "plus__order null"
+                          : "plus__order"
+                      }
                     />
                   </td>
-                  <td className="td">
-                    ₦{item.quantity * Math.round(item.price)}
-                  </td>
+                  <td className="td">₦{item.qty * Math.round(item.price)}</td>
                   <td className="td">
                     <MdDeleteOutline
                       size={20}
