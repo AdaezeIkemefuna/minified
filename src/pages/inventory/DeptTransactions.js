@@ -1,4 +1,4 @@
-import { useContext} from "react";
+import { useContext } from "react";
 import TableContext from "../../context/TableContext";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineArrowBackIos } from "react-icons/md";
@@ -50,30 +50,29 @@ const DeptTransactions = () => {
     return sortedTrans;
   };
   return (
-   <>
+    <>
       <div className="ims__transactions">
-      <div className="transactions__backbutton" onClick={() => navigate(-1)}>
-          <MdOutlineArrowBackIos  size={22} />
-          <p style={{fontSize:"1.2rem", margin:"0rem"}}>Go Back</p>
+        <div className="transactions__backbutton" onClick={() => navigate(-1)}>
+          <MdOutlineArrowBackIos size={22} />
+          <p style={{ fontSize: "1.2rem", margin: "0rem" }}>Go Back</p>
         </div>
-        <div style={{display:"flex", gap:"1rem"}}>
-        <h2
-          className={`${activeDept === "" ? "ims--title" : ""}`}
-          onClick={() => setActiveDept("")}
-          style={{ cursor: "pointer" }}
-        >
-          All Items Distributed from the General Store
-        </h2>
-        <div style={{display:"flex", gap:"0.5rem", marginTop:"1rem"}}>
-          <span
-            className={`${activeDept === "Bar" ? "ims--title" : "ims--dept"}`}
-            style={{
-              marginRight: "0.5rem",
-              cursor: "pointer",
-            }}
-            onClick={() => setActiveDept("Bar")}
-
+        <div style={{ display: "flex", gap: "1rem", alignItems: "flex-end" }}>
+          <h2
+            className={`${activeDept === "" ? "ims--title" : ""}`}
+            onClick={() => setActiveDept("")}
+            style={{ cursor: "pointer" }}
           >
+            All Items Distributed from the General Store
+          </h2>
+          <div style={{ display: "flex", gap: "0.5rem", marginTop: "1rem" }}>
+            <span
+              className={`${activeDept === "Bar" ? "ims--title" : "ims--dept"}`}
+              style={{
+                marginRight: "0.5rem",
+                cursor: "pointer",
+              }}
+              onClick={() => setActiveDept("Bar")}
+            >
               Bar
             </span>
             <span
@@ -91,7 +90,7 @@ const DeptTransactions = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="ims__date">
         <span>From</span>
         <span className="ims--place__order">
@@ -166,7 +165,7 @@ const DeptTransactions = () => {
           ))}
         </tbody>
       </table>
-      </>
+    </>
   );
 };
 
