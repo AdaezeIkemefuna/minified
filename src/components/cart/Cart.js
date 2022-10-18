@@ -91,7 +91,7 @@ const Cart = () => {
                     />
 
                     <span style={{ margin: "0 0.5rem", fontSize: "1.5rem" }}>
-                      {item.qty}
+                      {item.quantity}
                     </span>
                     <FaPlus
                       onClick={() => {
@@ -105,7 +105,7 @@ const Cart = () => {
                       className="plus__order"
                     />
                   </td>
-                  <td className="td">₦{item.qty * Math.round(item.price)}</td>
+                  <td className="td">₦{item.quantity * Math.round(item.price)}</td>
                   <td className="td">
                     <MdDeleteOutline
                       size={20}
