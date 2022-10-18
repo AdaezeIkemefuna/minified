@@ -29,7 +29,7 @@ const NewTable = () => {
       newOrderCall(activePasscode, activeUser, table_name, order);
     }
   };
-
+  console.log(order);
   const newOrderCall = async (
     activePasscode,
     activeUser,
