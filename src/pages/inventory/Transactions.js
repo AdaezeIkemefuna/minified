@@ -72,6 +72,7 @@ const Transactions = ({ order, closeModal }) => {
         </option>
         <option value="Bar">Bar</option>
         <option value="Lounge">Lounge</option>
+        <option value="Lounge">Kitchen</option>
       </select>
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value="" hidden style={{ color: "red" }}>
@@ -88,6 +89,7 @@ const Transactions = ({ order, closeModal }) => {
         <option value="Noodles">Noodles</option>
         <option value="Rice">Rice</option>
         <option value="Chips">Chips</option>
+        
       </select>
       <input
         type="number"
