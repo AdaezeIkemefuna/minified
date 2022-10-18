@@ -14,7 +14,7 @@ function IndividualReportPerWaiter() {
   const [date, setDate] = useState("");
   const { waiter, toastOptions } = useContext(AuthContext);
   const [report, setReport] = useState([]);
-  const establishment = "Dbase";
+  const establishment = "SwiftLounge";
 
   // FUNCTION TO GET WAITER
   const getWaiterReport = async (waiter) => {
