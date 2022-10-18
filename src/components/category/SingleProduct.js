@@ -11,7 +11,7 @@ const SingleProduct = ({ items }) => {
   return (
     <div className="menu-item">
       <div style={{textAlign:"center",position:"relative",}}>
-      <p style={{ fontSize: "1rem", fontWeight:"bold", position:"absolute", left:"0",top:"50%", transform:"translateY(-50%)"}}>{items.quantity}</p>
+      {(items.category === "Beers" || items.category === "Soft Drinks" || items.category === "Wines" || items.category === "Energy drink")&& <p style={{ fontSize: "1rem", fontWeight:"bold", position:"absolute", left:"0",top:"50%", transform:"translateY(-50%)"}}>{items.quantity}</p>}
       <p style={{fontSize: "1rem", padding:"0 50px"}}>{items.department}</p>
       </div>
 
