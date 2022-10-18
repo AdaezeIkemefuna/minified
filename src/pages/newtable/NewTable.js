@@ -21,9 +21,7 @@ const NewTable = () => {
   const navigate = useNavigate();
   const newOrder = (e) => {
     e.preventDefault();
-    console.log(cart);
-
-    if (!order) {
+    if (!order.length) {
       toast("Please add items to the order", toastOptions);
     } else if (table_name === "") {
       toast("Enter table name", toastOptions);
@@ -52,7 +50,7 @@ const NewTable = () => {
         }),
       });
       if (response.ok) {
-        toast(`Added new table for ${table_name}`, toastOptions);
+        toast.success(`Added new table for ${table_name}`, toastOptions);
         setLoading(false);
         setOrder([]);
         dispatch({

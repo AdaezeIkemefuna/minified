@@ -62,6 +62,7 @@ export const orderReducer = (state, action) => {
             ? {
                 ...x,
                 quantity: x.quantity > 1 ? x.quantity - 1 : (x.quantity = 1),
+                returned: x.returned + 1,
               }
             : x
         ),
@@ -74,6 +75,7 @@ export const orderReducer = (state, action) => {
             ? {
                 ...x,
                 quantity: x.quantity > 1 ? x.quantity - 1 : (x.quantity = 1),
+                returned: x.returned + 1,
               }
             : x
         ),

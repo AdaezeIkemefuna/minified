@@ -319,7 +319,7 @@ export const AuthProvider = ({ children }) => {
         }
       );
       const data = await response.json();
-      setOrderCount(data.order_count[0].count);
+      setOrderCount(data.Waiter_count);
     } catch (error) {}
   };
 
