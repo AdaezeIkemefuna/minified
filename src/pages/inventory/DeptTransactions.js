@@ -64,11 +64,10 @@ const DeptTransactions = () => {
         >
           All Items Distributed from the General Store
         </h2>
-        <div>
+        <div style={{display:"flex", gap:"0.5rem", marginTop:"1rem"}}>
           <span
             className={`${activeDept === "Bar" ? "ims--title" : "ims--dept"}`}
             style={{
-              display: "inline",
               marginRight: "0.5rem",
               cursor: "pointer",
             }}
@@ -82,7 +81,6 @@ const DeptTransactions = () => {
                 activeDept === "Lounge" ? "ims--title" : "ims--dept"
               }`}
               style={{
-                display: "inline",
                 marginRight: "0.5rem",
                 cursor: "pointer",
               }}
@@ -93,7 +91,7 @@ const DeptTransactions = () => {
           </div>
         </div>
       </div>
-
+      
       <div className="ims__date">
         <span>From</span>
         <span className="ims--place__order">

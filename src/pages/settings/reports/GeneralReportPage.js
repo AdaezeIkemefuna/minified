@@ -17,7 +17,7 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
   console.log(adminTables);
   adminTables.find((element, index) => {
     if (element.status === "CLOSED" && index === 1) {
-      startTime = `${element.time}`;
+      startTime = `${element.date} ${element.time} `;
     }
   });
 
@@ -27,6 +27,15 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
     if (element.status === "CLOSED" && index === arr.length - 1) {
       closeTime = `${element.date} ${element.time} `;
       console.log(closeTime)
+    }
+  });
+
+
+  adminTables.filter((element, index, arr) => {
+    let closeTime2 = ""
+    if (element.status === "CLOSED") {
+      closeTime2 = `${element.date} ${element.time} `;
+      console.log(closeTime2)
     }
   });
 
