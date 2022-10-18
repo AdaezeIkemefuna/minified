@@ -17,7 +17,6 @@ const Cart = () => {
     toggleSideBar,
   } = useContext(AuthContext);
   const [total, setTotal] = useState();
-  console.log(cart);
 
   useEffect(() => {
     setTotal(
