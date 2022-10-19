@@ -20,7 +20,7 @@ const Cart = () => {
 
   useEffect(() => {
     setTotal(
-      cart.reduce((acc, curr) => acc + Number(curr.price) * curr.qty, 0)
+      cart.reduce((acc, curr) => acc + Number(curr.price) * curr.quantity, 0)
     );
   }, [cart]);
   const menuAction = () => {

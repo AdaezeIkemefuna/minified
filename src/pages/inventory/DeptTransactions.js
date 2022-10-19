@@ -34,6 +34,11 @@ const DeptTransactions = () => {
       sortedTrans = trans.filter((item) => item.department === "Lounge");
     }
 
+    if (activeDept === "Kitchen") {
+      sortedTrans = trans.filter((item) => item.department === "Kitchen");
+    }
+
+
     if (transactions) {
       sortedTrans = transactions.filters;
       if (activeDept === "Bar") {
@@ -44,6 +49,12 @@ const DeptTransactions = () => {
       if (activeDept === "Lounge") {
         sortedTrans = transactions.filters.filter(
           (item) => item.department === "Lounge"
+        );
+      }
+
+      if (activeDept === "Kitchen") {
+        sortedTrans = transactions.filters.filter(
+          (item) => item.department ===  "Kitchen"
         );
       }
     }
@@ -86,6 +97,18 @@ const DeptTransactions = () => {
               onClick={() => setActiveDept("Lounge")}
             >
               Lounge
+            </span>
+            <span
+              className={`${
+                activeDept === "Kitchen" ? "ims--title" : "ims--dept"
+              }`}
+              style={{
+                marginRight: "0.5rem",
+                cursor: "pointer",
+              }}
+              onClick={() => setActiveDept("Kitchen")}
+            >
+              Kitchen
             </span>
           </div>
         </div>
