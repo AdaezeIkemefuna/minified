@@ -14,6 +14,8 @@ import Transactions from "./Transactions";
 import { useNavigate } from "react-router";
 import { BsPlusCircle } from "react-icons/bs";
 import ReorderQty from "./modals/ReorderQty";
+import DeleteItem from "./modals/DeleteItem";
+import AdminModal from "./modals/AdminModal";
 
 const Inventory = () => {
   const {
@@ -53,7 +55,11 @@ const Inventory = () => {
       {/* <ImsDashboards /> */}
 
       <div className="ims__topPage">
-        <div className="ims--title imsPage">
+        <div
+          className="ims--title imsPage"
+          onClick={() => setSearchQuery("")}
+          style={{ cursor: "pointer" }}
+        >
           <span>All Items</span>
           <span className="order__badge">{imsItems?.length}</span>
         </div>
@@ -81,7 +87,7 @@ const Inventory = () => {
           <span>Add Item</span>
         </div>
         <div
-        style={{padding:"0.5rem"}}
+          style={{ padding: "0.5rem" }}
           className="ims--place__order"
           onClick={() => navigate("/transactions")}
         >
@@ -98,6 +104,7 @@ const Inventory = () => {
             {activeCategory !== "TRANSACTIONS" && <th>Size</th>}
             {activeCategory === "TRANSACTIONS" ? (
               <>
+                <th>Description</th>
                 <th>Department</th>
                 <th>Date</th>
               </>
@@ -107,7 +114,8 @@ const Inventory = () => {
                   <>
                     <th>Reorder Level</th>
                     <th>Status</th>
-                    <th></th>
+                    <th>Action</th>
+                    <th>Delete</th>
                   </>
                 ) : (
                   <>
@@ -350,6 +358,8 @@ const TableRow = ({ order, index }) => {
   const [updateQuantity, setUpdateQuantity] = useState(false);
   const [reorderQuantity, setReorderQuantity] = useState(false);
   const [send, setSend] = useState(false);
+  const [deleteItem, setDelete] = useState(false);
+  const [adminModal, showAdminModal] = useState(false);
 
   const { activeCategory } = useContext(TableContext);
   const { user } = useContext(AuthContext);
@@ -362,7 +372,36 @@ const TableRow = ({ order, index }) => {
       setUpdateQuantity(false);
       setSend(false);
       setReorderQuantity(false);
+      setDelete(false);
     }
+  };
+
+  const closeAdminModal = (e) => {
+    if (e.target.id === "bg") {
+      showAdminModal(false);
+      setReceive(false);
+      setCancel(false);
+      setUpdateQty(false);
+      setUpdateQuantity(false);
+      setSend(false);
+      setReorderQuantity(false);
+      setDelete(false);
+    }
+  };
+
+  const closeOneModal = () => {
+    showAdminModal(false);
+  };
+
+  const closeAll = () => {
+    showAdminModal(false);
+    setReceive(false);
+    setCancel(false);
+    setUpdateQty(false);
+    setUpdateQuantity(false);
+    setSend(false);
+    setReorderQuantity(false);
+    setDelete(false);
   };
 
   const {
@@ -442,6 +481,7 @@ const TableRow = ({ order, index }) => {
                   size={15}
                   className="edit__qty"
                   onClick={() => {
+                    showAdminModal(true);
                     setUpdateQuantity(true);
                   }}
                 />
@@ -457,6 +497,7 @@ const TableRow = ({ order, index }) => {
                   size={15}
                   className="edit__qty"
                   onClick={() => {
+                    showAdminModal(true);
                     setReorderQuantity(true);
                   }}
                 />
@@ -472,8 +513,23 @@ const TableRow = ({ order, index }) => {
                   <span className="ims--inStock">In stock</span>
                 )}
               </td>
-              <td className="ims__send" onClick={() => setSend(true)}>
+              <td
+                className="ims__send"
+                onClick={() => {
+                  showAdminModal(true);
+                  setSend(true);
+                }}
+              >
                 Send
+              </td>
+              <td
+                className="ims__delete"
+                onClick={() => {
+                  showAdminModal(true);
+                  setDelete(true);
+                }}
+              >
+                Delete Item
               </td>
             </>
           ) : (
@@ -501,6 +557,7 @@ const TableRow = ({ order, index }) => {
                 {size}
                 {metric}
               </td>
+              <td></td>
               <td>₦{unitprice?.toLocaleString("en-US")}</td>
               <td>₦{(qty * unitprice)?.toLocaleString("en-US")}</td>
               <td>{formattedDate}</td>
@@ -591,6 +648,43 @@ const TableRow = ({ order, index }) => {
         >
           <div>
             <ReorderQty order={order} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+
+      {/* delete item */}
+      {deleteItem && (
+        <div
+          className={deleteItem ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={closeModal}
+        >
+          <div>
+            <DeleteItem
+              order={order}
+              closeModal={closeModal}
+              closeAll={closeAll}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* admin modal */}
+      {adminModal && (
+        <div
+          className={adminModal ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={(e) => {
+            closeAdminModal(e);
+          }}
+        >
+          <div>
+            <AdminModal
+              order={order}
+              closeModal={closeModal}
+              closeAdminModal={closeOneModal}
+              closeAll={closeAll}
+            />
           </div>
         </div>
       )}

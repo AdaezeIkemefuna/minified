@@ -13,7 +13,11 @@ const Company = () => {
   })} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
 
   const currentTime = new Date();
-  const time = currentTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  const time = currentTime.toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
   return (
     <>
       <div className="company__wrapper">
@@ -24,13 +28,13 @@ const Company = () => {
           <div className="contact">
             <MdLocationOn size={20} />
             <span>
-              3D Igboeze Street, <br /> Independence Layout.
+              78 Aguleri Street, <br /> Independence Layout.
             </span>
           </div>{" "}
           <br />
           <div className="contact">
             <FaPhoneAlt />
-            <span>09015290078</span>
+            <span>07082836846</span>
           </div>
         </div>
       </div>
@@ -46,13 +50,12 @@ const Company = () => {
         </div>
 
         <div className="waiter">
-        <div>
-          <h4 style={{ display: "inline" }}>Time: </h4>
-          <span>{time}</span>
+          <div>
+            <h4 style={{ display: "inline" }}>Time: </h4>
+            <span>{time}</span>
+          </div>
         </div>
       </div>
-      </div>
-      
     </>
   );
 };

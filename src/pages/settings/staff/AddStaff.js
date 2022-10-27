@@ -68,9 +68,9 @@ const AddStaff = () => {
 
   return (
     <div className="form__wrapper">
-      <div style={{margin:"0"}} className="add__header">
+      <div className="add__header">
         <div className="back__button" onClick={() => navigate(-1)}>
-          <MdOutlineArrowBackIos size={22} />
+          <MdOutlineArrowBackIos size={25} />
           <p className="goback__text">Go Back</p>
         </div>
         <h1 className="page__name">Staff Manager</h1>
@@ -110,10 +110,11 @@ const AddStaff = () => {
               Select Role
             </option>
             <option value="Super Admin">Super Admin</option>
-            <option value="Administrator">Administrator</option>
+            <option value="Bar Man">Bar Man</option>
+            <option value="Supervisor">Supervisor</option>
             <option value="Store Manager">Store Manager</option>
-            <option value="Accountant">Accountant</option>
-            <option value="Cashier">Cashier</option>
+            <option value="Accounts">Accounts</option>
+            <option value="Waiter">Waiter</option>
           </select>
         </div>
 
@@ -126,6 +127,7 @@ const AddStaff = () => {
             onChange={handleChange}
             value={newUser.password}
             required
+            autoFocus
           />
           <label htmlFor="input" className="control-label">
             Enter Staff Password
@@ -141,6 +143,7 @@ const AddStaff = () => {
             onChange={handleChange}
             value={newUser.passcode}
             required
+            autoFocus
           />
           <label htmlFor="input" className="control-label">
             Enter Unique Pass Code

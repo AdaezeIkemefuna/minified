@@ -36,7 +36,8 @@
   text-transform: capitalize;
   font-size: 0.8rem;
   width: 150px;
-  border-radius: 5px;
+  border-radius: 10px;
+  border: 1px solid var(--orange);
   box-shadow: 1px 1px 5px rgb(206, 203, 203);
   margin-bottom: 1rem;
   text-align: center;
@@ -47,7 +48,6 @@
   border: 1px solid goldenrod;
   margin-top: 3px;
   padding: 0.3rem 1.5rem;
-  border-radius: 5px;
   background-color: transparent;
   font-weight: 500;
   cursor: pointer;
@@ -60,6 +60,36 @@
 
 .price {
   margin: 0.5rem 0;
+}
+
+.item-info {
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+.item-info h2 {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #4a5870;
+  letter-spacing: 0.5%;
+}
+
+.item-info h3 {
+  font-weight: 700;
+  font-size: 1.12rem;
+  color: #343f50;
+}
+
+.menu-img {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  border-radius: 50%;
+  background-color: var(--orange);
 }
 
 /* UPDATE ITEMS */
@@ -89,6 +119,7 @@
   font-weight: 600;
   cursor: pointer;
   padding: 0 1rem;
+  border-radius: none !important;
 }
 
 .edit__price:hover,
@@ -99,7 +130,7 @@
 .delete__item {
   color: var(--danger);
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: none !important;
 }
 
 .loader__main {

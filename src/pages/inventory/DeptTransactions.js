@@ -1,7 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import TableContext from "../../context/TableContext";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineArrowBackIos } from "react-icons/md";
+import AdminModal from "./modals/AdminModal";
+import DeleteTransaction from "./modals/DeleteTransactions";
+import { toast } from "react-toastify";
+import AuthContext from "../../context/AuthContext";
 
 const DeptTransactions = () => {
   const {
@@ -16,12 +20,20 @@ const DeptTransactions = () => {
     getTransactions,
     setTransactions,
   } = useContext(TableContext);
+
+  const { toastOptions } = useContext(AuthContext);
   const clearFilters = () => {
     setTransactions("");
     setToDate("");
     setFromDate("");
   };
-
+  const transactionsCall = () => {
+    if (fromDate === "" || toDate === "") {
+      toast.warn(`Both dates are required`, toastOptions);
+    } else {
+      getTransactions(fromDate, toDate);
+    }
+  };
   const navigate = useNavigate();
 
   const transformTransactions = (trans) => {
@@ -38,23 +50,20 @@ const DeptTransactions = () => {
       sortedTrans = trans.filter((item) => item.department === "Kitchen");
     }
 
-
     if (transactions) {
-      sortedTrans = transactions.filters;
+      sortedTrans = transactions;
       if (activeDept === "Bar") {
-        sortedTrans = transactions.filters.filter(
-          (item) => item.department === "Bar"
-        );
+        sortedTrans = transactions.filter((item) => item.department === "Bar");
       }
       if (activeDept === "Lounge") {
-        sortedTrans = transactions.filters.filter(
+        sortedTrans = transactions.filter(
           (item) => item.department === "Lounge"
         );
       }
 
       if (activeDept === "Kitchen") {
-        sortedTrans = transactions.filters.filter(
-          (item) => item.department ===  "Kitchen"
+        sortedTrans = transactions.filter(
+          (item) => item.department === "Kitchen"
         );
       }
     }
@@ -68,13 +77,17 @@ const DeptTransactions = () => {
           <p style={{ fontSize: "1.2rem", margin: "0rem" }}>Go Back</p>
         </div>
         <div style={{ display: "flex", gap: "1rem", alignItems: "flex-end" }}>
-          <h2
-            className={`${activeDept === "" ? "ims--title" : ""}`}
+          <span
+            className={`${activeDept === "" ? "ims--title" : "ims--dept"}`}
             onClick={() => setActiveDept("")}
-            style={{ cursor: "pointer" }}
+            style={{
+              cursor: "pointer",
+              marginRight: "5rem",
+              padding: "0.4rem 0.1rem",
+            }}
           >
-            All Items Distributed from the General Store
-          </h2>
+            All Items
+          </span>
           <div style={{ display: "flex", gap: "0.5rem", marginTop: "1rem" }}>
             <span
               className={`${activeDept === "Bar" ? "ims--title" : "ims--dept"}`}
@@ -136,7 +149,7 @@ const DeptTransactions = () => {
           className="date__btn"
           onClick={() => {
             setActiveDept("");
-            getTransactions(fromDate, toDate);
+            transactionsCall();
           }}
           style={{
             padding: "0.9rem 1rem",
@@ -175,9 +188,11 @@ const DeptTransactions = () => {
           <tr className="table__header__ims">
             <th>No</th>
             <th>Item Names</th>
+            {activeDept === "Kitchen" && <th>Description</th>}
             <th>Quantity</th>
             <th>Department</th>
             <th>Date</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -195,18 +210,84 @@ const DeptTransactions = () => {
 export default DeptTransactions;
 
 const TableRow = ({ order, index }) => {
-  const { date, department, product, quantity } = order;
-
+  const { date, department, product, quantity, description } = order;
+  const { activeDept } = useContext(TableContext);
   const formattedDate = date?.substring(0, 10);
+  const [adminModal, showAdminModal] = useState(false);
+  const [deleteItem, setDelete] = useState(false);
+
+  const closeModal = (e) => {
+    if (e.target.id === "bg") {
+      setDelete(false);
+    }
+  };
+
+  const closeAdminModal = (e) => {
+    if (e.target.id === "bg") {
+      showAdminModal(false);
+      setDelete(false);
+    }
+  };
+
+  const closeOneModal = () => {
+    showAdminModal(false);
+  };
+
+  const closeAll = () => {
+    showAdminModal(false);
+    setDelete(false);
+  };
 
   return (
     <>
       <td>0{index + 1}</td>
       <td>{product}</td>
+      {activeDept === "Kitchen" && <td>{description}</td>}
       <td>{quantity}</td>
-
       <td>{department}</td>
       <td>{formattedDate}</td>
+      <td
+        className="ims__delete"
+        onClick={() => {
+          showAdminModal(true);
+          setDelete(true);
+        }}
+      >
+        Delete Item
+      </td>
+
+      {/* delete transaction */}
+      {deleteItem && (
+        <div
+          className={deleteItem ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={closeModal}
+        >
+          <div>
+            <DeleteTransaction order={order} closeModal={closeModal} />
+          </div>
+        </div>
+      )}
+
+      {/* admin modal */}
+      {adminModal && (
+        <div
+          className={adminModal ? "backdrop__container" : "close"}
+          id="bg"
+          onClick={(e) => {
+            closeAdminModal(e);
+          }}
+        >
+          <div>
+            <AdminModal
+              order={order}
+              closeModal={closeModal}
+              closeAdminModal={closeOneModal}
+              closeAll={closeAll}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 };

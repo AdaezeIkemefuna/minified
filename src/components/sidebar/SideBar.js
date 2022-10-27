@@ -64,11 +64,7 @@ const SideBar = () => {
             onClick={() => {
               setActiveTab("orders");
             }}
-            className={
-              user.role === "Store Manager"
-                ? "sidebar-link null"
-                : "sidebar-link"
-            }
+            className="sidebar-link"
           >
             <MdOutlineInventory size={25} />
             {user.role === "Super Admin" || user.role === "Administrator"
@@ -155,11 +151,7 @@ const SideBar = () => {
               toggleSideBar(!showSideBar);
               setActiveTab("orders");
             }}
-            className={
-              user.role === "Store Manager"
-                ? "sidebar-link null"
-                : "sidebar-link"
-            }
+            className="sidebar-link"
           >
             <MdOutlineInventory size={25} />
 
@@ -187,17 +179,16 @@ const SideBar = () => {
             Table Manager
           </NavLink>
 
-          {user.role === "Super Admin" ||
-            (user.role === "Administrator" && (
-              <div
-                style={activeTab === "settings" ? activeStyle : undefined}
-                onClick={settingsAction}
-                className="sidebar-link"
-              >
-                <FiSettings size={25} />
-                Settings
-              </div>
-            ))}
+          {(user.role === "Super Admin" || user.role === "Administrator") && (
+            <div
+              style={activeTab === "settings" ? activeStyle : undefined}
+              onClick={settingsAction}
+              className="sidebar-link"
+            >
+              <FiSettings size={25} />
+              Settings
+            </div>
+          )}
 
           {user.role === "Super Admin" ||
           user.role === "Store Manager" ||

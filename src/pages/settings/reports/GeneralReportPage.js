@@ -2,39 +2,19 @@ import React, { useState, useContext, useEffect } from "react";
 import { BiTime } from "react-icons/bi";
 import AuthContext from "../../../context/AuthContext";
 
-function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
+function GeneralReportPage({ bar, lounge, barTotal, loungeTotal,FromDate, ToDate, ToTime, FromTime, cashPayments1, posPayments1, transferPayments1, totalRevenue1 }) {
   const {
     adminCashPayments,
     adminPosPayments,
     adminTransferPayments,
     adminTotalRevenue,
     user,
-    adminTables,
     displayAdminTables,
     displayTables,
   } = useContext(AuthContext);
 
-  let startTime = "";
-  console.log(adminTables);
-  adminTables.find((element, index) => {
-    if (element.status === "CLOSED" && index === 1) {
-      let hour = element.time.split(":")[0];
-      let hours = hour >= 12 ? "PM" : "AM";
-      let time = element.time + " " + hours;
-      startTime = `${element.date} - ${time} `;
-    }
-  });
 
-  let closeTime = "";
 
-  adminTables.find((element, index, arr) => {
-    if (element.status === "CLOSED" && index === arr.length - 1) {
-      let hour = element.time.split(":")[0];
-      let hours = hour >= 12 ? "PM" : "AM";
-      let time = element.time + " " + hours;
-      closeTime = `${element.date} - ${time} `;
-    }
-  });
 
   const activeUser = user.username;
   const activePasscode = user.passcode;
@@ -44,7 +24,7 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
     } else {
       displayTables(activeUser);
     }
-  }, );
+  },[]);
 
   const current = new Date();
   const date = `${current.toLocaleString("en-US", {
@@ -53,24 +33,11 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
     month: "long",
   })} ${current.getDate()}, ${current.getFullYear()}`;
 
-  
-  const getTime = (e) => {
-    console.log(e.target.value);
-  }
 
+  
+  
   return (
     <div style={{ background: "white" }}>
-      {/* <div style={{display:"flex", gap:"3rem"}}>
-      <div className="startTime__header" style={{display:"flex"}}>
-        <p>Start Time :</p>
-      <input type="time" onClick={getTime}/>
-      </div>
-
-      <div className="endTime__header" style={{display:"flex"}}>
-        <p>End Time :</p>
-      <input type="time" onClick={getTime}/>
-      </div>
-      </div> */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h1
           style={{
@@ -95,7 +62,7 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
             paddingLeft: "2rem",
           }}
         >
-          <div style={{fontSize:"1.2rem"}}><span>Start Time:</span> <b>{startTime}</b></div>
+          { FromDate !=="Invalid Date" && <div style={{fontSize:"1.2rem"}}><span>Start Report Time:</span> <b>{`${FromDate} ${FromTime}`}</b></div>}
           <div style={{ fontSize: "1.2rem" }}>
             <span>Bar Total:</span> <b>N{barTotal.toLocaleString("en-US")}</b>
           </div>
@@ -107,7 +74,7 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
           <div style={{ fontSize: "1.2rem" }}>
             <b>
               <span>Total Revenue: </span>N
-              {adminTotalRevenue.toLocaleString("en-US")}{" "}
+              {totalRevenue1 ? totalRevenue1.toLocaleString() : adminTotalRevenue.toLocaleString("en-US")}{" "}
             </b>
           </div>
         </div>
@@ -120,20 +87,20 @@ function GeneralReportPage({ bar, lounge, barTotal, loungeTotal }) {
             paddingRight: "2rem",
           }}
         >
-          <div style={{ fontSize: "1.2rem" }}>
-            <span>Closing Time:</span> <b>{closeTime}</b>
-          </div>
+          {ToDate !== "Invalid Date" && <div style={{ fontSize: "1.2rem" }}>
+            <span>End Report Time:</span> <b>{`${ToDate} ${ToTime}`}</b>
+          </div>}
           <div style={{ fontSize: "1.2rem" }}>
             <span>Cash Payments:</span>{" "}
-            <b>N{adminCashPayments.toLocaleString("en-US")} </b>
+            <b>N{cashPayments1? cashPayments1.toLocaleString("en-US") : adminCashPayments.toLocaleString("en-US")} </b>
           </div>
           <div style={{ fontSize: "1.2rem" }}>
             <span>POS Payments:</span>{" "}
-            <b>N{adminPosPayments.toLocaleString("en-US")} </b>
+            <b>N{posPayments1   ? posPayments1.toLocaleString("en-US") :adminPosPayments.toLocaleString("en-US")} </b>
           </div>
           <div style={{ fontSize: "1.2rem" }}>
             <span>Transfer Payments:</span>{" "}
-            <b>N{adminTransferPayments.toLocaleString("en-US")}</b>
+            <b>N{transferPayments1  ? transferPayments1.toLocaleString("en-US") :adminTransferPayments.toLocaleString("en-US")}</b>
           </div>
 
           </div>

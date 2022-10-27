@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import AuthContext from "../../../context/AuthContext";
 import TableContext from "../../../context/TableContext";
 
-const UpdateAllItemsQty = ({ order }) => {
+const UpdateAllItemsQty = ({ order, closeAll }) => {
   const [quantity, setQuantity] = useState(order.quantity);
   const { user, toastOptions } = useContext(AuthContext);
   const { displayImsItems } = useContext(TableContext);
@@ -28,13 +28,14 @@ const UpdateAllItemsQty = ({ order }) => {
         if (res.ok) {
           displayImsItems();
           toast.success("Quantity Updated", toastOptions);
+          closeAll();
         } else toast.error("Failed to update quantity", toastOptions);
       });
     } catch (error) {}
   };
 
-  const updateQty = () => {   
-      _updateQuantity();
+  const updateQty = () => {
+    _updateQuantity();
   };
   return (
     <div id="payments">

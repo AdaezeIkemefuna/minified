@@ -1,32 +1,26 @@
 import { useContext } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../context/AuthContext";
+import AuthContext from "../../../context/AuthContext";
 import { toast } from "react-toastify";
 
-export default function AdminModal({ setShowModal }) {
+export default function AdminModal({ closeAll, closeAdminModal }) {
   const navigate = useNavigate();
   const [code, setCode] = useState("");
-  const { user, toastOptions, toggleSideBar } = useContext(AuthContext);
+  const { user, toastOptions } = useContext(AuthContext);
   const activePasscode = user.passcode;
   const handleAuthorization = (e) => {
-    toggleSideBar(false);
     e.preventDefault();
     if (+code !== activePasscode) {
-      toast(`Unauthorized`, toastOptions);
-      setShowModal(false);
+      toast.warn(`Unauthorized`, toastOptions);
+      closeAll();
     } else {
-      setShowModal(false);
-      navigate("/settings");
+      closeAdminModal();
     }
   };
-  const closeModal = (e) => {
-    if (e.target.id === "bg") {
-      setShowModal(false);
-    }
-  };
+
   return (
-    <div id="bg" onClick={closeModal}>
+    <div id="bg">
       <div className="modal__center1">
         <div className="admin__pad">
           <h2>Enter Passcode</h2>

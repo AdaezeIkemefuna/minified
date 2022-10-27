@@ -263,9 +263,25 @@ const PlaceOrder = () => {
   return (
     <div className="placeorder__wrapper">
       <div className="ims__Itemdate">{date}</div>
+      <div
+        style={{
+          width: "fit-content",
+          display: "flex",
+          border: "1px solid var(--black)",
+          borderRadius: "7px",
+          margin: "1rem",
+          padding: "0.3rem",
+          cursor: "pointer",
+        }}
+        onClick={() => navigate(-1)}
+      >
+        <MdOutlineArrowBackIos size={22} />
+        <p style={{ fontSize: "1.2rem", margin: "0rem" }}>Go Back</p>
+      </div>
       <div className="ims__back">
-        <MdOutlineArrowBackIos size={28} onClick={() => navigate(-1)} />
-        {activeCategory === "ALL ITEMS" && <span className="ims__addItem">Add Item</span>}
+        {activeCategory === "ALL ITEMS" && (
+          <span className="ims__addItem">Add Item</span>
+        )}
         {activeCategory === "PENDING" && <span>Place Order</span>}
         {activeCategory === "TRANSACTIONS" && <span>Send Item</span>}
       </div>
@@ -441,7 +457,6 @@ const PlaceOrder = () => {
                   placeholder="a"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  autoFocus
                 />
                 <label htmlFor="" className="ims__label">
                   Price
@@ -457,7 +472,6 @@ const PlaceOrder = () => {
                   placeholder="a"
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
-                  autoFocus
                 />
                 <label htmlFor="" className="ims__label">
                   Size
@@ -471,7 +485,6 @@ const PlaceOrder = () => {
                   placeholder="a"
                   value={metric}
                   onChange={(e) => setMetric(e.target.value)}
-                  autoFocus
                 />
                 <label htmlFor="" className="ims__label">
                   Unit Of Measurement (e.g ml, gram, litre, etc)
@@ -487,24 +500,10 @@ const PlaceOrder = () => {
                       placeholder="a"
                       value={reorder}
                       onChange={(e) => setReorder(e.target.value)}
-                      autoFocus
                     />
                     <label htmlFor="" className="ims__label">
                       Reorder Level
                     </label>
-                  </div>
-
-                  <div className="file-input">
-                    <label htmlFor="file">
-                      <span>Upload Image</span>
-                      <FaCamera size={20} />
-                    </label>
-                    <input
-                      type="file"
-                      id="file"
-                      className="inputTag"
-                      onChange={uploadFile}
-                    />
                   </div>
                 </>
               ) : (
@@ -516,7 +515,6 @@ const PlaceOrder = () => {
                       placeholder="a"
                       value={unitPrice}
                       onChange={(e) => setUnitPrice(e.target.value)}
-                      autoFocus
                     />
                     <label htmlFor="" className="ims__label">
                       Unit Price

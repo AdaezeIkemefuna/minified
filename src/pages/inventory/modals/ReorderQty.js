@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import AuthContext from "../../../context/AuthContext";
 import TableContext from "../../../context/TableContext";
 
-const ReorderQty = ({ order }) => {
+const ReorderQty = ({ order, closeAll }) => {
   const [quantity, setQuantity] = useState(order.reorder);
   const { user, toastOptions } = useContext(AuthContext);
   const { displayImsItems } = useContext(TableContext);
@@ -28,6 +28,7 @@ const ReorderQty = ({ order }) => {
         if (res.ok) {
           displayImsItems();
           toast.success("Reorder level Updated", toastOptions);
+          closeAll();
         } else toast.error("Failed to update reorder level", toastOptions);
       });
     } catch (error) {}

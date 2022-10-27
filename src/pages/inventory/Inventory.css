@@ -577,8 +577,17 @@
   cursor: pointer;
 }
 
+.ims__delete {
+  color: var(--error);
+  cursor: pointer;
+}
+
 .ims__send:hover {
   color: rgb(97, 97, 7);
+}
+
+.ims__delete:hover {
+  color: rgb(241, 47, 73);
 }
 
 .ims__topPage {
@@ -613,7 +622,7 @@
   font-weight: bold;
   color: var(--yellow);
   font-weight: 50;
-  cursor:pointer;
+  cursor: pointer;
   background-color: var(--primary-color);
 }
 
@@ -628,10 +637,10 @@
   padding: 0.2rem;
 }
 
-.ims--place__order:hover{
+.ims--place__order:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.date__btn:hover{
+.date__btn:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }

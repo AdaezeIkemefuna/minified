@@ -32,7 +32,11 @@ const Dashboard = () => {
   const [getUserCredit, setGetUserCredit] = useState({});
 
   useEffect(() => {
-    if (user.role === "Super Admin" || user.role === "Administrator") {
+    if (
+      user.role === "Super Admin" ||
+      user.role === "Administrator" ||
+      user.role === "Store Manager"
+    ) {
       displayAdminTables(activeUser, activePasscode);
     } else {
       displayTables(activeUser);
@@ -40,7 +44,11 @@ const Dashboard = () => {
   }, [activeUser, activePasscode]);
 
   useEffect(() => {
-    if (user.role === "Super Admin" || user.role === "Administrator") {
+    if (
+      user.role === "Super Admin" ||
+      user.role === "Administrator" ||
+      user.role === "Store Manager"
+    ) {
       getOrderCount(activeUser, activePasscode);
     } else {
       getOrderCount(activeUser, activePasscode);
@@ -69,6 +77,39 @@ const Dashboard = () => {
     }
   };
 
+  //FUNCTION TO CLEAR TABLES
+  const clearTables = async () => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/clear-tables",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            activeUser,
+            activePasscode,
+          }),
+        }
+      );
+      if (response.ok) {
+        if (
+          user.role === "Super Admin" ||
+          user.role === "Administrator" ||
+          "Supervisor" ||
+          user.role === "Store Manager"
+        ) {
+          displayAdminTables(activeUser, activePasscode);
+        } else {
+          displayTables(activeUser);
+        }
+      }
+    } catch (err) {
+      console.log(err, "Credit not fetched");
+    }
+  };
+
   useEffect(() => {
     getCreditReport(activeUser);
   }, []);
@@ -90,7 +131,9 @@ const Dashboard = () => {
           color="var(--primary-color)"
           styling="dashboard__card"
           numbers={`₦${
-            user.role === "Super Admin" || user.role === "Administrator"
+            user.role === "Super Admin" ||
+            user.role === "Administrator" ||
+            user.role === "Store Manager"
               ? adminTotalRevenue
               : totalRevenue
           }`}
@@ -106,7 +149,9 @@ const Dashboard = () => {
           color="var(--primary-color)"
           styling="dashboard__card"
           numbers={`₦${
-            user.role === "Super Admin" || user.role === "Administrator"
+            user.role === "Super Admin" ||
+            user.role === "Administrator" ||
+            user.role === "Store Manager"
               ? adminPosPayments
               : posPayments
           }`}
@@ -116,7 +161,9 @@ const Dashboard = () => {
           color="var(--primary-color)"
           styling="dashboard__card"
           numbers={`₦${
-            user.role === "Super Admin" || user.role === "Administrator"
+            user.role === "Super Admin" ||
+            user.role === "Administrator" ||
+            user.role === "Store Manager"
               ? adminCashPayments
               : cashPayments
           }`}
@@ -126,7 +173,9 @@ const Dashboard = () => {
           color="var(--primary-color)"
           styling="dashboard__card"
           numbers={`₦${
-            user.role === "Super Admin" || user.role === "Administrator"
+            user.role === "Super Admin" ||
+            user.role === "Administrator" ||
+            user.role === "Store Manager"
               ? adminTransferPayments
               : transferPayments
           }`}
@@ -160,7 +209,35 @@ const Dashboard = () => {
         />
       </div>
 
-      {user.role === "Super Admin" || user.role === "Administrator" ? (
+      {(user.role === "Super Admin" ||
+        user.role === "Administrator" ||
+        user.role === "Supervisor") && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "end",
+            alignItems: "center",
+            marginRight: "5rem",
+            marginTop: "1rem",
+          }}
+        >
+          <strong
+            onClick={() => clearTables()}
+            style={{
+              backgroundColor: "var(--primary-color)",
+              color: "var(--yellow)",
+              padding: "0.5rem",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Clear Tables
+          </strong>
+        </div>
+      )}
+      {user.role === "Super Admin" ||
+      user.role === "Administrator" ||
+      user.role === "Store Manager" ? (
         <div className="tables">
           {adminTables.map((t, index) => {
             return <SingleTableDetail table={t} key={index} />;

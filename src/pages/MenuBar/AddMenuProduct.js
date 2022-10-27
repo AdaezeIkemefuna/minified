@@ -166,7 +166,7 @@ const AddMenuProduct = () => {
           </label>
         </div>
 
-        <div className="file-input">
+        {/* <div className="file-input">
           <label htmlFor="file">
             <span>Upload Image</span>
             <FaCamera size={20} />
@@ -177,7 +177,7 @@ const AddMenuProduct = () => {
             className="inputTag"
             onChange={uploadFile}
           />
-        </div>
+        </div> */}
 
         <button style={{ borderRadius: "5px", padding: "2rem" }}>
           {loading ? "Adding Product..." : "Add Product"}

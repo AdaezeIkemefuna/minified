@@ -14,7 +14,34 @@ const GeneralReport = () => {
   const [date, setDate] = useState("");
   const [bar, setBar] = useState([]);
   const [lounge, setLounge] = useState([]);
+  const [FromDate, setFromDate] = useState("");
+  const [FromTime, setFromTime] = useState("");
+  const [ToDate, setToDate] = useState("");
+  const [ToTime, setToTime] = useState("");
+  const [reports, setReports] = useState([]);
+  const [filteredReports, setFilteredReports] = useState([]);
   const navigate = useNavigate();
+
+  // A FUNCTION TO HANDLE FROM AND TO DATE
+  function handleDate(e) {
+    setFromDate(e.target.value);
+  }
+
+  let FromDate1 = new Date(FromDate).toLocaleString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  function handleDate2(e) {
+    setToDate(e.target.value);
+  }
+
+  let ToDate1 = new Date(ToDate).toLocaleString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   const activeUser = user.username;
   const activePasscode = user.passcode;
@@ -23,18 +50,101 @@ const GeneralReport = () => {
 
   const url = `https://pos-server1.herokuapp.com/overall-reports`;
   const getAllReports = async () => {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
-        // filter property bar
-        sortDuplicateValues(data);
-        console.log(data)
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setReports(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  // A Function A SELECTED DATE
+  const FilterByDate = async () => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/filter-reports",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: `${FromDate1} ${FromTime}`,
+            to: `${ToDate1} ${ToTime}`,
+          }),
+        }
+      );
+      if (response.ok) {
+        const filtereddata = await response.json();
+        setFilteredReports(filtereddata);
+      } else {
+        toast.warn("No Report Found For This Date", toastOptions);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const [paymentsFilter, setPaymentsFilter] = useState([]);
+  // A Function A SELECTED DATE
+  const FilterPayments = async () => {
+    try {
+      const response = await fetch(
+        "https://pos-server1.herokuapp.com/filter-tables",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: `${FromDate1} ${FromTime}`,
+            to: `${ToDate1} ${ToTime}`,
+          }),
+        }
+      );
+      if (response.ok) {
+        const filtereddata = await response.json();
+        setPaymentsFilter(filtereddata);
+      } else {
+        toast.warn("No Report Found For This Date", toastOptions);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  let cashPayments1 = paymentsFilter?.reduce((accumulator, obj) => {
+    return accumulator + obj.cash;
+  }, 0);
+
+  let posPayments1 = paymentsFilter?.reduce((accumulator, obj) => {
+    return accumulator + obj.pos;
+  }, 0);
+
+  let transferPayments1 = paymentsFilter?.reduce((accumulator, obj) => {
+    return accumulator + obj.transfer;
+  }, 0);
+
+  let totalRevenue1 = cashPayments1 + posPayments1 + transferPayments1;
+
+  console.log(cashPayments1, posPayments1, transferPayments1, totalRevenue1);
+
+  function getDate() {
+    if (ToDate === "" || ToTime === "" || FromDate === "" || FromTime === "") {
+      toast.warn("All fields are required", toastOptions);
+    } else {
+      FilterByDate();
+      FilterPayments();
+    }
+  }
+  const transformReports = !filteredReports.length ? reports : filteredReports;
+
+  useEffect(() => {
+    if (transformReports.length) {
+      sortDuplicateValues(transformReports);
+    }
+  }, [transformReports]);
 
   var width = window.innerWidth > 0 ? window.innerWidth : window.screen.width;
 
@@ -61,7 +171,7 @@ const GeneralReport = () => {
           }),
         }
       );
-         if (response.status === 200) {
+      if (response.status === 200) {
         toast.success("Individual table has been cleared", toastOptions);
         setBar([]);
         setLounge([]);
@@ -218,6 +328,14 @@ const GeneralReport = () => {
     return acc + +curr.subtotal;
   }, 0);
 
+  function clearReports() {
+    setFilteredReports([]);
+    setToDate("");
+    setFromDate("");
+    setToTime("");
+    setFromTime("");
+  }
+
   return (
     <div className="main__report">
       <div
@@ -233,7 +351,62 @@ const GeneralReport = () => {
           <p className="goback__text">Go Back</p>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div
+          className="dateTime__container"
+          style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+        >
+          <div
+            className="dateTime__from"
+            style={{ display: "flex", gap: "0.5rem" }}
+          >
+            <h2 style={{ display: "inline" }} className="dateTime__text">
+              From
+            </h2>
+            <span className="report--get__date">
+              <input type="date" value={FromDate} onChange={handleDate} />
+            </span>
+            <span className="report--get__date">
+              <input
+                type="time"
+                value={FromTime}
+                onChange={(e) => setFromTime(e.target.value)}
+              />
+            </span>
+            <button className="from__datebtn" onClick={getDate}>
+              Get Filter
+            </button>
+            <button
+              className="to__datebtn"
+              onClick={() => {
+                clearReports();
+                window.location.reload();
+              }}
+            >
+              Clear Filter
+            </button>
+          </div>
+
+          <div
+            className="dateTime__to"
+            style={{ display: "flex", gap: "1rem", marginLeft: "1rem" }}
+          >
+            <h2 style={{ display: "inline" }} className="dateTime__text">
+              To
+            </h2>
+            <span className="report--get__date">
+              <input type="date" value={ToDate} onChange={handleDate2} />
+            </span>
+            <span className="report--get__date">
+              <input
+                type="time"
+                value={ToTime}
+                onChange={(e) => setToTime(e.target.value)}
+              />
+            </span>
+          </div>
+        </div>
+
+        {/* <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <button
             className="reportbuttons"
             onClick={() => {
@@ -250,7 +423,7 @@ const GeneralReport = () => {
           >
             Download Report
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div ref={generalReportPageRef}>
@@ -259,6 +432,14 @@ const GeneralReport = () => {
           lounge={lounge}
           barTotal={totalBar}
           loungeTotal={totalLounge}
+          FromDate={FromDate1}
+          FromTime={FromTime}
+          ToDate={ToDate1}
+          ToTime={ToTime}
+          cashPayments1={cashPayments1}
+          posPayments1={posPayments1}
+          transferPayments1={transferPayments1}
+          totalRevenue1={totalRevenue1}
         />
       </div>
 
@@ -304,4 +485,3 @@ const GeneralReport = () => {
 };
 
 export default GeneralReport;
-

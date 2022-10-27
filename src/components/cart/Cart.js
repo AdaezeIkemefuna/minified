@@ -101,7 +101,11 @@ const Cart = () => {
                       }}
                       size={18}
                       color="white"
-                      className="plus__order"
+                      className={
+                        item.qty === item.quantity
+                          ? "plus__order null"
+                          : "plus__order"
+                      }
                     />
                   </td>
                   <td className="td">

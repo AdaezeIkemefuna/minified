@@ -1,13 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import "../Settings.css";
-import { useEffect, useState, useContext } from "react";
-import AuthContext from "../../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-import { toast } from "react-toastify";
 
 const IndividualReport = () => {
-  const { toastOptions, setWaiter } = useContext(AuthContext);
   const [username, setUsername] = useState([]);
   const navigate = useNavigate();
 
@@ -26,10 +22,6 @@ const IndividualReport = () => {
     getAllUsers();
   }, []);
 
-  const getWaiterUsername = (user) => {
-    setWaiter(user);
-  };
-
   return (
     <div className="main__div">
       <div className="back__button" onClick={() => navigate(-1)}>
@@ -41,14 +33,14 @@ const IndividualReport = () => {
         {username.map(
           (user) =>
             user.username !== null && (
-              <Link to="/settings/reports/individual/individualreportperwaiter">
-                <div
-                  key={user.username}
-                  onClick={() => getWaiterUsername(user.username)}
-                >
-                  <p>{user.username}</p>
-                </div>
-              </Link>
+              <div
+                key={user.username}
+                onClick={() => {
+                  navigate(`/settings/reports/individual/${user.username}`);
+                }}
+              >
+                <p>{user.username}</p>
+              </div>
             )
         )}
       </div>

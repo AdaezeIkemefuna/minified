@@ -68,11 +68,12 @@ export const AuthProvider = ({ children }) => {
         }
       );
       const data = await response.json();
+      const sorted = data.sort((a, b) => a.product.localeCompare(b.product));
       dispatch({
         type: "INITIALIZE_CART",
         payload: {
           ...initialCartState,
-          items: data,
+          items: sorted,
         },
       });
       setActiveCategory("All Menu");
@@ -214,7 +215,8 @@ export const AuthProvider = ({ children }) => {
         }
       );
       const data = await response.json();
-      setAdminTables(data);
+      const sorted = data.sort((a, b) => b.status.localeCompare(a.status));
+      setAdminTables(sorted);
     } catch (err) {}
   };
 
@@ -233,8 +235,8 @@ export const AuthProvider = ({ children }) => {
         }),
       });
       const data = await response.json();
-      console.log(data);
-      setTables(data);
+      const sorted = data.sort((a, b) => b.status.localeCompare(a.status));
+      setTables(sorted);
     } catch (err) {
       console.log(err);
     }

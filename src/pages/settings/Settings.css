@@ -411,6 +411,37 @@ body .main__report {
   margin-right: 14rem;
 }
 
+.from__datebtn,
+.to__datebtn {
+  padding: 0.9rem 1rem;
+  margin-top: 3px;
+  color: var(--yellow);
+  border-radius: 8px;
+  font-weight: 500;
+  border: 1px solid var(--blue-border);
+  cursor: pointer;
+  background-color: var(--primary-color);
+}
+
+.report--get__date {
+  color: var(--yellow);
+  padding: 0.1rem 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-left: 0.2rem;
+  font-weight: 500;
+  border: 1px solid var(--blue-border);
+  cursor: pointer;
+  background-color: var(--primary-color);
+}
+
+.dateTime__to .report--get__date {
+  padding: 0.6rem;
+}
+
 /* Responsivessness for Mobile Screen */
 @media (max-width: 768px) {
   .form__wrapper {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState, useContext, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import IndividualReportPage from "./IndividualReportPage";
 import AuthContext from "../../../context/AuthContext";
 import jsPDF from "jspdf";
@@ -12,12 +12,13 @@ function IndividualReportPerWaiter() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [date, setDate] = useState("");
-  const { waiter, toastOptions } = useContext(AuthContext);
+  const { toastOptions } = useContext(AuthContext);
   const [report, setReport] = useState([]);
   const establishment = "SwiftLounge";
+  const { waitername } = useParams();
 
   // FUNCTION TO GET WAITER
-  const getWaiterReport = async (waiter) => {
+  const getWaiterReport = async (waitername) => {
     try {
       const response = await fetch(
         "https://pos-server1.herokuapp.com/individual-report",
@@ -27,7 +28,7 @@ function IndividualReportPerWaiter() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            waiter,
+            waiter: waitername,
           }),
         }
       );
@@ -41,7 +42,7 @@ function IndividualReportPerWaiter() {
   };
 
   useEffect(() => {
-    getWaiterReport(waiter);
+    getWaiterReport(waitername);
   }, []);
 
   //  A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
@@ -103,7 +104,7 @@ function IndividualReportPerWaiter() {
         let dateModified = dateCreated.toString().replace(/\//g, "-");
         const myFile = new File(
           [blobFile],
-          `${waiter}-${establishment}-${dateModified}.pdf`,
+          `${waitername}-${establishment}-${dateModified}.pdf`,
           {
             type: "application/pdf",
           }
@@ -116,7 +117,7 @@ function IndividualReportPerWaiter() {
           .post("https://pos-server1.herokuapp.com/upload-report", formData)
           .then((res) => {
             if (res.ok) {
-              getWaiterReport(waiter);
+              getWaiterReport(waitername);
               toast.success("Report Uploaded Successfully", toastOptions);
             }
           });
@@ -138,7 +139,7 @@ function IndividualReportPerWaiter() {
   // A Function To GET PDF OF A USER SELECTED DATE
 
   const getPdfByDate = async (date) => {
-    const client = `${waiter}-${establishment}`;
+    const client = `${waitername}-${establishment}`;
     try {
       const response = await fetch(
         "https://pos-server1.herokuapp.com/retrieve-pdf",
@@ -201,7 +202,7 @@ function IndividualReportPerWaiter() {
       </div>
 
       <div ref={individualReportPageRef}>
-        <IndividualReportPage report={report} total={total} waiter={waiter} />
+        <IndividualReportPage report={report} total={total} />
       </div>
 
       <div className={showModal ? "backdrop__container" : "close"}>

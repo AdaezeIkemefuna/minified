@@ -148,10 +148,11 @@ const ChangeRole = () => {
                   Select Role
                 </option>
                 <option value="Super Admin">Super Admin</option>
-                <option value="Administrator">Administrator</option>
+                <option value="Bar Man">Bar Man</option>
+                <option value="Supervisor">Supervisor</option>
                 <option value="Store Manager">Store Manager</option>
-                <option value="Accountant">Accountant</option>
-                <option value="Cashier">Cashier</option>
+                <option value="Accounts">Accounts</option>
+                <option value="Waiter">Waiter</option>
               </select>
 
               <div className="modal__buttons">

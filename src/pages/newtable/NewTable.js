@@ -26,10 +26,10 @@ const NewTable = () => {
     } else if (table_name === "") {
       toast("Enter table name", toastOptions);
     } else {
+      setLoading(true);
       newOrderCall(activePasscode, activeUser, table_name, order);
     }
   };
-  console.log(order);
   const newOrderCall = async (
     activePasscode,
     activeUser,
@@ -67,6 +67,7 @@ const NewTable = () => {
       }
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
   return (
@@ -85,7 +86,9 @@ const NewTable = () => {
               onChange={(e) => setTableName(e.target.value)}
               autoFocus
             />
-            <button>{loading ? "Adding Table..." : "Add Table"}</button>
+            <button disabled={loading ? true : false}>
+              {loading ? "Adding Table..." : "Add Table"}
+            </button>
           </form>
         </article>
       </div>

@@ -61,7 +61,7 @@ function App() {
               element={<IndividualReport />}
             />
             <Route
-              path="/settings/reports/individual/individualreportperwaiter"
+              path="/settings/reports/individual/:waitername"
               element={<IndividualReportPerWaiter />}
             />
             <Route

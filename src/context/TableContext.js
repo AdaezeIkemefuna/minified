@@ -111,7 +111,11 @@ export const TableProvider = ({ children }) => {
     try {
       const response = await fetch("https://pos-server1.herokuapp.com/items");
       const data = await response.json();
-      setImsItems(data);
+      const undeleted = data.filter((item) => item.deleted_status === "FALSE");
+      const sorted = undeleted.sort((a, b) =>
+        a.product.localeCompare(b.product)
+      );
+      setImsItems(sorted);
     } catch (err) {}
   };
 
@@ -189,7 +193,8 @@ export const TableProvider = ({ children }) => {
       );
       const data = await response.json();
       if (response.ok) {
-        setPlacedOrdersFilter(data);
+        const sorted = data.sort((a, b) => a.product.localeCompare(b.product));
+        setPlacedOrdersFilter(sorted);
       } else {
         toast("Couldn't fetch transactions for this date");
       }
@@ -205,7 +210,8 @@ export const TableProvider = ({ children }) => {
         "https://pos-server1.herokuapp.com/ims/sent-items"
       );
       const data = await response.json();
-      setImsTransactions(data);
+      const sorted = data.sort((a, b) => a.product.localeCompare(b.product));
+      setImsTransactions(sorted);
     } catch (err) {}
   };
 
@@ -232,9 +238,13 @@ export const TableProvider = ({ children }) => {
       );
       const data = await response.json();
       if (response.ok) {
-        setTransactions(data);
+        const sorted = data.filters.sort((a, b) =>
+          a.product.localeCompare(b.product)
+        );
+
+        setTransactions(sorted);
       } else {
-        toast("Couldn't fetch transactions for this date");
+        toast.error("Couldn't fetch transactions for this date");
       }
     } catch (error) {}
   };
@@ -267,7 +277,6 @@ export const TableProvider = ({ children }) => {
 
   const [activeCategory, setActiveCategory] = useState("ALL ITEMS");
   const [activeDept, setActiveDept] = useState("");
-
   const [searchQuery, setSearchQuery] = useState("");
 
   //TRANSFORM ORDERS

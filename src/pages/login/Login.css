@@ -10,8 +10,7 @@
 
 .logo {
   height: 200px;
-  width: 300px;
-  margin-bottom: 6rem;
+  width: 500px;
 }
 
 .logo-2 {
@@ -30,25 +29,25 @@
 
 .form-container input {
   outline: none;
-  border: 1px solid var(--yellow);
+  border: 1px solid var(--primary-color);
   width: 100%;
   padding-left: 2.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   font-size: 1rem;
-  color: var(--primary-color);
+  color: var(--black);
   border-radius: 8px;
   background-color: #eee;
 }
 
 .form-container input:focus {
-  border: 2px solid var(--yellow);
+  border: 2px solid var(--primary-color);
 }
 
 .login-button {
   width: 100%;
   padding: 1rem;
-  background-color: var(--primary-color);
+  background-color: rgb(31, 30, 30);
   color: var(--yellow);
   margin-top: 1rem;
   border-radius: 5px;

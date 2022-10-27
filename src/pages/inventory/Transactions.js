@@ -3,12 +3,13 @@ import { toast } from "react-toastify";
 import AuthContext from "../../context/AuthContext";
 import TableContext from "../../context/TableContext";
 
-const Transactions = ({ order, closeModal }) => {
+const Transactions = ({ order, closeAll }) => {
   const { toastOptions } = useContext(AuthContext);
   const { displayImsItems, displayImsTransactions } = useContext(TableContext);
   const [quantity, setQuantity] = useState("");
   const [department, setDepartment] = useState("");
   const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
 
   const sendItems = async () => {
@@ -26,6 +27,7 @@ const Transactions = ({ order, closeModal }) => {
             department,
             category,
             price: +price,
+            description,
           }),
         }
       );
@@ -33,6 +35,7 @@ const Transactions = ({ order, closeModal }) => {
         toast.success(`Item sent successfully`, toastOptions);
         displayImsItems();
         displayImsTransactions();
+        closeAll();
       } else {
         toast.error(`Failed to send item`, toastOptions);
       }
@@ -43,10 +46,7 @@ const Transactions = ({ order, closeModal }) => {
 
   const sendItemsCall = () => {
     if (quantity > order.quantity) {
-      toast.warn(
-        "Quantity is insufficient to send to department",
-        toastOptions
-      );
+      toast.warn("Insufficient quantity available", toastOptions);
     } else if (
       department === "" ||
       category === "" ||
@@ -62,7 +62,7 @@ const Transactions = ({ order, closeModal }) => {
   return (
     <div id="payments">
       {/* <p>Enter Update Quantity:</p> */}
-      <input type="text" value={order.product} />
+      <input type="text" defaultValue={order.product} />
       <select
         value={department}
         onChange={(e) => setDepartment(e.target.value)}
@@ -74,8 +74,16 @@ const Transactions = ({ order, closeModal }) => {
         <option value="Lounge">Lounge</option>
         <option value="Kitchen">Kitchen</option>
       </select>
+      {department === "Kitchen" && (
+        <input
+          type="text"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      )}
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
-        <option value="" hidden style={{ color: "red" }}>
+        <option value="" hidden>
           Select Category
         </option>
         <option value="Wines">Wines/Whisky</option>
@@ -85,11 +93,11 @@ const Transactions = ({ order, closeModal }) => {
         <option value="Meals">Meals</option>
         <option value="Cigarettes">Cigarettes</option>
         <option value="Soups/Swallow">Soups/Swallow</option>
+        <option value="Ingredients">Ingredients</option>
         <option value="Grills">Grills</option>
         <option value="Noodles">Noodles</option>
         <option value="Rice">Rice</option>
         <option value="Chips">Chips</option>
-        
       </select>
       <input
         type="number"
