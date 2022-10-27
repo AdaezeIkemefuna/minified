@@ -28,13 +28,13 @@ const Company = () => {
           <div className="contact">
             <MdLocationOn size={20} />
             <span>
-              78 Aguleri Street, <br /> Independence Layout.
+              7 Ihiala Avenue, Upper Chime, <br /> New Haven, Enugu.
             </span>
           </div>{" "}
           <br />
           <div className="contact">
             <FaPhoneAlt />
-            <span>07082836846</span>
+            <span>09132035923</span>
           </div>
         </div>
       </div>

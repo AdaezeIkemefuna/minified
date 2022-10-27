@@ -334,13 +334,13 @@ export default function TableDetailsModal({ table, closeModal }) {
           <div className="contact">
             <MdLocationOn size={20} />
             <span>
-              3D Igboeze Street, <br /> Independence Layout.
+              7 Ihiala Avenue, Upper Chime, <br /> New Haven, Enugu.
             </span>
           </div>{" "}
           <br />
           <div className="contact">
             <FaPhoneAlt />
-            <span>09015290078</span>
+            <span>09132035923</span>
           </div>
         </div>
       </div>
