@@ -20,9 +20,12 @@ const Login = () => {
 
   return (
     <div className="login-page">
-      <div className="logo">
-        <img src="/logo.png" alt="TheBase Logo" width={"100%"} />
+      <div className="logo-container">
+        <div className="logo">
+          <img src="/1.png" alt="TheBase Logo" width={"100%"} />
+        </div>
       </div>
+
       <h1 className="login-header">INTEGRATED POS/IMS MANAGEMENT SYSTEM</h1>
       <div className="form-container">
         {errMsg && (

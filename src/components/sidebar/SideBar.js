@@ -55,7 +55,7 @@ const SideBar = () => {
       )}
       <div className="nav__container desktop">
         <div className="nav__logo">
-          <img src="/logo.png" alt="" width={"100%"} />
+          <img src="/1.png" alt="" width={"100%"} />
         </div>
         <div className="nav__wrapper">
           <NavLink
@@ -141,7 +141,7 @@ const SideBar = () => {
           <FaTimes size={25} onClick={menuAction} />
         </div>
         <div className="nav__logo">
-          <img src="/logo.png" alt="" width={"100%"} />
+          <img src="/1.png" alt="" width={"100%"} />
         </div>
         <div className="nav__wrapper">
           <NavLink
