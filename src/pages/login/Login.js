@@ -23,7 +23,7 @@ const Login = () => {
       <div className="logo">
         <img src="/logo.png" alt="TheBase Logo" width={"100%"} />
       </div>
-      <h1 className="login-header">POS MANAGEMENT SYSTEM</h1>
+      <h1 className="login-header">INTEGRATED POS/IMS MANAGEMENT SYSTEM</h1>
       <div className="form-container">
         {errMsg && (
           <p
