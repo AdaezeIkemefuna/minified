@@ -24,7 +24,7 @@ const AddStaff = () => {
   const addUser = async (username, password, role, passcode) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/new-user",
+        "https://rainforest-pos.herokuapp.com/new-user",
         {
           method: "POST",
           headers: {

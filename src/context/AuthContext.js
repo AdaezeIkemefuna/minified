@@ -19,16 +19,19 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async (username, password) => {
     try {
-      const response = await fetch("https://pos-server1.herokuapp.com/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "https://rainforest-pos.herokuapp.com/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+          }),
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         setLoading(false);
@@ -56,7 +59,7 @@ export const AuthProvider = ({ children }) => {
   const displayItems = async (department) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/items/department",
+        "https://rainforest-pos.herokuapp.com/items/department",
         {
           method: "POST",
           headers: {
@@ -202,7 +205,7 @@ export const AuthProvider = ({ children }) => {
   const displayAdminTables = async (activeUser, activePasscode) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/all-tables",
+        "https://rainforest-pos.herokuapp.com/all-tables",
         {
           method: "POST",
           headers: {
@@ -225,15 +228,18 @@ export const AuthProvider = ({ children }) => {
 
   const displayTables = async (activeUser) => {
     try {
-      const response = await fetch("https://pos-server1.herokuapp.com/tables", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          activeUser,
-        }),
-      });
+      const response = await fetch(
+        "https://rainforest-pos.herokuapp.com/tables",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            activeUser,
+          }),
+        }
+      );
       const data = await response.json();
       const sorted = data.sort((a, b) => b.status.localeCompare(a.status));
       setTables(sorted);
@@ -248,7 +254,7 @@ export const AuthProvider = ({ children }) => {
   const getDetails = async (activeUser, activePasscode, table_name) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/get-orders",
+        "https://rainforest-pos.herokuapp.com/get-orders",
         {
           method: "POST",
           headers: {
@@ -281,7 +287,7 @@ export const AuthProvider = ({ children }) => {
   ) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/get-orders",
+        "https://rainforest-pos.herokuapp.com/get-orders",
         {
           method: "POST",
           headers: {
@@ -308,7 +314,7 @@ export const AuthProvider = ({ children }) => {
   const getOrderCount = async (activeUser, activePasscode) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/order-count",
+        "https://rainforest-pos.herokuapp.com/order-count",
         {
           method: "POST",
           headers: {
@@ -368,7 +374,9 @@ export const AuthProvider = ({ children }) => {
   const [waiterNotifs, setWaiterNotifs] = useState([]);
   const getNotifs = async () => {
     try {
-      const response = await fetch("https://pos-server1.herokuapp.com/waiters");
+      const response = await fetch(
+        "https://rainforest-pos.herokuapp.com/waiters"
+      );
       const data = await response.json();
       if (response.status === 200) {
         setWaiterNotifs(data);
@@ -385,7 +393,7 @@ export const AuthProvider = ({ children }) => {
   const getNotifCount = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/notification-count"
+        "https://rainforest-pos.herokuapp.com/notification-count"
       );
       const data = await response.json();
       setNotifCount(data.length);

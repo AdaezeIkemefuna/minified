@@ -172,7 +172,7 @@ const PlaceOrder = () => {
   const addProductCall = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/new-item",
+        "https://rainforest-pos.herokuapp.com/new-item",
         {
           method: "POST",
           headers: {
@@ -216,7 +216,7 @@ const PlaceOrder = () => {
   const placeOrder = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/ims/place-order",
+        "https://rainforest-pos.herokuapp.com/ims/place-order",
         {
           method: "POST",
           headers: {
@@ -254,10 +254,12 @@ const PlaceOrder = () => {
   const uploadFile = (e) => {
     const data = new FormData();
     data.append("image", e.target.files[0]);
-    axios.post("https://pos-server1.herokuapp.com/upload", data).then((res) => {
-      //print response status
-      setImageFile(res.data.imgPath);
-    });
+    axios
+      .post("https://rainforest-pos.herokuapp.com/upload", data)
+      .then((res) => {
+        //print response status
+        setImageFile(res.data.imgPath);
+      });
   };
 
   return (

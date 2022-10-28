@@ -48,7 +48,7 @@ const GeneralReport = () => {
 
   const client = "SwiftLounge";
 
-  const url = `https://pos-server1.herokuapp.com/overall-reports`;
+  const url = `https://rainforest-pos.herokuapp.com/overall-reports`;
   const getAllReports = async () => {
     try {
       const response = await fetch(url);
@@ -63,7 +63,7 @@ const GeneralReport = () => {
   const FilterByDate = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/filter-reports",
+        "https://rainforest-pos.herokuapp.com/filter-reports",
         {
           method: "POST",
           headers: {
@@ -91,7 +91,7 @@ const GeneralReport = () => {
   const FilterPayments = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/filter-tables",
+        "https://rainforest-pos.herokuapp.com/filter-tables",
         {
           method: "POST",
           headers: {
@@ -159,7 +159,7 @@ const GeneralReport = () => {
   const clearDB = async (activeUser, activePasscode) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/clear-db",
+        "https://rainforest-pos.herokuapp.com/clear-db",
         {
           method: "DELETE",
           headers: {
@@ -206,7 +206,7 @@ const GeneralReport = () => {
         formData.append("file", dateModified);
 
         axios
-          .post("https://pos-server1.herokuapp.com/upload-report", formData)
+          .post("https://rainforest-pos.herokuapp.com/upload-report", formData)
           .then((res) => {
             if (res.ok) {
               toast.success("Report Uploaded Successfully", toastOptions);
@@ -292,7 +292,7 @@ const GeneralReport = () => {
   const getPdfByDate = async (client, date) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/retrieve-pdf",
+        "https://rainforest-pos.herokuapp.com/retrieve-pdf",
         {
           method: "POST",
           headers: {

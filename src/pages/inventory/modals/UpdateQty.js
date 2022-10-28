@@ -10,7 +10,7 @@ const UpdateQty = ({ order, closeModal }) => {
 
   const _updateQty = async () => {
     try {
-      fetch("https://pos-server1.herokuapp.com/ims/update-order-quantity", {
+      fetch("https://rainforest-pos.herokuapp.com/ims/update-order-quantity", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

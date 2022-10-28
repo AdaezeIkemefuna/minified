@@ -14,7 +14,7 @@ export default function EditPriceModal({ item }) {
   const changePrice = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/update-item",
+        "https://rainforest-pos.herokuapp.com/update-item",
         {
           method: "PUT",
           headers: {

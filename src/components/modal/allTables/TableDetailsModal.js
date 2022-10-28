@@ -163,7 +163,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   const closeTableCall = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/close-table",
+        "https://rainforest-pos.herokuapp.com/close-table",
         {
           method: "POST",
           headers: {
@@ -227,7 +227,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   const updateQtyCall = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/apply-returns",
+        "https://rainforest-pos.herokuapp.com/apply-returns",
         {
           method: "PUT",
           headers: {
@@ -267,7 +267,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   const updateQtyBarman = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/apply-returns",
+        "https://rainforest-pos.herokuapp.com/apply-returns",
         {
           method: "PUT",
           headers: {

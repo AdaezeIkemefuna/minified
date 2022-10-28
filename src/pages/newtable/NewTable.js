@@ -37,18 +37,21 @@ const NewTable = () => {
     order
   ) => {
     try {
-      const response = await fetch("https://pos-server1.herokuapp.com/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          activePasscode,
-          activeUser,
-          table_name,
-          order,
-        }),
-      });
+      const response = await fetch(
+        "https://rainforest-pos.herokuapp.com/order",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            activePasscode,
+            activeUser,
+            table_name,
+            order,
+          }),
+        }
+      );
       if (response.ok) {
         toast.success(`Added new table for ${table_name}`, toastOptions);
         setLoading(false);

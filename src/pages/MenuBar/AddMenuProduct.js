@@ -47,7 +47,7 @@ const AddMenuProduct = () => {
   const addProductCall = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/new-item",
+        "https://rainforest-pos.herokuapp.com/new-item",
         {
           method: "POST",
           headers: {
@@ -83,10 +83,12 @@ const AddMenuProduct = () => {
   const uploadFile = (e) => {
     const data = new FormData();
     data.append("image", e.target.files[0]);
-    axios.post("https://pos-server1.herokuapp.com/upload", data).then((res) => {
-      //print response status
-      setImageFile(res.data.imgPath);
-    });
+    axios
+      .post("https://rainforest-pos.herokuapp.com/upload", data)
+      .then((res) => {
+        //print response status
+        setImageFile(res.data.imgPath);
+      });
   };
   return (
     <div className="form__wrapper2 menubar__wrapper">

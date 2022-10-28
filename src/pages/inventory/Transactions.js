@@ -15,7 +15,7 @@ const Transactions = ({ order, closeAll }) => {
   const sendItems = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/ims/send-items",
+        "https://rainforest-pos.herokuapp.com/ims/send-items",
         {
           method: "POST",
           headers: {

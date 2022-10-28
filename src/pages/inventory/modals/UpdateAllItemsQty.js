@@ -13,7 +13,7 @@ const UpdateAllItemsQty = ({ order, closeAll }) => {
 
   const _updateQuantity = async () => {
     try {
-      fetch("https://pos-server1.herokuapp.com/update-quantity", {
+      fetch("https://rainforest-pos.herokuapp.com/update-quantity", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

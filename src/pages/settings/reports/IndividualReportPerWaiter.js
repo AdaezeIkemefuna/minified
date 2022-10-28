@@ -21,7 +21,7 @@ function IndividualReportPerWaiter() {
   const getWaiterReport = async (waitername) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/individual-report",
+        "https://rainforest-pos.herokuapp.com/individual-report",
         {
           method: "POST",
           headers: {
@@ -114,7 +114,7 @@ function IndividualReportPerWaiter() {
         formData.append("file", myFile);
         formData.append("file", dateModified);
         axios
-          .post("https://pos-server1.herokuapp.com/upload-report", formData)
+          .post("https://rainforest-pos.herokuapp.com/upload-report", formData)
           .then((res) => {
             if (res.ok) {
               getWaiterReport(waitername);
@@ -142,7 +142,7 @@ function IndividualReportPerWaiter() {
     const client = `${waitername}-${establishment}`;
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/retrieve-pdf",
+        "https://rainforest-pos.herokuapp.com/retrieve-pdf",
         {
           method: "POST",
           headers: {

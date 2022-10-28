@@ -59,7 +59,7 @@ const Dashboard = () => {
   const getCreditReport = async (activeUser) => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/user-credit",
+        "https://rainforest-pos.herokuapp.com/user-credit",
         {
           method: "POST",
           headers: {
@@ -81,7 +81,7 @@ const Dashboard = () => {
   const clearTables = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/clear-tables",
+        "https://rainforest-pos.herokuapp.com/clear-tables",
         {
           method: "PUT",
           headers: {

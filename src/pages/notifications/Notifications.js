@@ -16,7 +16,7 @@ export default function Notifications() {
   const clearNotifs = async () => {
     try {
       const response = await fetch(
-        "https://pos-server1.herokuapp.com/clear-notifications",
+        "https://rainforest-pos.herokuapp.com/clear-notifications",
         {
           method: "DELETE",
           headers: {

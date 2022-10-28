@@ -9,7 +9,7 @@ const ReceiveOrder = ({ order, closeModal }) => {
   const { displayImsOrders } = useContext(TableContext);
   const receiveOrder = async () => {
     try {
-      fetch("https://pos-server1.herokuapp.com/ims/update-status", {
+      fetch("https://rainforest-pos.herokuapp.com/ims/update-status", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -12,7 +12,7 @@ const DeleteItem = ({ order, closeModal, closeAll }) => {
   console.log(order);
   const deleteItem = async () => {
     try {
-      fetch("https://pos-server1.herokuapp.com/ims/delete-item", {
+      fetch("https://rainforest-pos.herokuapp.com/ims/delete-item", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
