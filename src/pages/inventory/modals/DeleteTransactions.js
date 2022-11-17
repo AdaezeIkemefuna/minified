@@ -9,7 +9,7 @@ const DeleteTransaction = ({ order, closeModal }) => {
   const { displayImsTransactions } = useContext(TableContext);
   const deleteTransaction = async () => {
     try {
-      fetch("https://rainforest-pos.herokuapp.com/ims/delete-transactions", {
+      fetch("https://uppist-server.herokuapp.com/ims/delete-transactions", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -26,7 +26,7 @@ const UpdateStaff = () => {
     },
   ]);
 
-  const url = `https://rainforest-pos.herokuapp.com/users`;
+  const url = `https://uppist-server.herokuapp.com/users`;
   const getAllUsers = async () => {
     try {
       const response = await fetch(url);
@@ -68,7 +68,7 @@ const UpdateStaff = () => {
   ) => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/update-password",
+        "https://uppist-server.herokuapp.com/update-password",
         {
           method: "PUT",
           headers: {
@@ -101,7 +101,7 @@ const UpdateStaff = () => {
   ) => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/update-passcode",
+        "https://uppist-server.herokuapp.com/update-passcode",
         {
           method: "PUT",
           headers: {
@@ -128,7 +128,7 @@ const UpdateStaff = () => {
   const deleteUser = async (activeUser, activePasscode, username) => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/delete-user",
+        "https://uppist-server.herokuapp.com/delete-user",
         {
           method: "DELETE",
           headers: {
@@ -155,7 +155,7 @@ const UpdateStaff = () => {
   const suspendUser = async (activeUser, activePasscode, username) => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/suspend-user",
+        "https://uppist-server.herokuapp.com/suspend-user",
         {
           method: "PUT",
           headers: {
@@ -182,7 +182,7 @@ const UpdateStaff = () => {
   const reactivateUser = async (activeUser, activePasscode, username) => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/reactivate",
+        "https://uppist-server.herokuapp.com/reactivate",
         {
           method: "PUT",
           headers: {

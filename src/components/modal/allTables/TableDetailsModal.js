@@ -23,6 +23,7 @@ import { ComponentToPrint } from "../../print/ComponentToPrint";
 import { useReactToPrint } from "react-to-print";
 import DeleteSingleOrder from "./DeleteSingleOrder";
 import "../Modal.css";
+import Passcode from "../payments/Passcode";
 
 export default function TableDetailsModal({ table, closeModal }) {
   const {
@@ -63,6 +64,9 @@ export default function TableDetailsModal({ table, closeModal }) {
 
   const [creditAmt, setCreditAmt] = useState("");
   const [creditModal, showCreditModal] = useState(false);
+
+  const [passcode, setPasscode] = useState(activePasscode);
+  const [passcodeModal, showPasscodeModal] = useState(false);
 
   const totalPay = +cashAmt + +posAmt + +transferAmt + +creditAmt;
 
@@ -106,6 +110,7 @@ export default function TableDetailsModal({ table, closeModal }) {
       showPosModal(false);
       showTransferModal(false);
       showCreditModal(false);
+      showPasscodeModal(false);
     }
   };
 
@@ -153,7 +158,6 @@ export default function TableDetailsModal({ table, closeModal }) {
 
   //Variables
   const complimentary_qty = compQty;
-  const passcode = 1410;
   const cash = +cashAmt;
   const pos = +posAmt;
   const transfer = +transferAmt;
@@ -163,7 +167,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   const closeTableCall = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/close-table",
+        "https://uppist-server.herokuapp.com/close-table",
         {
           method: "POST",
           headers: {
@@ -208,7 +212,7 @@ export default function TableDetailsModal({ table, closeModal }) {
       closeTableCall(
         complimentary_qty,
         credit,
-        passcode,
+        +passcode,
         activeUser,
         table_name,
         cash,
@@ -227,7 +231,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   const updateQtyCall = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/apply-returns",
+        "https://uppist-server.herokuapp.com/apply-returns",
         {
           method: "PUT",
           headers: {
@@ -267,7 +271,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   const updateQtyBarman = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/apply-returns",
+        "https://uppist-server.herokuapp.com/apply-returns",
         {
           method: "PUT",
           headers: {
@@ -644,6 +648,22 @@ export default function TableDetailsModal({ table, closeModal }) {
                 <CreditModal
                   cash={creditAmt}
                   setCash={setCreditAmt}
+                  closeModal={closePaymentModal}
+                />
+              </div>
+            )}
+
+            {/* passcode */}
+            {passcodeModal && (
+              <div
+                className={passcodeModal ? "backdrop__container" : "close"}
+                id="bg"
+                onClick={closePaymentModal}
+              >
+                <Passcode
+                  passcode={passcode}
+                  setPasscode={setPasscode}
+                  closeTable={closeTable}
                   closeModal={closePaymentModal}
                 />
               </div>

@@ -38,7 +38,7 @@ const NewTable = () => {
   ) => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/order",
+        "https://uppist-server.herokuapp.com/order",
         {
           method: "POST",
           headers: {

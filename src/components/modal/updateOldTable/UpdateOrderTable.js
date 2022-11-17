@@ -38,7 +38,7 @@ export default function UpdateOrderTable({ table, closeModal }) {
   const updateOrderCall = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/update-order",
+        "https://uppist-server.herokuapp.com/update-order",
         {
           method: "POST",
           headers: {

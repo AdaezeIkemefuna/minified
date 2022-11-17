@@ -11,11 +11,13 @@ const Transactions = ({ order, closeAll }) => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [portion, setPortion] = useState("");
+  const [size, setSize] = useState("");
 
   const sendItems = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/ims/send-items",
+        "https://uppist-server.herokuapp.com/ims/send-items",
         {
           method: "POST",
           headers: {
@@ -28,6 +30,8 @@ const Transactions = ({ order, closeAll }) => {
             category,
             price: +price,
             description,
+            portion,
+            size,
           }),
         }
       );

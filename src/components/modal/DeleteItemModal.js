@@ -14,7 +14,7 @@ export default function DeleteItemModal({ item, closeModal, setDeleteMode }) {
   const deleteItem = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/delete-item",
+        "https://uppist-server.herokuapp.com/delete-item",
         {
           method: "DELETE",
           headers: {

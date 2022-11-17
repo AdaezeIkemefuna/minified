@@ -19,7 +19,7 @@ const StaffCredit = () => {
     },
   ]);
 
-  const url = `https://rainforest-pos.herokuapp.com/credit-status`;
+  const url = `https://uppist-server.herokuapp.com/credit-status`;
   const getAllUsers = async () => {
     try {
       const response = await fetch(url);
@@ -57,7 +57,7 @@ const StaffCredit = () => {
   const updateCredit = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/grant-credit",
+        "https://uppist-server.herokuapp.com/grant-credit",
         {
           method: "POST",
           headers: {

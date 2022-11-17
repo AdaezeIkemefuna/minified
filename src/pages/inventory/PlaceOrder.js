@@ -172,7 +172,7 @@ const PlaceOrder = () => {
   const addProductCall = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/new-item",
+        "https://uppist-server.herokuapp.com/new-item",
         {
           method: "POST",
           headers: {
@@ -216,7 +216,7 @@ const PlaceOrder = () => {
   const placeOrder = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/ims/place-order",
+        "https://uppist-server.herokuapp.com/ims/place-order",
         {
           method: "POST",
           headers: {
@@ -255,7 +255,7 @@ const PlaceOrder = () => {
     const data = new FormData();
     data.append("image", e.target.files[0]);
     axios
-      .post("https://rainforest-pos.herokuapp.com/upload", data)
+      .post("https://uppist-server.herokuapp.com/upload", data)
       .then((res) => {
         //print response status
         setImageFile(res.data.imgPath);
@@ -265,18 +265,7 @@ const PlaceOrder = () => {
   return (
     <div className="placeorder__wrapper">
       <div className="ims__Itemdate">{date}</div>
-      <div
-        style={{
-          width: "fit-content",
-          display: "flex",
-          border: "1px solid var(--black)",
-          borderRadius: "7px",
-          margin: "1rem",
-          padding: "0.3rem",
-          cursor: "pointer",
-        }}
-        onClick={() => navigate(-1)}
-      >
+      <div onClick={() => navigate(-1)} className="addItems__back">
         <MdOutlineArrowBackIos size={22} />
         <p style={{ fontSize: "1.2rem", margin: "0rem" }}>Go Back</p>
       </div>

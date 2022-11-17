@@ -12,7 +12,7 @@ const WaiterNotif = () => {
   const getWaiterOrders = async () => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/notification",
+        "https://uppist-server.herokuapp.com/notification",
         {
           method: "POST",
           headers: {
@@ -36,7 +36,7 @@ const WaiterNotif = () => {
   const updateNotifs = async (waiter) => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/update-notification",
+        "https://uppist-server.herokuapp.com/update-notification",
         {
           method: "PUT",
           headers: {

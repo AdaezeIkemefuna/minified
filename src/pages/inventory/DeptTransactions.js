@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import AdminModal from "./modals/AdminModal";
 import DeleteTransaction from "./modals/DeleteTransactions";
-import { toast } from "react-toastify";
-import AuthContext from "../../context/AuthContext";
+import { BiCalendar } from "react-icons/bi";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import MobileTransactions from "./MobileTransactions";
 
 const DeptTransactions = () => {
   const {
@@ -20,21 +21,14 @@ const DeptTransactions = () => {
     getTransactions,
     setTransactions,
   } = useContext(TableContext);
-
-  const { toastOptions } = useContext(AuthContext);
   const clearFilters = () => {
     setTransactions("");
     setToDate("");
     setFromDate("");
   };
-  const transactionsCall = () => {
-    if (fromDate === "" || toDate === "") {
-      toast.warn(`Both dates are required`, toastOptions);
-    } else {
-      getTransactions(fromDate, toDate);
-    }
-  };
+
   const navigate = useNavigate();
+  const [openFilter, setOpenFilter] = useState(false);
 
   const transformTransactions = (trans) => {
     let sortedTrans = trans;
@@ -51,18 +45,20 @@ const DeptTransactions = () => {
     }
 
     if (transactions) {
-      sortedTrans = transactions;
+      sortedTrans = transactions.filters;
       if (activeDept === "Bar") {
-        sortedTrans = transactions.filter((item) => item.department === "Bar");
+        sortedTrans = transactions.filters.filter(
+          (item) => item.department === "Bar"
+        );
       }
       if (activeDept === "Lounge") {
-        sortedTrans = transactions.filter(
+        sortedTrans = transactions.filters.filter(
           (item) => item.department === "Lounge"
         );
       }
 
       if (activeDept === "Kitchen") {
-        sortedTrans = transactions.filter(
+        sortedTrans = transactions.filters.filter(
           (item) => item.department === "Kitchen"
         );
       }
@@ -76,9 +72,36 @@ const DeptTransactions = () => {
           <MdOutlineArrowBackIos size={22} />
           <p style={{ fontSize: "1.2rem", margin: "0rem" }}>Go Back</p>
         </div>
+        <div className="mobile__heading">
+          <div className="mobile__container">
+            <div onClick={() => navigate(-1)}>
+              <MdOutlineArrowBackIos size={22} />
+            </div>
+            <span
+              className={`${activeDept === "" ? "ims--title3" : "ims--dept"}`}
+              onClick={() => setActiveDept("")}
+              style={{
+                cursor: "pointer",
+                fontSize: "1.4rem",
+              }}
+            >
+              All Items
+            </span>
+          </div>
+
+          <div
+            className="mobile__filter"
+            onClick={() => setOpenFilter((prevValue) => !prevValue)}
+          >
+            <div className="filter__button">
+              <BiCalendar size={20} style={{ marginRight: "0.5rem" }} />
+            </div>
+            <h3>filter by date</h3>
+          </div>
+        </div>
         <div style={{ display: "flex", gap: "1rem", alignItems: "flex-end" }}>
           <span
-            className={`${activeDept === "" ? "ims--title" : "ims--dept"}`}
+            className={`${activeDept === "" ? "ims--title2" : "ims--dept2"}`}
             onClick={() => setActiveDept("")}
             style={{
               cursor: "pointer",
@@ -88,8 +111,8 @@ const DeptTransactions = () => {
           >
             All Items
           </span>
-          <div style={{ display: "flex", gap: "0.5rem", marginTop: "1rem" }}>
-            <span
+          <div className="ims__placeFilter">
+            <div
               className={`${activeDept === "Bar" ? "ims--title" : "ims--dept"}`}
               style={{
                 marginRight: "0.5rem",
@@ -98,8 +121,8 @@ const DeptTransactions = () => {
               onClick={() => setActiveDept("Bar")}
             >
               Bar
-            </span>
-            <span
+            </div>
+            <div
               className={`${
                 activeDept === "Lounge" ? "ims--title" : "ims--dept"
               }`}
@@ -110,8 +133,8 @@ const DeptTransactions = () => {
               onClick={() => setActiveDept("Lounge")}
             >
               Lounge
-            </span>
-            <span
+            </div>
+            <div
               className={`${
                 activeDept === "Kitchen" ? "ims--title" : "ims--dept"
               }`}
@@ -122,12 +145,12 @@ const DeptTransactions = () => {
               onClick={() => setActiveDept("Kitchen")}
             >
               Kitchen
-            </span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="ims__date">
+      <div className="date__hidden">
         <span>From</span>
         <span className="ims--place__order">
           <input
@@ -149,7 +172,7 @@ const DeptTransactions = () => {
           className="date__btn"
           onClick={() => {
             setActiveDept("");
-            transactionsCall();
+            getTransactions(fromDate, toDate);
           }}
           style={{
             padding: "0.9rem 1rem",
@@ -183,6 +206,80 @@ const DeptTransactions = () => {
         </button>
       </div>
 
+      <div className={openFilter ? "ims__dateshow" : "ims__hidden"}>
+        <div className="close__modal" onClick={() => setOpenFilter(false)}>
+          <AiOutlineCloseCircle size={25} />
+        </div>
+        <p className="ims__dateheading">Select Date Range To Filter</p>
+        <div className="ims__space">
+          <span style={{ fontSize: "1.3rem", fontWeight: "bold" }}>From</span>
+          <span className="ims--place__order1">
+            <input
+              type="date"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+            />
+          </span>
+        </div>
+
+        <div className="ims__space">
+          <span style={{ fontSize: "1.3rem", fontWeight: "bold" }}>To</span>
+          <span className="ims--place__order1">
+            <input
+              type="date"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+            />
+          </span>
+        </div>
+        <div className="ims__space button">
+          <button
+            className="date__btn"
+            onClick={() => {
+              setActiveDept("");
+              getTransactions(fromDate, toDate);
+            }}
+            style={{
+              padding: "0.9rem 1rem",
+              marginTop: "3px",
+              color: "var(--yellow)",
+              borderRadius: "8px",
+              fontWeight: "500",
+              border: "1px solid var(--blue-border)",
+              cursor: "pointer",
+              backgroundColor: "var(--primary-color)",
+            }}
+          >
+            Get date
+          </button>
+          <button
+            className="date__btn"
+            onClick={clearFilters}
+            style={{
+              padding: "0.9rem 1rem",
+              marginTop: "3px",
+              background: "transparent",
+              color: "var(--yellow)",
+              borderRadius: "8px",
+              fontWeight: "500",
+              border: "1px solid var(--blue-border)",
+              cursor: "pointer",
+              backgroundColor: "var(--primary-color)",
+            }}
+          >
+            Clear filters
+          </button>
+        </div>
+      </div>
+
+      <div className="mobileIms">
+        {transformTransactions(imsTransactions)?.map((order, index) => (
+          <div key={index} className="ims__body">
+            <MobileTransactions order={order} index={index} />
+          </div>
+        ))}
+      </div>
+
       <table className="ims__table">
         <thead className="ims__thead ims__transactions__thead">
           <tr className="table__header__ims">
@@ -190,6 +287,7 @@ const DeptTransactions = () => {
             <th>Item Names</th>
             {activeDept === "Kitchen" && <th>Description</th>}
             <th>Quantity</th>
+            {activeDept === "Kitchen" && <th>Portion</th>}
             <th>Department</th>
             <th>Date</th>
             <th>Delete</th>
@@ -210,7 +308,8 @@ const DeptTransactions = () => {
 export default DeptTransactions;
 
 const TableRow = ({ order, index }) => {
-  const { date, department, product, quantity, description } = order;
+  const { date, department, product, quantity, description, portion, size } =
+    order;
   const { activeDept } = useContext(TableContext);
   const formattedDate = date?.substring(0, 10);
   const [adminModal, showAdminModal] = useState(false);
@@ -243,7 +342,14 @@ const TableRow = ({ order, index }) => {
       <td>0{index + 1}</td>
       <td>{product}</td>
       {activeDept === "Kitchen" && <td>{description}</td>}
-      <td>{quantity}</td>
+      {activeDept === "Kitchen" ? (
+        <td>
+          {quantity}({size})
+        </td>
+      ) : (
+        <td>{quantity}</td>
+      )}
+      {activeDept === "Kitchen" && <td>{portion}</td>}
       <td>{department}</td>
       <td>{formattedDate}</td>
       <td
@@ -264,7 +370,11 @@ const TableRow = ({ order, index }) => {
           onClick={closeModal}
         >
           <div>
-            <DeleteTransaction order={order} closeModal={closeModal} />
+            <DeleteTransaction
+              order={order}
+              closeModal={closeModal}
+              setDelete={setDelete}
+            />
           </div>
         </div>
       )}

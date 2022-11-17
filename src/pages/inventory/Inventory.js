@@ -13,9 +13,12 @@ import UpdateAllItemsQty from "./modals/UpdateAllItemsQty";
 import Transactions from "./Transactions";
 import { useNavigate } from "react-router";
 import { BsPlusCircle } from "react-icons/bs";
+import { GrTransaction } from "react-icons/gr";
+import { MdNotificationsActive } from "react-icons/md";
 import ReorderQty from "./modals/ReorderQty";
 import DeleteItem from "./modals/DeleteItem";
 import AdminModal from "./modals/AdminModal";
+import MobileView from "./MobileView";
 
 const Inventory = () => {
   const {
@@ -55,14 +58,25 @@ const Inventory = () => {
       {/* <ImsDashboards /> */}
 
       <div className="ims__topPage">
-        <div
-          className="ims--title imsPage"
-          onClick={() => setSearchQuery("")}
-          style={{ cursor: "pointer" }}
-        >
-          <span>All Items</span>
-          <span className="order__badge">{imsItems?.length}</span>
-        </div>
+        <section className="ims__notif">
+          <div
+            className="ims--title imsPage"
+            onClick={() => setSearchQuery("")}
+            style={{ cursor: "pointer" }}
+          >
+            <span>All Items</span>
+            <span className="order__badge">{imsItems?.length}</span>
+          </div>
+          {/* <div
+            className="ims--place__order notif"
+            onClick={() => navigate("/inventory/placeorder")}
+          >
+            <span>Notifications</span>
+            <span className="order__badge">
+              <MdNotificationsActive size={20} />
+            </span>
+          </div> */}
+        </section>
 
         <div className="ims__search">
           <form>
@@ -78,21 +92,37 @@ const Inventory = () => {
         </div>
 
         <div
-          className="ims--place__order"
-          onClick={() => navigate("/inventory/placeorder")}
+          className="ims__topBadges"
+          style={{ display: "flex", justifyContent: "space-between" }}
         >
-          <span className="order__badge">
-            <BsPlusCircle size={20} />
-          </span>
-          <span>Add Item</span>
+          <div
+            className="ims--place__order"
+            onClick={() => navigate("/inventory/placeorder")}
+          >
+            <span className="order__badge">
+              <BsPlusCircle size={20} />
+            </span>
+            <span>Add Item</span>
+          </div>
+          <div
+            style={{ padding: "0.5rem" }}
+            className="ims--place__order"
+            onClick={() => navigate("/transactions")}
+          >
+            <span className="order__badge">
+              <GrTransaction size={20} />
+            </span>
+            <span>Go To Transactions</span>
+          </div>
         </div>
-        <div
-          style={{ padding: "0.5rem" }}
-          className="ims--place__order"
-          onClick={() => navigate("/transactions")}
-        >
-          Go To Transactions
-        </div>
+      </div>
+
+      <div className="mobileIms">
+        {transformOrders(imsItems).map((order, index) => (
+          <div key={index} className="ims__body">
+            <MobileView order={order} index={index} />
+          </div>
+        ))}
       </div>
 
       <table className="ims__table">
@@ -112,7 +142,7 @@ const Inventory = () => {
               <>
                 {activeCategory === "ALL ITEMS" ? (
                   <>
-                    <th>Reorder Level</th>
+                    <th>MSL</th>
                     <th>Status</th>
                     <th>Action</th>
                     <th>Delete</th>
@@ -454,7 +484,11 @@ const TableRow = ({ order, index }) => {
           onClick={closeModal}
         >
           <div>
-            <UpdateQty order={order} closeModal={closeModal} />
+            <UpdateQty
+              setUpdateQty={setUpdateQty}
+              order={order}
+              closeModal={closeModal}
+            />
           </div>
         </div>
       )}
@@ -621,7 +655,11 @@ const TableRow = ({ order, index }) => {
           onClick={closeModal}
         >
           <div>
-            <UpdateAllItemsQty order={order} closeModal={closeModal} />
+            <UpdateAllItemsQty
+              setUpdateQuantity={setUpdateQuantity}
+              order={order}
+              closeModal={closeModal}
+            />
           </div>
         </div>
       )}
@@ -647,7 +685,11 @@ const TableRow = ({ order, index }) => {
           onClick={closeModal}
         >
           <div>
-            <ReorderQty order={order} closeModal={closeModal} />
+            <ReorderQty
+              order={order}
+              closeModal={closeModal}
+              setReorderQuantity={setReorderQuantity}
+            />
           </div>
         </div>
       )}
@@ -663,7 +705,7 @@ const TableRow = ({ order, index }) => {
             <DeleteItem
               order={order}
               closeModal={closeModal}
-              closeAll={closeAll}
+              setDelete={setDelete}
             />
           </div>
         </div>

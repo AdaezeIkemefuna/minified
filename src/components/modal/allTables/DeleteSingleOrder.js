@@ -21,7 +21,7 @@ const DeleteSingleOrder = ({ order, table_name, arr }) => {
   ) => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/delete-order",
+        "https://uppist-server.herokuapp.com/delete-order",
         {
           method: "DELETE",
           headers: {

@@ -22,7 +22,7 @@ const ChangeRole = () => {
     setShowRole((prevValue) => !prevValue);
   };
 
-  const url = `https://rainforest-pos.herokuapp.com/users`;
+  const url = `https://uppist-server.herokuapp.com/users`;
   const getAllUsers = async () => {
     try {
       const response = await fetch(url);
@@ -60,7 +60,7 @@ const ChangeRole = () => {
   const updateUser = async (activeUser, activePasscode, username, role) => {
     try {
       const response = await fetch(
-        "https://rainforest-pos.herokuapp.com/update-role",
+        "https://uppist-server.herokuapp.com/update-role",
         {
           method: "PUT",
           headers: {
