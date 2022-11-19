@@ -9,7 +9,7 @@ const IndividualReport = () => {
 
   // A USE EFFECT FUNCTION THAT FETCHES ALL DATA FROM THE DATABASE
   useEffect(() => {
-    const url = `https://uppist-server.herokuapp.com/waiter-reports`;
+    const url = `https://swift-lounge.herokuapp.com/waiter-reports`;
     const getAllUsers = async () => {
       try {
         const response = await fetch(url);

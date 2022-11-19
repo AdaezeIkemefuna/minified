@@ -7,6 +7,10 @@ import jsPDF from "jspdf";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { MdOutlineArrowBackIos } from "react-icons/md";
+import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 
 function IndividualReportPerWaiter() {
   const navigate = useNavigate();
@@ -16,12 +20,82 @@ function IndividualReportPerWaiter() {
   const [report, setReport] = useState([]);
   const establishment = "SwiftLounge";
   const { waitername } = useParams();
+  const [FromDate, setFromDate] = useState("");
+  const [ToDate, setToDate] = useState("");
+  const [filteredReports, setFilteredReports] = useState([]);
+  const [data, setData] = useState([]);
+
+  const [value, setValue] = useState("");
+  const [value2, setValue2] = useState("");
+
+  // A FUNCTION TO HANDLE THE DATE FOR FILTERED REPORTS
+  let fromTime = value && value?.$d.toTimeString().split(" ")[0].slice(0, -3);
+  let toTime = value2 && value2?.$d.toTimeString().split(" ")[0].slice(0, -3);
+
+  let FromDate1 = new Date(FromDate).toLocaleString("en-US", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
+  // A FUNCTION TO HANDLE FROM AND TO DATE
+  function handleDate(e) {
+    setFromDate(e.target.value);
+  }
+
+  function handleDate2(e) {
+    setToDate(e.target.value);
+  }
+
+  let ToDate1 = new Date(ToDate).toLocaleString("en-US", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
+  // console.log(fromTime, FromDate, ToDate, toTime)
+
+  // A Function A SELECTED DATE
+  const FilterByDate = async () => {
+    try {
+      const response = await fetch(
+        "https://swift-lounge.herokuapp.com/filter-individual-report",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            waiter: waitername,
+            from: `${FromDate1} ${fromTime}`,
+            to: `${ToDate1} ${toTime}`,
+          }),
+        }
+      );
+      if (response.ok) {
+        const filtereddata = await response.json();
+        setFilteredReports(filtereddata);
+      } else {
+        toast.warn("No Report Found For This Date", toastOptions);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  function getDate() {
+    if (ToDate === "" || toTime === "" || FromDate === "" || fromTime === "") {
+      toast.warn("All fields are required", toastOptions);
+    } else {
+      FilterByDate();
+    }
+  }
 
   // FUNCTION TO GET WAITER
   const getWaiterReport = async (waitername) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/individual-report",
+        "https://swift-lounge.herokuapp.com/individual-report",
         {
           method: "POST",
           headers: {
@@ -35,7 +109,7 @@ function IndividualReportPerWaiter() {
       const data = await response.json();
       // A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
       // filter property bar
-      sortDuplicateValues(data);
+      setData(data);
     } catch (err) {
       console.log(err);
     }
@@ -44,6 +118,13 @@ function IndividualReportPerWaiter() {
   useEffect(() => {
     getWaiterReport(waitername);
   }, []);
+
+  // A USE EFFECT FOR FILTERED REPORTS AND NORMAL REPORT
+  const transformReports = !filteredReports.length ? data : filteredReports;
+
+  useEffect(() => {
+    transformReports.length && sortDuplicateValues(transformReports);
+  }, [transformReports]);
 
   //  A FUNCTION TO SORT DUPLICATE ITEMS AND ADD THEIR QUANTITY/PRICE
   function sortDuplicateValues(data) {
@@ -114,7 +195,7 @@ function IndividualReportPerWaiter() {
         formData.append("file", myFile);
         formData.append("file", dateModified);
         axios
-          .post("https://uppist-server.herokuapp.com/upload-report", formData)
+          .post("https://swift-lounge.herokuapp.com/upload-report", formData)
           .then((res) => {
             if (res.ok) {
               getWaiterReport(waitername);
@@ -142,7 +223,7 @@ function IndividualReportPerWaiter() {
     const client = `${waitername}-${establishment}`;
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/retrieve-pdf",
+        "https://swift-lounge.herokuapp.com/retrieve-pdf",
         {
           method: "POST",
           headers: {
@@ -173,6 +254,14 @@ function IndividualReportPerWaiter() {
     return acc + +curr.subtotal;
   }, 0);
 
+  function clearReports() {
+    setFilteredReports([]);
+    setToDate("");
+    setFromDate("");
+    setValue2("");
+    setValue("");
+  }
+
   return (
     <div>
       <div
@@ -187,7 +276,75 @@ function IndividualReportPerWaiter() {
           <MdOutlineArrowBackIos size={25} />
           <p className="goback__text">Go Back</p>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <div
+          className="dateTime__container"
+          style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+        >
+          <div
+            className="dateTime__from"
+            style={{ display: "flex", gap: "0.5rem" }}
+          >
+            <h2 style={{ display: "inline" }} className="dateTime__text">
+              From
+            </h2>
+            <span className="report--get__date">
+              <input type="date" value={FromDate} onChange={handleDate} />
+            </span>
+            <span>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <TimePicker
+                  label="Pick a time"
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </span>
+            <button
+              className="from__datebtn"
+              onClick={() => {
+                getDate();
+              }}
+            >
+              Get Filter
+            </button>
+            <button
+              className="to__datebtn"
+              onClick={() => {
+                clearReports();
+              }}
+            >
+              Clear Filter
+            </button>
+          </div>
+
+          <div
+            className="dateTime__to"
+            style={{ display: "flex", gap: "1rem", marginLeft: "1rem" }}
+          >
+            <h2 style={{ display: "inline" }} className="dateTime__text">
+              To
+            </h2>
+            <span className="report--get__date">
+              <input type="date" value={ToDate} onChange={handleDate2} />
+            </span>
+            <span>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <TimePicker
+                  label="Pick a time"
+                  value={value2}
+                  onChange={(newValue) => {
+                    setValue2(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </span>
+          </div>
+        </div>
+        {/* <div style={{ display: "flex", justifyContent: "space-around" }}>
           <button className="reportbuttons" onClick={handleGeneratePdf}>
             Upload Report
           </button>
@@ -198,7 +355,7 @@ function IndividualReportPerWaiter() {
           >
             Download Report
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div ref={individualReportPageRef}>

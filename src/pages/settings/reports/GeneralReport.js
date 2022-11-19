@@ -7,6 +7,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import AuthContext from "../../../context/AuthContext";
 import { MdOutlineArrowBackIos } from "react-icons/md";
+import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import React from "react";
 
 const GeneralReport = () => {
   const [showModal, setShowModal] = useState(false);
@@ -15,9 +20,7 @@ const GeneralReport = () => {
   const [bar, setBar] = useState([]);
   const [lounge, setLounge] = useState([]);
   const [FromDate, setFromDate] = useState("");
-  const [FromTime, setFromTime] = useState("");
   const [ToDate, setToDate] = useState("");
-  const [ToTime, setToTime] = useState("");
   const [reports, setReports] = useState([]);
   const [filteredReports, setFilteredReports] = useState([]);
   const navigate = useNavigate();
@@ -27,8 +30,14 @@ const GeneralReport = () => {
     setFromDate(e.target.value);
   }
 
+  const [value, setValue] = useState("");
+  const [value2, setValue2] = useState("");
+
+  let fromTime = value && value?.$d.toTimeString().split(" ")[0].slice(0, -3);
+  let toTime = value2 && value2?.$d.toTimeString().split(" ")[0].slice(0, -3);
+
   let FromDate1 = new Date(FromDate).toLocaleString("en-US", {
-    day: "numeric",
+    day: "2-digit",
     month: "long",
     year: "numeric",
   });
@@ -38,7 +47,7 @@ const GeneralReport = () => {
   }
 
   let ToDate1 = new Date(ToDate).toLocaleString("en-US", {
-    day: "numeric",
+    day: "2-digit",
     month: "long",
     year: "numeric",
   });
@@ -48,7 +57,7 @@ const GeneralReport = () => {
 
   const client = "SwiftLounge";
 
-  const url = `https://uppist-server.herokuapp.com/overall-reports`;
+  const url = `https://swift-lounge.herokuapp.com/overall-reports`;
   const getAllReports = async () => {
     try {
       const response = await fetch(url);
@@ -63,15 +72,15 @@ const GeneralReport = () => {
   const FilterByDate = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/filter-reports",
+        "https://swift-lounge.herokuapp.com/filter-reports",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: `${FromDate1} ${FromTime}`,
-            to: `${ToDate1} ${ToTime}`,
+            from: `${FromDate1} ${fromTime}`,
+            to: `${ToDate1} ${toTime}`,
           }),
         }
       );
@@ -91,15 +100,15 @@ const GeneralReport = () => {
   const FilterPayments = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/filter-tables",
+        "https://swift-lounge.herokuapp.com/filter-tables",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: `${FromDate1} ${FromTime}`,
-            to: `${ToDate1} ${ToTime}`,
+            from: `${FromDate1} ${fromTime}`,
+            to: `${ToDate1} ${toTime}`,
           }),
         }
       );
@@ -128,10 +137,8 @@ const GeneralReport = () => {
 
   let totalRevenue1 = cashPayments1 + posPayments1 + transferPayments1;
 
-  console.log(cashPayments1, posPayments1, transferPayments1, totalRevenue1);
-
   function getDate() {
-    if (ToDate === "" || ToTime === "" || FromDate === "" || FromTime === "") {
+    if (ToDate === "" || toTime === "" || FromDate === "" || fromTime === "") {
       toast.warn("All fields are required", toastOptions);
     } else {
       FilterByDate();
@@ -159,7 +166,7 @@ const GeneralReport = () => {
   const clearDB = async (activeUser, activePasscode) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/clear-db",
+        "https://swift-lounge.herokuapp.com/clear-db",
         {
           method: "DELETE",
           headers: {
@@ -206,7 +213,7 @@ const GeneralReport = () => {
         formData.append("file", dateModified);
 
         axios
-          .post("https://uppist-server.herokuapp.com/upload-report", formData)
+          .post("https://swift-lounge.herokuapp.com/upload-report", formData)
           .then((res) => {
             if (res.ok) {
               toast.success("Report Uploaded Successfully", toastOptions);
@@ -292,7 +299,7 @@ const GeneralReport = () => {
   const getPdfByDate = async (client, date) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/retrieve-pdf",
+        "https://swift-lounge.herokuapp.com/retrieve-pdf",
         {
           method: "POST",
           headers: {
@@ -332,8 +339,8 @@ const GeneralReport = () => {
     setFilteredReports([]);
     setToDate("");
     setFromDate("");
-    setToTime("");
-    setFromTime("");
+    setValue2("");
+    setValue("");
   }
 
   return (
@@ -365,12 +372,17 @@ const GeneralReport = () => {
             <span className="report--get__date">
               <input type="date" value={FromDate} onChange={handleDate} />
             </span>
-            <span className="report--get__date">
-              <input
-                type="time"
-                value={FromTime}
-                onChange={(e) => setFromTime(e.target.value)}
-              />
+            <span>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <TimePicker
+                  label="Pick a time"
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
             </span>
             <button className="from__datebtn" onClick={getDate}>
               Get Filter
@@ -396,12 +408,17 @@ const GeneralReport = () => {
             <span className="report--get__date">
               <input type="date" value={ToDate} onChange={handleDate2} />
             </span>
-            <span className="report--get__date">
-              <input
-                type="time"
-                value={ToTime}
-                onChange={(e) => setToTime(e.target.value)}
-              />
+            <span>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <TimePicker
+                  label="Pick a time"
+                  value={value2}
+                  onChange={(newValue) => {
+                    setValue2(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
             </span>
           </div>
         </div>
@@ -433,9 +450,9 @@ const GeneralReport = () => {
           barTotal={totalBar}
           loungeTotal={totalLounge}
           FromDate={FromDate1}
-          FromTime={FromTime}
+          FromTime={fromTime}
           ToDate={ToDate1}
-          ToTime={ToTime}
+          ToTime={toTime}
           cashPayments1={cashPayments1}
           posPayments1={posPayments1}
           transferPayments1={transferPayments1}
