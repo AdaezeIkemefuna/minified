@@ -4,6 +4,7 @@ import {
   MdOutlineInventory,
   MdOutlineTableChart,
   MdDashboardCustomize,
+  MdAccountBox,
 } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { BiLogOut } from "react-icons/bi";
@@ -13,6 +14,8 @@ import "../modal/Modal.css";
 import AuthContext from "../../context/AuthContext";
 import AdminModal from "../modal/AdminModal";
 import { useState } from "react";
+import {AiFillMoneyCollect} from  "react-icons/ai";
+
 
 const SideBar = () => {
   const { user, showSideBar, toggleSideBar, toggleCartMenu, logoutUser } =
@@ -20,7 +23,7 @@ const SideBar = () => {
   const [showModal, setShowModal] = useState(false);
 
   const activeStyle = {
-    backgroundColor: "var(--primary-color)",
+    borderBottom: "2px solid var(--yellow)",
     color: "var(--yellow)",
     fontWeight: "bold",
   };
@@ -55,7 +58,7 @@ const SideBar = () => {
       )}
       <div className="nav__container desktop">
         <div className="nav__logo">
-          <img src="/1.png" alt="" width={"100%"} />
+          <img src="/Uppist3.png" alt="" width={"100%"} />
         </div>
         <div className="nav__wrapper">
           <NavLink
@@ -66,7 +69,7 @@ const SideBar = () => {
             }}
             className="sidebar-link"
           >
-            <MdOutlineInventory size={25} />
+            <MdOutlineInventory size={20} />
             {user.role === "Super Admin" || user.role === "Administrator"
               ? "Menu Manager"
               : "New Orders"}
@@ -84,7 +87,7 @@ const SideBar = () => {
                 : "sidebar-link"
             }
           >
-            <MdOutlineTableChart size={25} />
+            <MdOutlineTableChart size={20} />
             Table Manager
           </NavLink>
 
@@ -94,7 +97,7 @@ const SideBar = () => {
               onClick={settingsAction}
               className="sidebar-link"
             >
-              <FiSettings size={25} />
+              <FiSettings size={20} />
               Settings
             </div>
           )}
@@ -110,10 +113,52 @@ const SideBar = () => {
               }}
               className="sidebar-link"
             >
-              <MdDashboardCustomize size={25} />
+              <MdDashboardCustomize size={20} />
               Inventory Management
             </NavLink>
           ) : undefined}
+{/* 
+          {user.role === "Super Admin" ||
+          user.role === "Store Manager" ||
+          user.role === "Administrator" ? (
+            <NavLink
+              style={activeTab === "supplier" ? activeStyle : undefined}
+              className="sidebar-link no-hover"
+            >
+              <MdDashboardCustomize size={20} />
+              Supplier Management
+            </NavLink>
+          ) : undefined} */}
+
+        {user.role === "Super Admin" ||
+          user.role === "Store Manager" ||
+          user.role === "Administrator" ? (
+            <NavLink
+              to={"/supplier"}
+              style={activeTab === "supplier" ? activeStyle : undefined}
+              onClick={() => {
+                setActiveTab("supplier");
+              }}
+              className="sidebar-link"
+            >
+              <MdDashboardCustomize size={20} />
+              Supplier Management
+            </NavLink>
+          ) : undefined}
+
+
+ {user.role === "Super Admin" ||
+          user.role === "Store Manager" ||
+          user.role === "Administrator" ? (
+            <NavLink
+              style={activeTab === "supplier" ? activeStyle : undefined}
+              className="sidebar-link no-hover"
+            >
+              <AiFillMoneyCollect size={20} />
+              Accounting Management
+            </NavLink>
+          ) : undefined}
+
 
           <NavLink
             to={"/"}
@@ -123,25 +168,25 @@ const SideBar = () => {
             }}
             className="sidebar-link"
           >
-            <BiLogOut size={25} />
+            <BiLogOut size={20} />
             Logout
           </NavLink>
         </div>
         <div className="nav__logo uppist">
-          <small style={{ textTransform: "uppercase", fontWeight: "600" }}>
+          <small style={{ textTransform: "uppercase", fontWeight: "600", color: "var(--white)" }}>
             powered by
           </small>
           <br />
-          <img src="/1.png" alt="" />
+          <img src="/Uppist.png" alt="" />
         </div>
       </div>
 
       <div className="nav__container mobile">
         <div className={showSideBar ? "position" : "no-display"}>
-          <FaTimes size={25} onClick={menuAction} />
+          <FaTimes size={20} onClick={menuAction} />
         </div>
         <div className="nav__logo">
-          <img src="/1.png" alt="" width={"100%"} />
+          <img src="/Uppist3.png" alt="" width={"100%"} />
         </div>
         <div className="nav__wrapper">
           <NavLink
@@ -153,7 +198,7 @@ const SideBar = () => {
             }}
             className="sidebar-link"
           >
-            <MdOutlineInventory size={25} />
+            <MdOutlineInventory size={20} />
 
             {user.role === "Super Admin" ||
             user.role === "Supervisor" ||
@@ -175,7 +220,7 @@ const SideBar = () => {
                 : "sidebar-link"
             }
           >
-            <MdOutlineTableChart size={25} />
+            <MdOutlineTableChart size={20} />
             Table Manager
           </NavLink>
 
@@ -185,7 +230,7 @@ const SideBar = () => {
               onClick={settingsAction}
               className="sidebar-link"
             >
-              <FiSettings size={25} />
+              <FiSettings size={20} />
               Settings
             </div>
           )}
@@ -202,8 +247,32 @@ const SideBar = () => {
               }}
               className="sidebar-link"
             >
-              <MdDashboardCustomize size={25} />
+              <MdDashboardCustomize size={20} />
               Inventory Management
+            </NavLink>
+          ) : undefined}
+
+          {user.role === "Super Admin" ||
+          user.role === "Store Manager" ||
+          user.role === "Administrator" ? (
+            <NavLink
+              style={activeTab === "inventory" ? activeStyle : undefined}
+              className="sidebar-link"
+            >
+            <MdDashboardCustomize size={20} />
+              Supplier Management
+            </NavLink>
+          ) : undefined}
+
+
+          {user.role === "Super Admin" ||
+          user.role === "Store Manager" ||
+          user.role === "Administrator" ? (
+            <NavLink
+              style={activeTab === "inventory" ? activeStyle : undefined}
+              className="sidebar-link"
+            >
+             <AiFillMoneyCollect size={20} />Account Management
             </NavLink>
           ) : undefined}
 
@@ -215,16 +284,16 @@ const SideBar = () => {
             }}
             className="sidebar-link"
           >
-            <BiLogOut size={25} />
+            <BiLogOut size={20} />
             Logout
           </NavLink>
         </div>
         <div className="nav__logo uppist">
-          <small style={{ textTransform: "uppercase", fontWeight: "600" }}>
+          <small style={{ textTransform: "uppercase", fontWeight: "600", color: "var(--white)" }}>
             powered by
           </small>
           <br />
-          <img src="/1.png" alt="" />
+          <img src="/Uppist.png" alt="" />
         </div>
       </div>
     </>
@@ -232,3 +301,90 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

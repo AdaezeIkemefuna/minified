@@ -14,7 +14,7 @@ export default function EditPriceModal({ item }) {
   const changePrice = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/update-item",
+        "https://uppist-server.onrender.com/update-item",
         {
           method: "PUT",
           headers: {

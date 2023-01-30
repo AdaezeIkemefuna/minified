@@ -18,7 +18,7 @@ const TopMenu = () => {
     toggleCartMenu(false);
   };
   return (
-    <div className="topbar__container menu">
+    <div className="topbar__container menu" style={{marginLeft:"0.5rem"}}>
       <div className="menu__icons" style={{marginLeft:"16px", marginTop:"0.5rem"}}>
         <GoThreeBars size={24} onClick={menuActions} />
       </div>

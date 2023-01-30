@@ -38,7 +38,7 @@ const NewTable = () => {
   ) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/order",
+        "https://uppist-server.onrender.com/order",
         {
           method: "POST",
           headers: {

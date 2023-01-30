@@ -172,7 +172,7 @@ const PlaceOrder = () => {
   const addProductCall = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/new-item",
+        "https://uppist-server.onrender.com/new-item",
         {
           method: "POST",
           headers: {
@@ -216,7 +216,7 @@ const PlaceOrder = () => {
   const placeOrder = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/ims/place-order",
+        "https://uppist-server.onrender.com/ims/place-order",
         {
           method: "POST",
           headers: {
@@ -255,7 +255,7 @@ const PlaceOrder = () => {
     const data = new FormData();
     data.append("image", e.target.files[0]);
     axios
-      .post("https://uppist-server.herokuapp.com/upload", data)
+      .post("https://uppist-server.onrender.com/upload", data)
       .then((res) => {
         //print response status
         setImageFile(res.data.imgPath);

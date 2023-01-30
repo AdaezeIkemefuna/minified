@@ -24,7 +24,7 @@ const AddStaff = () => {
   const addUser = async (username, password, role, passcode) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/new-user",
+        "https://uppist-server.onrender.com/new-user",
         {
           method: "POST",
           headers: {

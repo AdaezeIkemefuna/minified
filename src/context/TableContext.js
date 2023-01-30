@@ -33,7 +33,7 @@ export const TableProvider = ({ children }) => {
   const getBarman = async (activeUser, activePasscode, table_name) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/get-orders",
+        "https://uppist-server.onrender.com/get-orders",
         {
           method: "POST",
           headers: {
@@ -74,7 +74,7 @@ export const TableProvider = ({ children }) => {
   ) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/get-orders",
+        "https://uppist-server.onrender.com/get-orders",
         {
           method: "POST",
           headers: {
@@ -109,7 +109,7 @@ export const TableProvider = ({ children }) => {
 
   const displayImsItems = async () => {
     try {
-      const response = await fetch("https://uppist-server.herokuapp.com/items");
+      const response = await fetch("https://uppist-server.onrender.com/items");
       const data = await response.json();
       const undeleted = data.filter((item) => item.deleted_status === "FALSE");
       const sorted = undeleted.sort((a, b) =>
@@ -129,7 +129,7 @@ export const TableProvider = ({ children }) => {
   const displayImsOrders = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/ims/all-orders"
+        "https://uppist-server.onrender.com/ims/all-orders"
       );
       const data = await response.json();
       setImsOrders(data);
@@ -146,7 +146,7 @@ export const TableProvider = ({ children }) => {
   const getCancelledOrder = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/ims/cancelled-order"
+        "https://uppist-server.onrender.com/ims/cancelled-order"
       );
       const data = await response.json();
       setCancelledOrder(data.count);
@@ -163,7 +163,7 @@ export const TableProvider = ({ children }) => {
   const getReceivedOrder = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/ims/received-order"
+        "https://uppist-server.onrender.com/ims/received-order"
       );
       const data = await response.json();
       setReceivedOrder(data.count);
@@ -179,7 +179,7 @@ export const TableProvider = ({ children }) => {
   const getplacedOrdersFilter = async (from, to) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/ims/order-transaction-date",
+        "https://uppist-server.onrender.com/ims/order-transaction-date",
         {
           method: "POST",
           headers: {
@@ -207,7 +207,7 @@ export const TableProvider = ({ children }) => {
   const displayImsTransactions = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/ims/sent-items"
+        "https://uppist-server.onrender.com/ims/sent-items"
       );
       const data = await response.json();
       const sorted = data.sort((a, b) => a.product.localeCompare(b.product));
@@ -224,7 +224,7 @@ export const TableProvider = ({ children }) => {
   const getTransactions = async (from, to) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/ims/transactions",
+        "https://uppist-server.onrender.com/ims/transactions",
         {
           method: "POST",
           headers: {
@@ -254,7 +254,7 @@ export const TableProvider = ({ children }) => {
   const getAllItemsFilter = async (from, to) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/dates-filter",
+        "https://uppist-server.onrender.com/dates-filter",
         {
           method: "POST",
           headers: {
@@ -278,6 +278,13 @@ export const TableProvider = ({ children }) => {
   const [activeCategory, setActiveCategory] = useState("ALL ITEMS");
   const [activeDept, setActiveDept] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+
+
+  const [activeItem, setActiveItem] = useState("SUPPLIER");
+  const [activePage, setActivePage] = useState("PLACED ORDERS");
+
+
+  const [searchResult, setSearchResult] = useState("");
 
   //TRANSFORM ORDERS
   const transformOrders = (items) => {
@@ -424,6 +431,12 @@ export const TableProvider = ({ children }) => {
     setAllItemsFilter,
     cancelledOrder,
     receivedOrder,
+    activeItem, 
+    setActiveItem,
+    searchResult,
+    setSearchResult,
+    activePage, 
+    setActivePage
   };
 
   return (

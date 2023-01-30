@@ -33,6 +33,8 @@ const Inventory = () => {
     displayImsItems,
   } = useContext(TableContext);
 
+
+
   const [receive, setReceive] = useState(false);
   const [cancel, setCancel] = useState(false);
   const [action, setAction] = useState(false);

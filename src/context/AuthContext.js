@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   const loginUser = async (username, password) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/login",
+        "https://uppist-server.onrender.com/login",
         {
           method: "POST",
           headers: {
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
   const displayItems = async (department) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/items/department",
+        "https://uppist-server.onrender.com/items/department",
         {
           method: "POST",
           headers: {
@@ -205,7 +205,7 @@ export const AuthProvider = ({ children }) => {
   const displayAdminTables = async (activeUser, activePasscode) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/all-tables",
+        "https://uppist-server.onrender.com/all-tables",
         {
           method: "POST",
           headers: {
@@ -229,7 +229,7 @@ export const AuthProvider = ({ children }) => {
   const displayTables = async (activeUser) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/tables",
+        "https://uppist-server.onrender.com/tables",
         {
           method: "POST",
           headers: {
@@ -254,7 +254,7 @@ export const AuthProvider = ({ children }) => {
   const getDetails = async (activeUser, activePasscode, table_name) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/get-orders",
+        "https://uppist-server.onrender.com/get-orders",
         {
           method: "POST",
           headers: {
@@ -287,7 +287,7 @@ export const AuthProvider = ({ children }) => {
   ) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/get-orders",
+        "https://uppist-server.onrender.com/get-orders",
         {
           method: "POST",
           headers: {
@@ -314,7 +314,7 @@ export const AuthProvider = ({ children }) => {
   const getOrderCount = async (activeUser, activePasscode) => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/order-count",
+        "https://uppist-server.onrender.com/order-count",
         {
           method: "POST",
           headers: {
@@ -375,7 +375,7 @@ export const AuthProvider = ({ children }) => {
   const getNotifs = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/waiters"
+        "https://uppist-server.onrender.com/waiters"
       );
       const data = await response.json();
       if (response.status === 200) {
@@ -393,7 +393,7 @@ export const AuthProvider = ({ children }) => {
   const getNotifCount = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.herokuapp.com/notification-count"
+        "https://uppist-server.onrender.com/notification-count"
       );
       const data = await response.json();
       setNotifCount(data.length);

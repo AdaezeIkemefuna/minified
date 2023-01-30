@@ -26,6 +26,18 @@ import WaiterNotif from "./pages/notifications/WaiterNotif";
 import Inventory from "./pages/inventory/Inventory";
 import PlaceOrder from "./pages/inventory/PlaceOrder";
 import DeptTransactions from "./pages/inventory/DeptTransactions";
+import Supplier from "./pages/supplier/Supplier";
+import UserProfile from "./pages/supplier/UserProfile";
+import SupplyTransaction from "./pages/supplier/SupplyTransaction";
+import PlaceSupply from "./pages/supplier/PlaceSupply";
+import CancelSupply from "./pages/supplier/CancelSupply";
+import ReturnedSupply from "./pages/supplier/ReturnedSupply";
+import DamagedSupply from "./pages/supplier/DamagedSupply";
+import ReceiveSupply from "./pages/supplier/ReceiveSupply";
+import NewSupplier from "./pages/supplier/NewSupplier";
+import EditSupplier from "./pages/supplier/EditSupplier";
+
+
 
 function App() {
   return (
@@ -44,7 +56,23 @@ function App() {
               <Route path="/inventory" element={<Inventory />} />
               <Route path="/inventory/placeorder" element={<PlaceOrder />} />
               <Route path="/transactions" element={<DeptTransactions />} />
+
+              {/* supplier routes */}
+             <Route path="/supplier" element={<Supplier/>}/>
+            <Route path="/supplier/add-supplier" element={<NewSupplier />}/>
+            <Route path="/supplier/edit-supplier" element={<EditSupplier />}/>
+            <Route path="/supplier/:customer" element={<UserProfile/>}>
+              <Route path="/supplier/:customer/supplyorder" element={<PlaceSupply />}/>
+              <Route path="/supplier/:customer/cancelsupply" element={<CancelSupply />}/>
+              <Route path="/supplier/:customer/returnsupply" element={<ReturnedSupply />}/>
+              <Route path="/supplier/:customer/damagedsupply" element={<DamagedSupply />}/>
+              <Route path="/supplier/:customer/receivesupply" element={<ReceiveSupply />}/>
+              <Route path="/supplier/:customer" element={<SupplyTransaction/>}/>
             </Route>
+            </Route>
+
+             
+
             <Route path="/updateorder" element={<UpdateOrder />} />
             <Route path="/settings" element={<Settings />} />
 
