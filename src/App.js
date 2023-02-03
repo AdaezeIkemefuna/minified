@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AuthProvider } from "./context/AuthContext";
 import { TableProvider } from "./context/TableContext";
 import "./App.css";
@@ -36,8 +36,7 @@ import DamagedSupply from "./pages/supplier/DamagedSupply";
 import ReceiveSupply from "./pages/supplier/ReceiveSupply";
 import NewSupplier from "./pages/supplier/NewSupplier";
 import EditSupplier from "./pages/supplier/EditSupplier";
-
-
+import Accounts from "./pages/accounting/Accounts";
 
 function App() {
   return (
@@ -58,20 +57,42 @@ function App() {
               <Route path="/transactions" element={<DeptTransactions />} />
 
               {/* supplier routes */}
-             <Route path="/supplier" element={<Supplier/>}/>
-            <Route path="/supplier/add-supplier" element={<NewSupplier />}/>
-            <Route path="/supplier/edit-supplier" element={<EditSupplier />}/>
-            <Route path="/supplier/:customer" element={<UserProfile/>}>
-              <Route path="/supplier/:customer/supplyorder" element={<PlaceSupply />}/>
-              <Route path="/supplier/:customer/cancelsupply" element={<CancelSupply />}/>
-              <Route path="/supplier/:customer/returnsupply" element={<ReturnedSupply />}/>
-              <Route path="/supplier/:customer/damagedsupply" element={<DamagedSupply />}/>
-              <Route path="/supplier/:customer/receivesupply" element={<ReceiveSupply />}/>
-              <Route path="/supplier/:customer" element={<SupplyTransaction/>}/>
-            </Route>
-            </Route>
+              <Route path="/supplier" element={<Supplier />} />
+              <Route path="/supplier/add-supplier" element={<NewSupplier />} />
+              <Route
+                path="/supplier/edit-supplier"
+                element={<EditSupplier />}
+              />
+              <Route path="/supplier/:customer" element={<UserProfile />}>
+                <Route
+                  path="/supplier/:customer/supplyorder"
+                  element={<PlaceSupply />}
+                />
+                <Route
+                  path="/supplier/:customer/cancelsupply"
+                  element={<CancelSupply />}
+                />
+                <Route
+                  path="/supplier/:customer/returnsupply"
+                  element={<ReturnedSupply />}
+                />
+                <Route
+                  path="/supplier/:customer/damagedsupply"
+                  element={<DamagedSupply />}
+                />
+                <Route
+                  path="/supplier/:customer/receivesupply"
+                  element={<ReceiveSupply />}
+                />
+                <Route
+                  path="/supplier/:customer"
+                  element={<SupplyTransaction />}
+                />
+              </Route>
 
-             
+              {/* accounting routes */}
+              <Route path="/accounting" element={<Accounts />} />
+            </Route>
 
             <Route path="/updateorder" element={<UpdateOrder />} />
             <Route path="/settings" element={<Settings />} />

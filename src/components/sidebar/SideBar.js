@@ -14,8 +14,7 @@ import "../modal/Modal.css";
 import AuthContext from "../../context/AuthContext";
 import AdminModal from "../modal/AdminModal";
 import { useState } from "react";
-import {AiFillMoneyCollect} from  "react-icons/ai";
-
+import { AiFillMoneyCollect } from "react-icons/ai";
 
 const SideBar = () => {
   const { user, showSideBar, toggleSideBar, toggleCartMenu, logoutUser } =
@@ -117,7 +116,7 @@ const SideBar = () => {
               Inventory Management
             </NavLink>
           ) : undefined}
-{/* 
+          {/* 
           {user.role === "Super Admin" ||
           user.role === "Store Manager" ||
           user.role === "Administrator" ? (
@@ -130,7 +129,7 @@ const SideBar = () => {
             </NavLink>
           ) : undefined} */}
 
-        {user.role === "Super Admin" ||
+          {user.role === "Super Admin" ||
           user.role === "Store Manager" ||
           user.role === "Administrator" ? (
             <NavLink
@@ -146,19 +145,21 @@ const SideBar = () => {
             </NavLink>
           ) : undefined}
 
-
- {user.role === "Super Admin" ||
+          {user.role === "Super Admin" ||
           user.role === "Store Manager" ||
           user.role === "Administrator" ? (
             <NavLink
-              style={activeTab === "supplier" ? activeStyle : undefined}
-              className="sidebar-link no-hover"
+              to={"/accounting"}
+              style={activeTab === "accounting" ? activeStyle : undefined}
+              onClick={() => {
+                setActiveTab("accounting");
+              }}
+              className="sidebar-link"
             >
               <AiFillMoneyCollect size={20} />
               Accounting Management
             </NavLink>
           ) : undefined}
-
 
           <NavLink
             to={"/"}
@@ -173,7 +174,13 @@ const SideBar = () => {
           </NavLink>
         </div>
         <div className="nav__logo uppist">
-          <small style={{ textTransform: "uppercase", fontWeight: "600", color: "var(--white)" }}>
+          <small
+            style={{
+              textTransform: "uppercase",
+              fontWeight: "600",
+              color: "var(--white)",
+            }}
+          >
             powered by
           </small>
           <br />
@@ -259,20 +266,24 @@ const SideBar = () => {
               style={activeTab === "inventory" ? activeStyle : undefined}
               className="sidebar-link"
             >
-            <MdDashboardCustomize size={20} />
+              <MdDashboardCustomize size={20} />
               Supplier Management
             </NavLink>
           ) : undefined}
-
 
           {user.role === "Super Admin" ||
           user.role === "Store Manager" ||
           user.role === "Administrator" ? (
             <NavLink
-              style={activeTab === "inventory" ? activeStyle : undefined}
+              to={"/accounting"}
+              style={activeTab === "accounting" ? activeStyle : undefined}
+              onClick={() => {
+                setActiveTab("accounting");
+              }}
               className="sidebar-link"
             >
-             <AiFillMoneyCollect size={20} />Account Management
+              <AiFillMoneyCollect size={20} />
+              Accounting Management
             </NavLink>
           ) : undefined}
 
@@ -289,7 +300,13 @@ const SideBar = () => {
           </NavLink>
         </div>
         <div className="nav__logo uppist">
-          <small style={{ textTransform: "uppercase", fontWeight: "600", color: "var(--white)" }}>
+          <small
+            style={{
+              textTransform: "uppercase",
+              fontWeight: "600",
+              color: "var(--white)",
+            }}
+          >
             powered by
           </small>
           <br />
@@ -301,90 +318,3 @@ const SideBar = () => {
 };
 
 export default SideBar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

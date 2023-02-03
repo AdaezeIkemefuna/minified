@@ -1,0 +1,114 @@
+/* header section */
+.accounts__header {
+  position: sticky;
+  left: 2rem;
+  right: 2rem;
+  top: 2rem;
+}
+.accounts__wrapper {
+  margin: 2rem;
+}
+
+.accounts__date {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.accounts__filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.accounts__filter span {
+  margin-right: 1.2rem;
+}
+
+.accounts__filter input[type="date"]::-webkit-datetime-edit {
+  padding: 0.5rem;
+}
+.accounts__filter input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  background: transparent;
+}
+
+.accounts__filter input[type="date"]::-webkit-datetime-edit-text {
+  color: var(--primary-color);
+}
+.accounts__filter input[type="date"]::-webkit-datetime-edit-month-field {
+  color: var(--primary-color);
+}
+.accounts__filter input[type="date"]::-webkit-datetime-edit-day-field {
+  color: var(--primary-color);
+}
+.accounts__filter input[type="date"]::-webkit-datetime-edit-year-field {
+  color: var(--primary-color);
+}
+
+.accounts__filter input[type="date"] {
+  font-family: inherit;
+  text-transform: uppercase;
+}
+.accounts__filter input {
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  outline: none;
+}
+
+.date__right button {
+  outline: none;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  color: var(--primary-color);
+  transition: 0.2s all ease;
+  text-transform: capitalize;
+  font-family: inherit;
+  font-weight: 500;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#apply {
+  background-color: var(--primary-color);
+  color: var(--white);
+  margin-right: 2rem;
+}
+#apply:hover {
+  background-color: rgba(88, 1, 88, 0.8);
+  border: 1px solid rgba(88, 1, 88, 0.2);
+}
+
+#clear__filter:hover {
+  background-color: rgba(88, 1, 88, 0.8);
+  color: var(--white);
+}
+
+.time__filters {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+.time__filter--element {
+  font-weight: 600;
+  text-transform: capitalize;
+  background-color: var(--grey-scale);
+  color: var(--orange);
+  padding: 1rem 2rem 1rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s all ease;
+}
+
+.active__filter {
+  background: var(--orange-scale);
+}
