@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import TableContext from "../../context/TableContext";
+import { FaArrowRight } from "react-icons/fa";
 import "./Accounts.css";
 
 const Accounts = () => {
@@ -12,6 +13,35 @@ const Accounts = () => {
 
   const [activeTime, setActiveTime] = useState("today");
   const { toDate, fromDate, setFromDate, setToDate } = useContext(TableContext);
+
+  // dummy data
+  const today = {
+    income: 200,
+    expenses: 500,
+    debts: 600000,
+    report: 1000000,
+  };
+
+  const thisWeek = {
+    income: 400,
+    expenses: 1700,
+    debts: 400000,
+    report: 200000,
+  };
+
+  const thisMonth = {
+    income: 500,
+    expenses: 700,
+    debts: 8000,
+    report: 1000,
+  };
+
+  const thisYear = {
+    income: 600,
+    expenses: 500,
+    debts: 1000,
+    report: 30000,
+  };
   return (
     <div className="accounts__wrapper">
       <section className="accounts__header">
@@ -86,6 +116,134 @@ const Accounts = () => {
             this year
           </div>
         </div>
+      </section>
+
+      {/* cards */}
+      <section className="cards__accounts">
+        <aside className="left__cards">
+          {/* INCOME */}
+          <div className="account__card">
+            <h1>Income</h1>
+            <div className="center__info">
+              <span className="naira__sign">₦</span>
+
+              {/* dynamic data render */}
+              {activeTime === "today" && (
+                <span className="amount__card">{today.income}</span>
+              )}
+              {activeTime === "week" && (
+                <span className="amount__card">{thisWeek.income}</span>
+              )}
+              {activeTime === "month" && (
+                <span className="amount__card">{thisMonth.income}</span>
+              )}
+              {activeTime === "year" && (
+                <span className="amount__card">{thisYear.income}</span>
+              )}
+
+              <span className="account__type">Total Income</span>
+            </div>
+            <div className="view__more">
+              <span>View More</span>
+              <span>
+                {" "}
+                <FaArrowRight />{" "}
+              </span>
+            </div>
+          </div>
+
+          {/* EXPENSES */}
+          <div className="account__card">
+            <h1>expenses</h1>
+            <div className="center__info">
+              <span className="naira__sign">₦</span>
+
+              {/* dynamic data render */}
+              {activeTime === "today" && (
+                <span className="amount__card">{today.expenses}</span>
+              )}
+              {activeTime === "week" && (
+                <span className="amount__card">{thisWeek.expenses}</span>
+              )}
+              {activeTime === "month" && (
+                <span className="amount__card">{thisMonth.expenses}</span>
+              )}
+              {activeTime === "year" && (
+                <span className="amount__card">{thisYear.expenses}</span>
+              )}
+
+              <span className="account__type">Total expenses</span>
+            </div>
+            <div className="view__more">
+              <span>View More</span>
+              <span>
+                {" "}
+                <FaArrowRight />{" "}
+              </span>
+            </div>
+          </div>
+        </aside>
+
+        <aside className="right__cards">
+          {/* DEBTS */}
+          <div className="account__card">
+            <h1>Debts</h1>
+            <div className="center__info">
+              <span className="naira__sign">₦</span>
+
+              {/* dynamic data render */}
+              {activeTime === "today" && (
+                <span className="amount__card">{today.debts}</span>
+              )}
+              {activeTime === "week" && (
+                <span className="amount__card">{thisWeek.debts}</span>
+              )}
+              {activeTime === "month" && (
+                <span className="amount__card">{thisMonth.debts}</span>
+              )}
+              {activeTime === "year" && (
+                <span className="amount__card">{thisYear.debts}</span>
+              )}
+              <span className="account__type">Total debts</span>
+            </div>
+            <div className="view__more">
+              <span>View More</span>
+              <span>
+                {" "}
+                <FaArrowRight />{" "}
+              </span>
+            </div>
+          </div>
+
+          {/* REPORT */}
+          <div className="account__card">
+            <h1>Income</h1>
+            <div className="center__info">
+              <span className="naira__sign">₦</span>
+              {/* dynamic data render */}
+              {activeTime === "today" && (
+                <span className="amount__card">{today.report}</span>
+              )}
+              {activeTime === "week" && (
+                <span className="amount__card">{thisWeek.report}</span>
+              )}
+              {activeTime === "month" && (
+                <span className="amount__card">{thisMonth.report}</span>
+              )}
+              {activeTime === "year" && (
+                <span className="amount__card">{thisYear.report}</span>
+              )}{" "}
+              <span className="account__type">Total Reports</span>
+            </div>
+            <div className="view__more">
+              <span>View More</span>
+              <span>
+                {" "}
+                <FaArrowRight />{" "}
+              </span>
+            </div>
+          </div>
+        </aside>
       </section>
     </div>
   );

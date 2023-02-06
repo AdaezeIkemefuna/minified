@@ -6,7 +6,9 @@
   top: 2rem;
 }
 .accounts__wrapper {
-  margin: 2rem;
+  padding: 2rem;
+  background-color: var(--white2);
+  min-height: 100vh;
 }
 
 .accounts__date {
@@ -104,11 +106,64 @@
   background-color: var(--grey-scale);
   color: var(--orange);
   padding: 1rem 2rem 1rem 1rem;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
   transition: 0.2s all ease;
 }
 
 .active__filter {
   background: var(--orange-scale);
+}
+
+/* CARDS */
+.cards__accounts {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  align-items: stretch;
+}
+
+.account__card {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px -2px 4px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  background-color: var(--white);
+  padding: 2rem;
+  font-family: "Inter", sans-serif;
+  width: 530px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.account__card h1 {
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.account__card .center__info {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.naira__sign {
+  align-self: flex-start;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.amount__card {
+  font-size: 3rem;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.account__type {
+  color: var(--grey-font2);
+  font-weight: 500;
+  font-size: 1.2rem;
 }
