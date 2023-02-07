@@ -144,10 +144,9 @@ const Accounts = () => {
               <span className="account__type">Total Income</span>
             </div>
             <div className="view__more">
-              <span>View More</span>
+              <span>See all income</span>
               <span>
-                {" "}
-                <FaArrowRight />{" "}
+                <FaArrowRight />
               </span>
             </div>
           </div>
@@ -175,7 +174,7 @@ const Accounts = () => {
               <span className="account__type">Total expenses</span>
             </div>
             <div className="view__more">
-              <span>View More</span>
+              <span>See all expenses</span>
               <span>
                 {" "}
                 <FaArrowRight />{" "}
@@ -189,7 +188,7 @@ const Accounts = () => {
           <div className="account__card">
             <h1>Debts</h1>
             <div className="center__info">
-              <span className="naira__sign">₦</span>
+              {/* <span className="naira__sign">₦</span> */}
 
               {/* dynamic data render */}
               {activeTime === "today" && (
@@ -204,10 +203,10 @@ const Accounts = () => {
               {activeTime === "year" && (
                 <span className="amount__card">{thisYear.debts}</span>
               )}
-              <span className="account__type">Total debts</span>
+              <span className="account__type">Total number of debtors</span>
             </div>
             <div className="view__more">
-              <span>View More</span>
+              <span>See all debts - credit</span>
               <span>
                 {" "}
                 <FaArrowRight />{" "}
@@ -219,7 +218,7 @@ const Accounts = () => {
           <div className="account__card">
             <h1>Income</h1>
             <div className="center__info">
-              <span className="naira__sign">₦</span>
+              {/* <span className="naira__sign">₦</span> */}
               {/* dynamic data render */}
               {activeTime === "today" && (
                 <span className="amount__card">{today.report}</span>
@@ -236,10 +235,9 @@ const Accounts = () => {
               <span className="account__type">Total Reports</span>
             </div>
             <div className="view__more">
-              <span>View More</span>
+              <span>See all reports</span>
               <span>
-                {" "}
-                <FaArrowRight />{" "}
+                <FaArrowRight />
               </span>
             </div>
           </div>

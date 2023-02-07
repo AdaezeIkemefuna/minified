@@ -128,24 +128,28 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px -2px 4px rgba(0, 0, 0, 0.04);
   border-radius: 8px;
   background-color: var(--white);
-  padding: 2rem;
+  padding-top: 2rem;
   font-family: "Inter", sans-serif;
-  width: 530px;
+  width: 30vw;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   margin-bottom: 3rem;
+  text-transform: capitalize;
 }
 
 .account__card h1 {
   font-weight: 600;
   font-size: 2rem;
+  margin-bottom: 2.7rem;
+  padding-left: 2rem;
+  color: var(--black);
 }
 
 .account__card .center__info {
   display: flex;
   align-items: flex-end;
-  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  padding-left: 2rem;
   justify-content: flex-start;
 }
 
@@ -159,11 +163,27 @@
 .amount__card {
   font-size: 3rem;
   color: var(--primary-color);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .account__type {
   color: var(--grey-font2);
   font-weight: 500;
+  font-family: "Work Sans", sans-serif;
   font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+}
+
+.view__more {
+  display: flex;
+  font-size: 0.85rem;
+  justify-content: center;
+  gap: 1rem;
+  align-items: flex-end;
+  border-top: 1px solid var(--grey-font2);
+  color: var(--grey-font2);
+  padding: 1.2rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: 0.2s all ease;
 }
