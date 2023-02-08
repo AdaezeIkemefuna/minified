@@ -37,6 +37,10 @@ import ReceiveSupply from "./pages/supplier/ReceiveSupply";
 import NewSupplier from "./pages/supplier/NewSupplier";
 import EditSupplier from "./pages/supplier/EditSupplier";
 import Accounts from "./pages/accounting/Accounts";
+import Income from "./pages/accounting/Income";
+import Expenses from "./pages/accounting/Expenses";
+import Debt from "./pages/accounting/Debt";
+import AccountReports from "./pages/accounting/Reports";
 
 function App() {
   return (
@@ -92,6 +96,10 @@ function App() {
 
               {/* accounting routes */}
               <Route path="/accounting" element={<Accounts />} />
+              <Route path="/income" element={<Income />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/debt" element={<Debt />} />
+              <Route path="/accreports" element={<AccountReports />} />
             </Route>
 
             <Route path="/updateorder" element={<UpdateOrder />} />
