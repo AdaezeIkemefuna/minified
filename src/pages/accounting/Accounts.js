@@ -69,8 +69,8 @@ const Accounts = () => {
             </span>
           </aside>
           <aside className="date__right">
-            <button id="apply">Apply</button>
-            <button id="clear__filter">Clear Filters</button>
+            <button className="apply">Apply</button>
+            <button className="clear__filter">Clear Filters</button>
           </aside>
         </section>
 
@@ -218,7 +218,7 @@ const Accounts = () => {
 
           {/* REPORT */}
           <div className="account__card">
-            <h1>Income</h1>
+            <h1>Reports</h1>
             <div className="center__info">
               {/* <span className="naira__sign">₦</span> */}
               {/* dynamic data render */}

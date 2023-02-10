@@ -41,6 +41,7 @@ import Income from "./pages/accounting/Income";
 import Expenses from "./pages/accounting/Expenses";
 import Debt from "./pages/accounting/Debt";
 import AccountReports from "./pages/accounting/Reports";
+import AddNew from "./pages/accounting/AddNew";
 
 function App() {
   return (
@@ -100,6 +101,7 @@ function App() {
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/debt" element={<Debt />} />
               <Route path="/accreports" element={<AccountReports />} />
+              <Route path="/newrecord" element={<AddNew />} />
             </Route>
 
             <Route path="/updateorder" element={<UpdateOrder />} />

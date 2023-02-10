@@ -279,10 +279,8 @@ export const TableProvider = ({ children }) => {
   const [activeDept, setActiveDept] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-
   const [activeItem, setActiveItem] = useState("SUPPLIER");
   const [activePage, setActivePage] = useState("PLACED ORDERS");
-
 
   const [searchResult, setSearchResult] = useState("");
 
@@ -379,6 +377,9 @@ export const TableProvider = ({ children }) => {
   const [totalPlacedOrders, setTotalPlaced] = useState();
   const [totalReceivedOrders, setTotalReceived] = useState();
 
+  // ACCOUNT CATEGORY STATES
+  const [activeAcc, setActiveAcc] = useState("");
+
   useEffect(() => {
     if (totalPlaced && totalCancelled && totalReceived) {
       setTotalPlaced(totalPlaced - totalCancelled);
@@ -431,12 +432,14 @@ export const TableProvider = ({ children }) => {
     setAllItemsFilter,
     cancelledOrder,
     receivedOrder,
-    activeItem, 
+    activeItem,
     setActiveItem,
     searchResult,
     setSearchResult,
-    activePage, 
-    setActivePage
+    activePage,
+    setActivePage,
+    activeAcc,
+    setActiveAcc,
   };
 
   return (

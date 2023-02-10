@@ -1,3 +1,9 @@
+.accounts__wrapper {
+  padding: 2rem 6rem;
+  background-color: var(--white2);
+  min-height: 100vh;
+}
+
 /* header section */
 .accounts__header {
   position: sticky;
@@ -6,11 +12,6 @@
   top: 2rem;
   background-color: var(--white2);
   padding: 0rem 1rem 1rem;
-}
-.accounts__wrapper {
-  padding: 2rem 6rem;
-  background-color: var(--white2);
-  min-height: 100vh;
 }
 
 .accounts__date {
@@ -27,6 +28,11 @@
   font-size: 1.2rem;
   color: var(--primary-color);
   font-weight: 700;
+}
+
+.accounts__filter.sub__pages {
+  justify-content: flex-end;
+  gap: 3rem;
 }
 
 .accounts__filter span {
@@ -79,17 +85,17 @@
   cursor: pointer;
 }
 
-#apply {
+.date__right .apply {
   background-color: var(--primary-color);
   color: var(--white);
   margin-right: 2rem;
 }
-#apply:hover {
+.apply:hover {
   background-color: rgba(88, 1, 88, 0.8);
   border: 1px solid rgba(88, 1, 88, 0.2);
 }
 
-#clear__filter:hover {
+.clear__filter:hover {
   background-color: rgba(88, 1, 88, 0.8);
   color: var(--white);
 }
@@ -141,12 +147,26 @@
   text-transform: capitalize;
 }
 
+.account__card.income__method {
+  width: 20vw;
+  justify-content: center;
+  text-align: center;
+  padding-top: 1.2rem;
+}
+
 .account__card h1 {
   font-weight: 600;
   font-size: 2rem;
   margin-bottom: 2.7rem;
   padding-left: 2rem;
   color: var(--black);
+}
+
+.account__card.income__method h1 {
+  padding-left: 0rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
 }
 
 .account__card .center__info {
@@ -190,10 +210,196 @@
   color: var(--text-color);
   cursor: pointer;
   transition: 0.2s all ease;
+  text-transform: capitalize;
+}
+
+.view__more.income__method {
+  padding: 0.9rem;
+  border-top: 1px solid #b021cd;
 }
 
 .view__more:hover {
   gap: 1.2rem;
+}
+
+.title__accounts {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.title__accounts h1 {
+  color: var(--black);
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.title__accounts--right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.recordNew__accounts {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 1rem;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.recordNew__accounts.report__actions {
+  background-color: transparent;
+  color: var(--black);
+  border: 1px solid var(--primary-color);
+  padding: 0.5rem;
+  gap: 1rem;
+}
+.recordNew__accounts:hover {
+  background-color: rgba(88, 1, 88, 0.8);
+  color: var(--white);
+}
+
+.accounts__table {
+  margin-top: 2rem;
+  width: 100%;
+  border-radius: 8px 8px 0px 0px;
+  border-collapse: collapse;
+}
+
+.accounts__table.debts_exp thead {
+  position: sticky;
+  top: 46%;
+}
+
+.accounts__table thead {
+  position: sticky;
+  top: 63%;
+}
+
+.accounts__table tbody {
+  border: 1px solid var(--grey-font);
+}
+
+.accounts__table th {
+  text-transform: capitalize;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 1rem 2rem;
+}
+
+.accounts__table th:first-child {
+  border-radius: 8px 0px 0px 0px;
+}
+
+.accounts__table th:last-child {
+  border-radius: 0px 8px 0px 0px;
+}
+
+.accounts__table td {
+  text-align: center;
+  padding: 1rem 2rem;
+  border-left: 1px solid var(--grey-font);
+  border-bottom: 1px solid var(--grey-font);
+  text-transform: capitalize;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.ims__search2.fade__animation {
+  animation: fadeIn 0.5s;
+  backface-visibility: hidden;
+}
+
+.redeem__debt {
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  text-transform: capitalize;
+  border-radius: 8px;
+  padding: 0.2rem 0.5rem;
+}
+
+.report__body {
+  background-color: var(--white);
+  color: var(--black);
+  padding: 2rem 4rem;
+  margin-top: 2rem;
+}
+
+.report__header {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.report__header h2 {
+  text-transform: capitalize;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.report__header h1 {
+  margin-bottom: 0.5rem;
+}
+
+.report__quarter {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 5rem;
+  margin-top: 4rem;
+  justify-content: space-around;
+}
+
+.report__quarter1 {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  gap: 2rem;
+  font-size: 1.2rem;
+}
+
+.report__quarter1.reportq2 span:last-child {
+  color: var(--primary-color);
+  font-weight: 700;
+  border-top: 2px solid var(--primary-color);
+  padding-top: 1rem;
+}
+
+.form__body {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.title__addNew h2 {
+  color: var(--black);
+  font-weight: 600;
+  font-size: 2.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--grey-font2);
+  margin-bottom: 3rem;
+}
+
+.form__body form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form__body form input,
+.form__body form textarea {
+  outline: none;
+  border: 1px solid var(--grey-font2);
+  border-radius: 8px;
+  padding: 1.2rem;
 }
 
 /* ANIMATIONS */
