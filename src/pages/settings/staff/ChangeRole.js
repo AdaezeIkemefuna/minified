@@ -22,7 +22,7 @@ const ChangeRole = () => {
     setShowRole((prevValue) => !prevValue);
   };
 
-  const url = `https://uppist-server.onrender.com/users`;
+  const url = `https://pos-server-cxqi.onrender.com/users`;
   const getAllUsers = async () => {
     try {
       const response = await fetch(url);
@@ -60,7 +60,7 @@ const ChangeRole = () => {
   const updateUser = async (activeUser, activePasscode, username, role) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/update-role",
+        "https://pos-server-cxqi.onrender.com/update-role",
         {
           method: "PUT",
           headers: {

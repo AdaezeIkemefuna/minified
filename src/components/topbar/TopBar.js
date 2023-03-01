@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { FaSearch, FaPlusCircle } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { BsPlusCircle } from "react-icons/bs";
 import { GoThreeBars } from "react-icons/go";
-import { MdOutlineInventory } from "react-icons/md";
+import { MdOutlineInventory, MdTune, MdSettings } from "react-icons/md";
 import AuthContext from "../../context/AuthContext";
 import "./TopBar.css";
 
@@ -19,6 +19,7 @@ const TopBar = () => {
   const {
     state: { cart },
     user,
+    toggleFilters,
   } = useContext(AuthContext);
 
   const menuActions = () => {
@@ -31,17 +32,27 @@ const TopBar = () => {
         <GoThreeBars size={25} onClick={menuActions} />
       </div>
 
-      <form>
-        <FaSearch size={20} className="search__icon" />
-        <input
-          type="text"
-          placeholder="search"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </form>
+      <div className="top-part">
+        <span className="menu-icons">
+          <MdSettings size={20} color="var(--primary-color)" />
+          <MdSettings size={20} color="var(--primary-color)" />
+          <MdSettings size={20} color="var(--primary-color)" />
+        </span>
+        <form>
+          <FaSearch size={20} className="search__icon" />
+          <input
+            type="text"
+            placeholder="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </form>
+        <span className="filters" onClick={toggleFilters}>
+          <MdTune size={20} color="var(--primary-color)" /> <span>filters</span>
+        </span>
+      </div>
 
-      <div className="date">{date}</div>
+      {/* <div className="date">{date}</div> */}
       {user.role === "Super Admin" || user.role === "Administrator" ? (
         <div
           className="menu__icons"

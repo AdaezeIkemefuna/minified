@@ -9,7 +9,7 @@ const ReceiveOrder = ({ order, closeModal }) => {
   const { displayImsOrders } = useContext(TableContext);
   const receiveOrder = async () => {
     try {
-      fetch("https://uppist-server.onrender.com/ims/update-status", {
+      fetch("https://pos-server-cxqi.onrender.com/ims/update-status", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

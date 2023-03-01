@@ -19,9 +19,7 @@ const HomeLayout = () => {
   return (
     <AppLogout>
       <div className={showSideBar ? "home__wrapper mobile" : "home__wrapper"}>
-        <div className="home__left">
-          <SideBar />
-        </div>
+        <div className="home__left">{/* <SideBar /> */}</div>
 
         <div
           className={showSideBar ? "backdrop__container" : "no-display"}

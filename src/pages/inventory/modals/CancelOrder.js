@@ -10,7 +10,7 @@ const CancelOrder = ({ order, closeModal }) => {
 
   const cancelOrder = async () => {
     try {
-      fetch("https://uppist-server.onrender.com/ims/update-status", {
+      fetch("https://pos-server-cxqi.onrender.com/ims/update-status", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

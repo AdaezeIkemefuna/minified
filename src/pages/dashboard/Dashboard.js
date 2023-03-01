@@ -59,7 +59,7 @@ const Dashboard = () => {
   const getCreditReport = async (activeUser) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/user-credit",
+        "https://pos-server-cxqi.onrender.com/user-credit",
         {
           method: "POST",
           headers: {
@@ -81,7 +81,7 @@ const Dashboard = () => {
   const clearTables = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/clear-tables",
+        "https://pos-server-cxqi.onrender.com/clear-tables",
         {
           method: "PUT",
           headers: {

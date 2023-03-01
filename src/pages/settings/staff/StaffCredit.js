@@ -19,7 +19,7 @@ const StaffCredit = () => {
     },
   ]);
 
-  const url = `https://uppist-server.onrender.com/credit-status`;
+  const url = `https://pos-server-cxqi.onrender.com/credit-status`;
   const getAllUsers = async () => {
     try {
       const response = await fetch(url);
@@ -57,7 +57,7 @@ const StaffCredit = () => {
   const updateCredit = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/grant-credit",
+        "https://pos-server-cxqi.onrender.com/grant-credit",
         {
           method: "POST",
           headers: {

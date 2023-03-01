@@ -8,7 +8,7 @@ const OrderPageLoad = () => {
 
   timer = setTimeout(() => {
     setReload(true);
-  }, 10000);
+  }, 1000000);
 
   const resetTimer = () => {
     if (timer) clearTimeout(timer);

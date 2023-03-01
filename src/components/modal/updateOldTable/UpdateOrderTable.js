@@ -38,7 +38,7 @@ export default function UpdateOrderTable({ table, closeModal }) {
   const updateOrderCall = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/update-order",
+        "https://pos-server-cxqi.onrender.com/update-order",
         {
           method: "POST",
           headers: {

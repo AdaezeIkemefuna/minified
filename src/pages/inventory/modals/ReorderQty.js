@@ -13,7 +13,7 @@ const ReorderQty = ({ order, closeAll }) => {
 
   const _updateQuantity = async () => {
     try {
-      fetch("https://uppist-server.onrender.com/update-reorder-level", {
+      fetch("https://pos-server-cxqi.onrender.com/update-reorder-level", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

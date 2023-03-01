@@ -12,7 +12,7 @@ const DeleteItem = ({ order, closeModal, closeAll }) => {
   console.log(order);
   const deleteItem = async () => {
     try {
-      fetch("https://uppist-server.onrender.com/ims/delete-item", {
+      fetch("https://pos-server-cxqi.onrender.com/ims/delete-item", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

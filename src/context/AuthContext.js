@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   const loginUser = async (username, password) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/login",
+        "https://pos-server-cxqi.onrender.com/login",
         {
           method: "POST",
           headers: {
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
   const displayItems = async (department) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/items/department",
+        "https://pos-server-cxqi.onrender.com/items/department",
         {
           method: "POST",
           headers: {
@@ -205,7 +205,7 @@ export const AuthProvider = ({ children }) => {
   const displayAdminTables = async (activeUser, activePasscode) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/all-tables",
+        "https://pos-server-cxqi.onrender.com/all-tables",
         {
           method: "POST",
           headers: {
@@ -229,7 +229,7 @@ export const AuthProvider = ({ children }) => {
   const displayTables = async (activeUser) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/tables",
+        "https://pos-server-cxqi.onrender.com/tables",
         {
           method: "POST",
           headers: {
@@ -254,7 +254,7 @@ export const AuthProvider = ({ children }) => {
   const getDetails = async (activeUser, activePasscode, table_name) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/get-orders",
+        "https://pos-server-cxqi.onrender.com/get-orders",
         {
           method: "POST",
           headers: {
@@ -287,7 +287,7 @@ export const AuthProvider = ({ children }) => {
   ) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/get-orders",
+        "https://pos-server-cxqi.onrender.com/get-orders",
         {
           method: "POST",
           headers: {
@@ -314,7 +314,7 @@ export const AuthProvider = ({ children }) => {
   const getOrderCount = async (activeUser, activePasscode) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/order-count",
+        "https://pos-server-cxqi.onrender.com/order-count",
         {
           method: "POST",
           headers: {
@@ -375,7 +375,7 @@ export const AuthProvider = ({ children }) => {
   const getNotifs = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/waiters"
+        "https://pos-server-cxqi.onrender.com/waiters"
       );
       const data = await response.json();
       if (response.status === 200) {
@@ -393,7 +393,7 @@ export const AuthProvider = ({ children }) => {
   const getNotifCount = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/notification-count"
+        "https://pos-server-cxqi.onrender.com/notification-count"
       );
       const data = await response.json();
       setNotifCount(data.length);
@@ -401,6 +401,9 @@ export const AuthProvider = ({ children }) => {
       console.log(err);
     }
   };
+
+  const [showFilters, setShowFilters] = useState(false);
+  const toggleFilters = () => [setShowFilters(!showFilters)];
 
   useEffect(() => {
     if (user?.role === "Bar Man") {
@@ -457,6 +460,8 @@ export const AuthProvider = ({ children }) => {
     waiterNotifs,
     notifCount,
     getNotifs,
+    showFilters,
+    toggleFilters,
   };
 
   return (

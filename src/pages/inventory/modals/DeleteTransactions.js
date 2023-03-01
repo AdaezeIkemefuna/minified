@@ -9,7 +9,7 @@ const DeleteTransaction = ({ order, closeModal }) => {
   const { displayImsTransactions } = useContext(TableContext);
   const deleteTransaction = async () => {
     try {
-      fetch("https://uppist-server.onrender.com/ims/delete-transactions", {
+      fetch("https://pos-server-cxqi.onrender.com/ims/delete-transactions", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

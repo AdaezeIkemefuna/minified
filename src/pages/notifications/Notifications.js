@@ -16,7 +16,7 @@ export default function Notifications() {
   const clearNotifs = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/clear-notifications",
+        "https://pos-server-cxqi.onrender.com/clear-notifications",
         {
           method: "DELETE",
           headers: {

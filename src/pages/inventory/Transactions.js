@@ -17,7 +17,7 @@ const Transactions = ({ order, closeAll }) => {
   const sendItems = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/ims/send-items",
+        "https://pos-server-cxqi.onrender.com/ims/send-items",
         {
           method: "POST",
           headers: {

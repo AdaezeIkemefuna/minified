@@ -1,10 +1,11 @@
 .home__wrapper {
   display: grid;
-  grid-template-columns: 250px auto !important;
+  grid-template-columns: 0px auto !important;
   gap: 0.5rem;
   height: 100vh !important;
   width: 100vw;
   overflow-x: hidden;
+  padding: 0rem 6rem;
 }
 
 .home__left.mobile {

@@ -13,7 +13,7 @@ const UpdateAllItemsQty = ({ order, closeAll }) => {
 
   const _updateQuantity = async () => {
     try {
-      fetch("https://uppist-server.onrender.com/update-quantity", {
+      fetch("https://pos-server-cxqi.onrender.com/update-quantity", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

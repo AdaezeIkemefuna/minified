@@ -14,7 +14,7 @@ export default function DeleteItemModal({ item, closeModal, setDeleteMode }) {
   const deleteItem = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/delete-item",
+        "https://pos-server-cxqi.onrender.com/delete-item",
         {
           method: "DELETE",
           headers: {

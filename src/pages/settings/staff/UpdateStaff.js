@@ -26,7 +26,7 @@ const UpdateStaff = () => {
     },
   ]);
 
-  const url = `https://uppist-server.onrender.com/users`;
+  const url = `https://pos-server-cxqi.onrender.com/users`;
   const getAllUsers = async () => {
     try {
       const response = await fetch(url);
@@ -68,7 +68,7 @@ const UpdateStaff = () => {
   ) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/update-password",
+        "https://pos-server-cxqi.onrender.com/update-password",
         {
           method: "PUT",
           headers: {
@@ -101,7 +101,7 @@ const UpdateStaff = () => {
   ) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/update-passcode",
+        "https://pos-server-cxqi.onrender.com/update-passcode",
         {
           method: "PUT",
           headers: {
@@ -128,7 +128,7 @@ const UpdateStaff = () => {
   const deleteUser = async (activeUser, activePasscode, username) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/delete-user",
+        "https://pos-server-cxqi.onrender.com/delete-user",
         {
           method: "DELETE",
           headers: {
@@ -155,7 +155,7 @@ const UpdateStaff = () => {
   const suspendUser = async (activeUser, activePasscode, username) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/suspend-user",
+        "https://pos-server-cxqi.onrender.com/suspend-user",
         {
           method: "PUT",
           headers: {
@@ -182,7 +182,7 @@ const UpdateStaff = () => {
   const reactivateUser = async (activeUser, activePasscode, username) => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/reactivate",
+        "https://pos-server-cxqi.onrender.com/reactivate",
         {
           method: "PUT",
           headers: {

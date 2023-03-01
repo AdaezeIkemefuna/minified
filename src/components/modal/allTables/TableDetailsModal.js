@@ -167,7 +167,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   const closeTableCall = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/close-table",
+        "https://pos-server-cxqi.onrender.com/close-table",
         {
           method: "POST",
           headers: {
@@ -231,7 +231,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   const updateQtyCall = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/apply-returns",
+        "https://pos-server-cxqi.onrender.com/apply-returns",
         {
           method: "PUT",
           headers: {
@@ -271,7 +271,7 @@ export default function TableDetailsModal({ table, closeModal }) {
   const updateQtyBarman = async () => {
     try {
       const response = await fetch(
-        "https://uppist-server.onrender.com/apply-returns",
+        "https://pos-server-cxqi.onrender.com/apply-returns",
         {
           method: "PUT",
           headers: {

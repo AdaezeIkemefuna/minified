@@ -16,10 +16,20 @@ const Filters = () => {
     state: { items },
     dispatch,
     setSearchQuery,
+    showFilters,
+    toggleFilters,
   } = useContext(AuthContext);
   const [activeDept, setActiveDept] = useState(dept);
 
-  const categories = ["all", ...new Set(items.map((item) => item.category))];
+  // const categories = ["all", ...new Set(items.map((item) => item.category))];
+  const categories = [
+    "all",
+    "beers",
+    "wines",
+    "cigarretes",
+    "spirits",
+    "soups",
+  ];
 
   useEffect(() => {
     changeItems();
@@ -33,13 +43,13 @@ const Filters = () => {
   }
 
   return (
-    <div id="filter__wrapper">
-      <div className="filter__head">
-        <p className="category_title">Choose Category:</p>
-        <div className="radio-buttons">
-          <span>
+    <div className="filter__container">
+      {showFilters && (
+        <div id="filter__wrapper">
+          {/* <p className="category_title"></p> */}
+          <div className="radio-buttons">
             <span
-              className={`${activeDept === "Bar" ? "ims--title" : "ims--dept"}`}
+              className={`${activeDept === "Bar" ? "active--filter" : ""}`}
               style={{
                 cursor: "pointer",
                 fontSize: "0.9rem",
@@ -54,13 +64,9 @@ const Filters = () => {
             >
               Bar
             </span>
-          </span>
 
-          <span>
             <span
-              className={`${
-                activeDept === "Lounge" ? "ims--title" : "ims--dept"
-              }`}
+              className={`${activeDept === "Lounge" ? "active--filter" : ""}`}
               style={{
                 cursor: "pointer",
                 fontSize: "0.9rem",
@@ -75,32 +81,29 @@ const Filters = () => {
             >
               Lounge
             </span>
-          </span>
+          </div>
+
+          <div className="btn-container">
+            {categories.map((category, index) => {
+              return (
+                <div
+                  className={`${
+                    activeCategory === category ? "active--filter" : ""
+                  }`}
+                  key={index}
+                  onClick={() => {
+                    setSearchQuery("");
+                    setActiveCategory(category);
+                    toggleFilters();
+                  }}
+                >
+                  {category}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-      <div className="btn-container">
-        {categories.map((category, index) => {
-          return (
-            <button
-              type="button"
-              className={`${
-                activeCategory === category
-                  ? "filter-btn btn-active"
-                  : "filter-btn"
-              }`}
-              key={index}
-              onClick={() => {
-                setSearchQuery("");
-                setActiveCategory(category);
-              }}
-            >
-              <span className="filter__bar">
-                <MdWineBar className="filter__icons" size={20} /> {category}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+      )}
     </div>
   );
 };
